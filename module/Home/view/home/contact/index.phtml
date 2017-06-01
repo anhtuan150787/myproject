@@ -1,0 +1,106 @@
+<style>
+    input[type="text"], input[type="password"], input[type="email"], textarea, select {
+        margin-bottom: 0px;
+    }
+    div#contactFormWrapper p {
+        margin-bottom: 20px;
+    }
+    label.error {
+        padding-top: 5px;
+    }
+</style>
+
+
+<div class="desktop-12 mobile-3" id="nav-border"></div>
+<?php echo $breadcrumbs; ?>
+
+<div id="page" class="desktop-12 tablet-6 mobile-3">
+    <h1>Liên hệ</h1>
+</div>
+
+<div class="desktop-6 tablet-6 mobile-3">
+    <?php
+    $form->setAttributes(['action' => '', 'class' => 'contact-form', 'id' => 'contact_form']);
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    ?>
+
+        <div id="contactFormWrapper">
+            <div class="desktop-12 mobile-3">
+                <p>
+                    <?php echo $this->formLabel($form->get('contact_fullname')); ?>
+                    <?php echo $this->formElement($form->get('contact_fullname')); ?>
+                    <?php echo $this->formElementErrors($form->get('contact_fullname'), array('class' => 'error-message')); ?>
+                </p>
+            </div>
+            <div class="desktop-12 mobile-3">
+                <p>
+                    <?php echo $this->formLabel($form->get('contact_email')); ?>
+                    <?php echo $this->formElement($form->get('contact_email')); ?>
+                    <?php echo $this->formElementErrors($form->get('contact_email'), array('class' => 'error-message')); ?>
+                </p>
+            </div>
+            <div class="desktop-12 mobile-3">
+                <p>
+                    <?php echo $this->formLabel($form->get('contact_phone')); ?>
+                    <?php echo $this->formElement($form->get('contact_phone')); ?>
+                    <?php echo $this->formElementErrors($form->get('contact_phone'), array('class' => 'error-message')); ?>
+                </p>
+            </div>
+            <div class="desktop-12 mobile-3">
+                <p>
+                    <?php echo $this->formLabel($form->get('contact_content')); ?>
+                    <?php echo $this->formElement($form->get('contact_content')); ?>
+                    <?php echo $this->formElementErrors($form->get('contact_content'), array('class' => 'error-message')); ?>
+                </p>
+            </div>
+            <div class="desktop-12 mobile-3">
+                <p>
+                    <?php echo $this->formSubmit($form->get('submit')); ?>
+                    <?php echo $this->formHidden($form->get('csrf')); ?>
+                </p>
+            </div>
+        </div>
+
+    <?php echo $this->form()->closeTag(); ?>
+</div>
+
+<script>
+
+    $(document).ready(function() {
+        $('input[name="captcha[input]"]').addClass('form-control input-captcha');
+
+        $("#contact_form").validate({
+            rules: {
+                contact_fullname: 'required',
+                contact_phone: {
+                    required: true,
+                    number: true,
+                },
+                contact_email: {
+                    required: true,
+                    email: true,
+                },
+                contact_content: {
+                    required: true,
+                    maxlength: 300,
+                },
+            },
+            messages: {
+                contact_fullname: 'Vui lòng nhập thông tin',
+                contact_phone: {
+                    required: 'Vui lòng nhập thông tin',
+                    number: 'Thông tin không đúng định dạng',
+                },
+                contact_email: {
+                    required: 'Vui lòng nhập thông tin',
+                    email: 'Thông tin không đúng định dạng',
+                },
+                contact_content: {
+                    required: 'Vui lòng nhập thông tin',
+                    maxlength: 'Lời nhắn không quá 300 ký tự',
+                },
+            }
+        });
+    });
+</script>

@@ -1,0 +1,248 @@
+<style>
+    .thumbnail {
+        cursor: pointer;
+        height: 75px !important;
+        width: 75px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .product-picture {
+        display: none;
+    }
+
+    .product-picture:first-child {
+        display: inline-block;
+    }
+
+    #product-description {
+        border-right: none;
+    }
+
+    #product-description h1 {
+        margin-bottom: 10px;
+    }
+
+    /* these styles are for the demo, but are not required for the plugin */
+    .zoom {
+        display: inline-block;
+        position: relative;
+    }
+
+    /* magnifying glass icon */
+    .zoom:after {
+        content: '';
+        display: block;
+        width: 33px;
+        height: 33px;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .zoom img {
+        display: block;
+    }
+
+    .zoom img::selection {
+        background-color: transparent;
+    }
+
+
+</style>
+
+<div class="desktop-12 mobile-3" id="nav-border"></div>
+<?php echo $breadcrumbs; ?>
+
+<div id="shopify-section-product-template" class="shopify-section">
+    <?php foreach ($productPicture as $k => $v) { ?>
+        <div data-id="product-picture-<?php echo $k; ?>"
+             class="desktop-6 mobile-3 product-picture product-picture-item-<?php echo $k; ?>">
+
+            <?php foreach ($v as $vv) { ?>
+                <?php if ($vv['product_picture_position'] == 1) { ?>
+                    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 main-product-image zoom" id='ex<?php echo $k; ?>'>
+                        <img class="product-picture-big" id="product-picture-big"
+                             src="<?php echo $this->basePath() . '/public/pictures/' . $vv['product_picture_name']; ?>"
+                             width="470" height="470"/>
+                    </div>
+
+                <?php } ?>
+
+                <div class="slide col-lg-2 col-md-2">
+                    <a class="clicker-thumb-<?php echo $k; ?>">
+                        <img class="thumbnail desktop-2"
+                             src="<?php echo $this->basePath() . '/public/pictures/' . $vv['product_picture_name']; ?>">
+                    </a>
+                </div>
+
+
+            <?php } ?>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#ex<?php echo $k; ?>').zoom();
+
+                $('.clicker-thumb-<?php echo $k; ?>').click(function () {
+                    var html_thumb = $(this).html();
+
+                    $('#ex<?php echo $k; ?>').html(html_thumb);
+                    $('#ex<?php echo $k; ?>').find('img').attr({'width': 470, 'height': 470}).removeAttr('class');
+                    $('#ex<?php echo $k; ?>').zoom();
+                })
+            });
+        </script>
+    <?php } ?>
+
+    <div id="product-right" class="desktop-6 tablet-half mobile-3">
+        <div id="product-description" class="desktop-12 tablet-6 mobile-3">
+            <h1 itemprop="name"><?php echo $this->escapeHtml($product['product_name']); ?></h1>
+
+            <p><?php echo $this->escapeHtml($product['product_code']); ?></p>
+
+            <div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                <p id="product-price">
+                        <span class="product-price" itemprop="price"><span
+                                class="money"><?php echo $this->currency($product['product_price']); ?>
+                                VND</span></span>
+                </p>
+
+
+                <div class="swatch clearfix" data-option-index="0">
+                    <div class="header">Màu</div>
+                    <?php foreach ($productColor as $v) { ?>
+                        <div onclick="change_style(<?php echo $v['product_detail_id']; ?>, <?php echo $v['color_id']; ?>)"
+                             data-value="<?php echo $v['color_id']; ?>"
+                             class="swatch-element <?php echo $v['color_id']; ?> available"><input
+                                id="swatch-0-<?php echo $v['color_id']; ?>" type="radio" name="color_order"
+                                value="<?php echo $v['color_id']; ?>">
+                            <label for="swatch-0-<?php echo $v['color_id']; ?>"
+                                   style="background: url('<?php echo $this->serverUrl() . '/public/thumbs/timthumb.php?src=' . $this->basePath() . '/public/pictures/' . $v['color_picture']; ?>')">
+                            </label>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <div class="swatch clearfix" data-option-index="0">
+                    <div class="header">Size</div>
+                    <?php $t = 1;
+                    foreach ($productSize as $k => $v) { ?>
+                        <div data-id="product-size-<?php echo $k; ?>"
+                             class="product-size product-size-item-<?php echo $k; ?>"
+                             style="<?php echo ($t != 1) ? 'display:none' : ''; ?>">
+                            <?php foreach ($v as $vv) { ?>
+                                <div onclick="chose_size('<?php echo $vv['size_id']; ?>')" class="swatch-element <?php echo $k . '_' . $vv['size_name']; ?> available">
+                                    <input id="swatch-0-<?php echo $k . '_' . $vv['size_name']; ?>" type="radio"
+                                           name="size_order" value="<?php echo $vv['size_name']; ?>">
+                                    <label for="swatch-0-<?php echo $k . '_' . $vv['size_name']; ?>">
+                                        <?php echo $vv['size_name']; ?>
+                                    </label>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <?php $t++;
+                    } ?>
+
+                </div>
+
+                <div class="swatch clearfix" style="padding-top: 10px;">
+                    <?php echo $product['product_description']; ?>
+                </div>
+
+                <div class="product-add">
+                    <form method="post" action="<?php echo $this->url('home-order');?>" onsubmit="return checkForm();">
+                        <input type="hidden" name="product_id" id="product_id" value="<?php echo $product['product_id'];?>">
+                        <input type="hidden" name="size" id="size" value="">
+                        <input type="hidden" name="color" id="color" value="">
+                        <input type="submit" name="button" class="add clearfix" value="Mua hàng">
+                    </form>
+
+
+                </div>
+            </div>
+
+
+            <div class="clear"></div>
+            <div class="desc">
+                <div id="social">
+                    <div class="share-icons">
+                        <?php
+                        echo $this->social()->shareFacebook(array(
+                            'url' => $this->serverUrl() . $this->url('home-product-detail', array('name' => $this->functions()->formatTitle($product['product_name']), 'id' => $product['product_id'])),
+                            'title' => $product['product_name'],
+                            'description' => $product['product_description'],
+                            'image' => $this->serverUrl() . '/thumbs/timthumb.php?src=' . $this->basePath() . '/pictures/' . $product['product_picture'] . '&w=200',
+                        ));
+
+                        echo $this->social()->shareGoogle();
+                        echo '&nbsp;';
+                        echo $this->social()->shareTweet();
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+
+    <div id="looked-at" class="desktop-12 mobile-half">
+        <div id="recently-viewed-products" class="collection clearfix" style="margin-top: 30px;">
+            <h4>Sản phẩm khác</h4>
+            <?php foreach ($productsOther as $v) { ?>
+                <div class="desktop-2 mobile-3">
+                    <div class="image"><a
+                            href="<?php echo $this->url('home-product-detail', array('name' => $this->functions()->formatTitle($v['product_name']), 'id' => $v['product_id'])); ?>"
+                            class="cy"> <img
+                                src="<?php echo $this->serverUrl() . '/public/thumbs/timthumb.php?src=' . $this->basePath() . '/public/pictures/' . $v['product_picture']; ?>&w=171&h=212">
+                        </a>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+
+    <style>
+        .selector-wrapper {
+            display: none;
+        }
+
+        .single-option-selector {
+            opacity: 0;
+            display: none;
+        }
+    </style>
+</div>
+
+<script>
+
+    function change_style(id, color_id) {
+        $('.product-picture[data-id="product-picture-' + id + '"]').show();
+        $('.product-picture[data-id!="product-picture-' + id + '"]').hide();
+
+        $('.product-size[data-id="product-size-' + id + '"]').show();
+        $('.product-size[data-id!="product-size-' + id + '"]').hide();
+
+        $('#color').val(color_id);
+        $('#size').val('');
+    }
+
+    function chose_size(id) {
+        $('#size').val(id);
+    }
+
+    function checkForm()
+    {
+        if ($('#color').val() == '') {
+            alert('Vui lòng chọn màu!');
+            return false;
+        }
+
+        if ($('#size').val() == '') {
+            alert('Vui lòng size!');
+            return false;
+        }
+
+        return true;
+    }
+</script>
