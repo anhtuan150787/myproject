@@ -14,7 +14,8 @@
                     <tr>
                         <th><input type="checkbox" class="checkbox-all" /></th>
                         <th>Tên</th>
-                        <th>Group</th>
+                        <th>Email</th>
+                        <th>Nhóm quản trị</th>
                         <th>Trạng thái</th>
                         <th>Chức năng</th>
                     </tr>
@@ -23,7 +24,8 @@
                     <?php foreach ($records as $record) { ?>
                         <tr style="background: <?php echo $statusColor[$record['status']]; ?>">
                             <td><input type="checkbox" class="checkbox-item" name="check_item[]" value="<?php echo $record['admin_id']; ?>" /></td>
-                            <td><strong><?php echo $this->escapeHtml($record['admin_name']); ?></strong></td>
+                            <td><?php echo $this->escapeHtml($record['admin_name']); ?></td>
+                            <td><strong><?php echo $this->escapeHtml($record['admin_email']); ?></strong></td>
                             <td><?php echo $record['group_admin_name']; ?></td>
                             <td><?php echo $status[$record['admin_status']]; ?></td>
                             <td>

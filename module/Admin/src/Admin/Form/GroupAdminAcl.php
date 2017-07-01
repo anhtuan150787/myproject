@@ -25,7 +25,7 @@ class GroupAdminAcl extends Form {
             'name' => 'submit',
             'type' => 'Submit',
             'attributes' => [
-                'value' => 'Tiếp tục',
+                'value' => 'Đồng ý',
                 'class' => 'btn btn-primary',
             ]
         ]);

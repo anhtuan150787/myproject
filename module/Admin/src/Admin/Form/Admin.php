@@ -30,7 +30,7 @@ class Admin extends Form {
                 'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Group admin',
+                'label' => 'Nhóm quản trị',
                 'label_attributes' => ['class' => 'control-label col-lg-2'],
                 'disable_inarray_validator' => true,
             ],

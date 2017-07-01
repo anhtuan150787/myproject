@@ -328,6 +328,23 @@ return array(
                             ],
                         ),
                     ),
+
+                    'group-navigation' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/group-navigation[/:action]',
+                            'constraints' => [
+                                'controller' => 'Admin\Controller\GroupNavigation',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'Admin\Controller',
+                                'controller' => 'Admin\Controller\GroupNavigation',
+                                'action' => 'index',
+                            ],
+                        ),
+                    ),
+
                 ),
 
             ],
@@ -359,6 +376,8 @@ return array(
             'Admin\Controller\Website' => 'Admin\Controller\WebsiteController',
             'Admin\Controller\EmailCustomer' => 'Admin\Controller\EmailCustomerController',
             'Admin\Controller\Contact' => 'Admin\Controller\ContactController',
+            'Admin\Controller\PostGet' => 'Admin\Controller\PostGetController',
+            'Admin\Controller\GroupNavigation' => 'Admin\Controller\GroupNavigationController',
         ),
     ),
 

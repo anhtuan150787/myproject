@@ -212,8 +212,8 @@
     <div id="left">
         <?php foreach ($menu as $v) : ?>
             <?php if ($v['menu_parent'] == 0) : ?>
-                <?php $sub = false; $s = ''; ?>
-        <div class="subnav">
+                <?php $sub = false; $s = ''; $activeMenuParent = false; $activeMenuSub = false; ?>
+        <div class="subnav subnav-hidden">
             <div class="subnav-title">
                 <a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span><?php echo $v['menu_name']; ?></span></a>
             </div>
@@ -221,12 +221,21 @@
             foreach ($menu as $vv) {
                 if ($vv['menu_parent'] == $v['menu_id']) {
                     $sub = true;
-                    $s .= '<li><a href="' . (($vv['menu_url'] != '') ? $this->serverUrl('/' . $vv['menu_url']) : '') . '">' . $vv['menu_name'] . '</a></li>';
+                    $menuUrlArray = explode('/', $vv['menu_url']);
+                    $menuUrlArray[1] = str_replace('-', '', $menuUrlArray[1]);
+                    if($menuUrlArray[1] == $controller_name) {
+                        $activeMenuParent = true;
+                        $activeMenuSub = true;
+                    } else {
+                        $activeMenuSub = false;
+                    }
+
+                    $s .= '<li><a ' . (($activeMenuSub == true) ? 'class="active"' : '') . ' href="' . (($vv['menu_url'] != '') ? $this->serverUrl('/' . $vv['menu_url']) : '') . '">' . $vv['menu_name'] . '</a></li>';
                 }
             }
             ?>
             <?php if ($sub == true) {
-                echo '<ul class="subnav-menu">' . $s . '</ul>';
+                echo '<ul class="subnav-menu" ' . (($activeMenuParent == false) ? 'style="display: none"' : '') . '>' . $s . '</ul>';
             } ?>
         </div>
                 <?php endif;?>

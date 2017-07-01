@@ -13,7 +13,7 @@
                     <thead>
                     <tr>
                         <th><input type="checkbox" class="checkbox-all" /></th>
-                        <th>Nhóm quản trị</th>
+                        <th>Menu</th>
                         <th>Trạng thái</th>
                         <th>Chức năng</th>
                     </tr>
@@ -21,18 +21,19 @@
                     <tbody>
                     <?php foreach ($records as $record) { ?>
                         <tr style="background: <?php echo $statusColor[$record['status']]; ?>">
-                            <td><input type="checkbox" class="checkbox-item" name="check_item[]" value="<?php echo $record['group_admin_id']; ?>" /></td>
-                            <td><strong><?php echo $this->escapeHtml($record['group_admin_name']); ?></strong></td>
-                            <td><?php echo $status[$record['group_admin_status']]; ?></td>
+                            <td><input type="checkbox" class="checkbox-item" name="check_item[]" value="<?php echo $record['group_navigation_id']; ?>" /></td>
+                            <td><strong><?php echo $this->escapeHtml($record['group_navigation_name']); ?></strong></td>
+                            <td><?php echo $status[$record['group_navigation_status']]; ?></td>
                             <td>
-                                <a href="<?php echo $this->url('admin/' . $module, array('action' => 'edit'), array('query' => array('id' => $record['group_admin_id']))); ?>">
+                                <a href="<?php echo $this->url('admin/' . $module, array('action' => 'edit'), array('query' => array('id' => $record['group_navigation_id']))); ?>">
                                     <i class="icon-edit"></i>
                                 </a>
-                                <a href="<?php echo $this->url('admin/' . $module, array('action' => 'acl'), array('query' => array('id' => $record['group_admin_id']))); ?>">
-                                    <i class="icon-user"></i>
+
+                                <a href="<?php echo $this->url('admin/navigation', array('action' => 'index'), array('query' => array('group_navigation_id' => $record['group_navigation_id']))); ?>">
+                                    <i class="icon-list"></i>
                                 </a>
                                 <a onclick="return confirmDelete()"
-                                   href="<?php echo $this->url('admin/' . $module, array('action' => 'delete'), array('query' => array('id' => $record['group_admin_id']))); ?>">
+                                   href="<?php echo $this->url('admin/' . $module, array('action' => 'delete'), array('query' => array('id' => $record['group_navigation_id']))); ?>">
                                     <i class="icon-remove"></i>
                                 </a>
                             </td>
@@ -40,7 +41,10 @@
                     <?php } ?>
                     </tbody>
                 </table>
-                <?php echo $this->paginationControl($records, 'sliding', 'admin/partial/paginator', array('url' => $this->url('admin/' . $module),)); ?>
+                <div class="form-actions no-margin-bottom" style="text-align:right;">
+                    <?php echo $this->paginationControl($records, 'sliding', 'admin/partial/paginator', array('url' => $this->url('admin/' . $module),)); ?>
+                </div>
+
             </div>
         </div>
     </div>

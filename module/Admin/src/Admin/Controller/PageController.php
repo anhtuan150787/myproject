@@ -68,7 +68,7 @@ class PageController extends AbstractActionController
                 $model->save($input);
 
                 $this->flashMessenger()->addMessage('Thêm thành công.');
-                $this->redirect()->toRoute('admin/page');
+                $this->redirect()->toRoute('admin/' . $this->module);
             }
         }
 

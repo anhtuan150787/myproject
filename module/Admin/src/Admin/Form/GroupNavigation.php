@@ -5,73 +5,24 @@ namespace Admin\Form;
 use \Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 
-class Navigation extends Form {
+class GroupNavigation extends Form {
     public function __construct($name = null) {
-        parent::__construct('navigation');
+        parent::__construct('group-navigation');
 
         $this->add([
-            'name' => 'navigation_name',
+            'name' => 'group_navigation_name',
             'type' => 'Text',
             'attributes' => [
                 'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Tên liên kết',
+                'label' => 'Menu',
                 'label_attributes' => ['class' => 'control-label col-lg-2'],
             ],
         ]);
 
         $this->add([
-            'name' => 'navigation_parent',
-            'type' => 'Zend\Form\Element\Select',
-            'attributes' => [
-                'class' => 'form-control',
-            ],
-            'options' => [
-                'label' => 'Menu cha',
-                'label_attributes' => ['class' => 'control-label col-lg-2'],
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'navigation_url',
-            'type' => 'Text',
-            'attributes' => [
-                'class' => 'form-control input-xlarge',
-                'placeholder' => 'Liên kết ngoài'
-            ],
-            'options' => [
-                'label' => 'Liên kết đến',
-                'label_attributes' => ['class' => 'control-label col-lg-2'],
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'navigation_url_select',
-            'type' => 'Zend\Form\Element\Select',
-            'attributes' => [
-                'class' => 'form-control chosen-select ',
-            ],
-            'options' => [
-                'label' => 'Url đã có',
-                'label_attributes' => ['class' => 'control-label col-lg-2'],
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'navigation_position',
-            'type' => 'Text',
-            'attributes' => [
-                'class' => 'form-control',
-            ],
-            'options' => [
-                'label' => 'Thứ tự',
-                'label_attributes' => ['class' => 'control-label col-lg-2'],
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'navigation_status',
+            'name' => 'group_navigation_status',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => [
                 'class' => 'form-control',
@@ -107,7 +58,7 @@ class Navigation extends Form {
     {
         $inputFilter = new InputFilter();
         $inputFilter->add([
-            'name' => 'navigation_name',
+            'name' => 'group_navigation_name',
             'required' => true,
             'filters' => [
                 ['name' => 'StripTags'],

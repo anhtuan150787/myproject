@@ -13,6 +13,7 @@ use Admin\Model\Color;
 use Admin\Model\Contact;
 use Admin\Model\EmailCustomer;
 use Admin\Model\GroupAcl;
+use Admin\Model\GroupNavigation;
 use Admin\Model\Navigation;
 use Admin\Model\News;
 use Admin\Model\NewsCategory;
@@ -162,6 +163,11 @@ class Module
                     $tableGateway = new TableGateway('contact', $dbAdapter);
                     return new Contact($tableGateway);
                 },
+                'GroupNavigationModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend/Db/Adapter/Adapter');
+                    $tableGateway = new TableGateway('group_navigation', $dbAdapter);
+                    return new GroupNavigation($tableGateway);
+                },
             ),
         );
     }
@@ -178,6 +184,12 @@ class Module
             $groupMenuModel = $e->getApplication()->getServiceManager()->get('GroupMenuModel');
             $cache = $e->getApplication()->getServiceManager()->get('cache');
 
+            $c = $e->getTarget();
+            $match = $e->getRouteMatch();
+            $controllerArr = explode('\\', $match->getParam('controller'));
+            $controller = strtolower($controllerArr[2]);
+            $module = strtolower($controllerArr[0]);
+
             if ($auth->hasIdentity()) {
                 $user = $auth->getIdentity();
 
@@ -192,6 +204,8 @@ class Module
                 $viewModel->menu = $menu;
                 $viewModel->user = $user;
             }
+
+            $viewModel->controller_name = $controller;
 
         });
     }

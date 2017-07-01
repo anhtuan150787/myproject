@@ -23,7 +23,7 @@ class NavigationController extends AbstractActionController
 
     private $module = 'navigation';
 
-    private $title = 'Menu top';
+    private $title = 'Menu';
 
     public function __construct()
     {
@@ -36,9 +36,20 @@ class NavigationController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('NavigationModel');
+        $group_navigation_id = $this->params()->fromQuery('group_navigation_id');
 
-        $records = $model->getNavigationList();
+        if (!$group_navigation_id || $group_navigation_id == '') {
+            $this->redirect()->toRoute('admin/group-navigation');
+        }
+
+        $model = $this->getServiceLocator()->get('NavigationModel');
+        $groupNavigationModel = $this->getServiceLocator()->get('GroupNavigationModel');
+
+
+        $records = $model->getNavigationList($group_navigation_id);
+
+        $groupNavigation = $groupNavigationModel->fetchRow($group_navigation_id);
+        $this->title = $this->title . ' / ' . $groupNavigation['group_navigation_name'];
 
         $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'title' => $this->title]);
 
@@ -54,10 +65,16 @@ class NavigationController extends AbstractActionController
         $form = new Navigation();
         $form->init();
 
+        $group_navigation_id = $this->params()->fromQuery('group_navigation_id');
+        if (!$group_navigation_id || $group_navigation_id == '') {
+            $this->redirect()->toRoute('admin/group-navigation');
+        }
+
         $model = $this->getServiceLocator()->get('NavigationModel');
         $productCategoryModel = $this->getServiceLocator()->get('ProductCategoryModel');
         $newsCategoryModel = $this->getServiceLocator()->get('NewsCategoryModel');
         $pageModel = $this->getServiceLocator()->get('PageModel');
+        $groupNavigationModel = $this->getServiceLocator()->get('GroupNavigationModel');
 
         if ($this->getRequest()->isPost()) {
 
@@ -71,14 +88,15 @@ class NavigationController extends AbstractActionController
                 $input['navigation_url']           = $this->params()->fromPost('navigation_url');
                 $input['navigation_url_select']    = $this->params()->fromPost('navigation_url_select');
                 $input['navigation_position']      = $this->params()->fromPost('navigation_position');
+                $input['group_navigation_id']      = $group_navigation_id;
                 $model->save($input);
 
                 $this->flashMessenger()->addMessage('Thêm thành công.');
-                $this->redirect()->toRoute('admin/' . $this->module);
+                $this->redirect()->toRoute('admin/navigation', array('action' => 'index'), array('query' => array('group_navigation_id' => $group_navigation_id)));
             }
         }
 
-        $navigationRoot = $model->getNavigationList();
+        $navigationRoot = $model->getNavigationList($group_navigation_id);
         $optionsNavigation = array(0 => '--- Gốc ---');
         foreach ($navigationRoot as $k => $v) {
             $optionsNavigation[$v['navigation_id']] = str_repeat('__', $v['navigation_level']) . ' ' . $v['navigation_name'];
@@ -86,7 +104,7 @@ class NavigationController extends AbstractActionController
 
         $navigationUrlSelect = [];
 
-        $navigationUrlSelectData = array('' => '--- Chọn Url đã có ---');
+        $navigationUrlSelectData = array('' => '--- Chọn liên kết đã có ---');
 
         $productCategory = $productCategoryModel->getProductCategoryList();
         foreach($productCategory as $v) {
@@ -103,13 +121,17 @@ class NavigationController extends AbstractActionController
             $navigationUrlSelectData[trim($url('home-page', array('name' => $functions->formatTitle($v['page_title']), 'id' => $v['page_id'])), '/')] = '[Trang nội dung] - ' . $v['page_title'];
         }
 
+        $groupNavigation = $groupNavigationModel->fetchRow($group_navigation_id);
+
         $form->get('navigation_parent')->setOptions(array('value_options' => $optionsNavigation));
         $form->get('navigation_status')->setOptions(array('value_options' => $this->status));
         $form->get('navigation_url_select')->setOptions(array('value_options' => $navigationUrlSelectData));
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $this->title = $this->title . ' / ' . $groupNavigation['group_navigation_name'];
+
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title, 'groupNavigation' => $groupNavigation]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -124,10 +146,16 @@ class NavigationController extends AbstractActionController
         $form = new Navigation();
         $form->init();
 
+        $group_navigation_id = $this->params()->fromQuery('group_navigation_id');
+        if (!$group_navigation_id || $group_navigation_id == '') {
+            $this->redirect()->toRoute('admin/group-navigation');
+        }
+
         $model = $this->getServiceLocator()->get('NavigationModel');
         $productCategoryModel = $this->getServiceLocator()->get('ProductCategoryModel');
         $newsCategoryModel = $this->getServiceLocator()->get('NewsCategoryModel');
         $pageModel = $this->getServiceLocator()->get('PageModel');
+        $groupNavigationModel = $this->getServiceLocator()->get('GroupNavigationModel');
 
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
@@ -147,13 +175,13 @@ class NavigationController extends AbstractActionController
                 $model->save($input, $id);
 
                 $this->flashMessenger()->addMessage('Cập nhật thành công.');
-                $this->redirect()->toRoute('admin/' . $this->module);
+                $this->redirect()->toRoute('admin/navigation', array('action' => 'index'), array('query' => array('group_navigation_id' => $group_navigation_id)));
             }
         }
 
         $form->bind($record);
 
-        $navigationRoot = $model->getNavigationList();
+        $navigationRoot = $model->getNavigationList($group_navigation_id);
         $optionsNavigation = array(0 => '--- Gốc ---');
         foreach ($navigationRoot as $k => $v) {
             $optionsNavigation[$v['navigation_id']] = str_repeat('__', $v['navigation_level']) . ' ' . $v['navigation_name'];
@@ -161,7 +189,7 @@ class NavigationController extends AbstractActionController
 
         $navigationUrlSelect = [];
 
-        $navigationUrlSelectData = array('' => '--- Chọn Url đã có ---');
+        $navigationUrlSelectData = array('' => '--- Chọn liên kết đã có ---');
 
         $productCategory = $productCategoryModel->getProductCategoryList();
         foreach($productCategory as $v) {
@@ -178,6 +206,8 @@ class NavigationController extends AbstractActionController
             $navigationUrlSelectData[trim($url('home-page', array('name' => $functions->formatTitle($v['page_title']), 'id' => $v['page_id'])), '/')] = '[Trang nội dung] - ' . $v['page_title'];
         }
 
+        $groupNavigation = $groupNavigationModel->fetchRow($group_navigation_id);
+
         $form->get('navigation_parent')->setOptions(array('value_options' => $optionsNavigation));
         $form->get('navigation_status')->setOptions(array('value_options' => $this->status));
         $form->get('navigation_url_select')->setOptions(array('value_options' => $navigationUrlSelectData));
@@ -186,7 +216,9 @@ class NavigationController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $this->title = $this->title . ' / ' . $groupNavigation['group_navigation_name'];
+
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title, 'groupNavigation' => $groupNavigation]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -194,10 +226,17 @@ class NavigationController extends AbstractActionController
 
     public function deleteAction()
     {
+
         if ($this->getRequest()->isPost()) {
             $id = $this->params()->fromPost('check_item');
+            $group_navigation_id = $this->params()->fromPost('group_navigation_id');
         } else {
             $id[] = $this->params()->fromQuery('id');
+            $group_navigation_id = $this->params()->fromQuery('group_navigation_id');
+        }
+
+        if (!$group_navigation_id || $group_navigation_id == '') {
+            $this->redirect()->toRoute('admin/group-navigation');
         }
 
         $model  = $this->getServiceLocator()->get('NavigationModel');
@@ -210,7 +249,7 @@ class NavigationController extends AbstractActionController
         }
 
         $this->flashMessenger()->addMessage('Xóa thành công');
-        $this->redirect()->toRoute('admin/' . $this->module);
+        $this->redirect()->toRoute('admin/navigation', array('action' => 'index'), array('query' => array('group_navigation_id' => $group_navigation_id)));
 
         return $this->response();
     }

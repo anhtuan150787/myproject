@@ -24,7 +24,7 @@ class GroupAdminController extends AbstractActionController
 
     private $module = 'group-admin';
 
-    private $title = 'Nhóm admin';
+    private $title = 'Nhóm quản trị';
 
     public function __construct()
     {

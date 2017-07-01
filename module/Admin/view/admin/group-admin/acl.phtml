@@ -4,7 +4,7 @@
     <div class="span12">
         <div class="box">
             <div class="box-title">
-                <h3><i class="icon-edit"></i> <?php echo $groupInfo['group_admin_name'];?></h3>
+                <h3><i class="icon-edit"></i> Nhóm quản trị: <strong><?php echo $groupInfo['group_admin_name'];?></strong></h3>
             </div>
             <div class="box-content">
                 <?php
@@ -14,12 +14,12 @@
                 ?>
 
                 <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-8">
+                    <div class="col-lg-offset-2 col-lg-8" style="overflow: scroll; height: 500px; float: left; width: 50%">
                         <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
                             <thead>
                             <tr>
                                 <th><input type="checkbox" class="checkbox-all-privilege" /></th>
-                                <th>Acl name</th>
+                                <th>Quyền</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -41,8 +41,8 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-8">
+                <div class="form-group" style="margin-left: 10px">
+                    <div class="col-lg-offset-2 col-lg-8" style="overflow: scroll; height: 500px; float: left; width: 50%">
                         <table id="dataTable"
                                class="table table-bordered table-condensed table-hover table-striped">
                             <thead>
@@ -62,7 +62,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="form-actions">
+                <div class="form-actions" style="float: right">
                     <?php echo $this->formSubmit($form->get('submit')); ?>
                     <?php echo $this->formHidden($form->get('csrf')); ?>
                 </div>

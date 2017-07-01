@@ -1791,11 +1791,11 @@ a:focus {
 
 #left {
     width: 200px;
-    position: absolute;
+    position: fixed;
     left: 0;
     background: #eee;
-    /*height: 100%;*/
-    top: 0px;;
+    height: 100%;
+    top: 40px;
 }
 
 #left.sidebar-fixed {
@@ -1880,6 +1880,11 @@ a:focus {
     color: #222
 }
 
+#left .subnav .subnav-menu > li > a.active {
+    background: #ddd;
+    color: #222
+}
+
 #left .subnav .subnav-menu > li.active > a {
     background: #ccc;
     color: #222;
@@ -1892,8 +1897,9 @@ a:focus {
 
 #navigation {
     background: #368ee0;
-    position: relative;
-    z-index: 100
+    position: fixed;
+    z-index: 100;
+    width: 100%;
 }
 
 #navigation.navbar-fixed-top {
@@ -2381,7 +2387,7 @@ a:focus {
 
 #main .page-header {
     border: 0;
-    margin: 15px 0 0 0;
+    margin: 50px 0 0 0;
     padding: 0 3px;
     *zoom: 1
 }
@@ -5140,3 +5146,4 @@ div.captcha ul.error-message {display: block; padding-left: 20px; float: left}
 div.captcha img {float: left; cursor: pointer}
 input.captcha-input {float: right; width: 180px; padding: 8px 12px; height: 35px}
 form {margin-bottom: 0 !important;}
+.scroll-div {overflow: scroll; width: 100%; max-height: 500px; margin-bottom: 10px;}

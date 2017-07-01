@@ -24,7 +24,7 @@ class AdminController extends AbstractActionController
 
     private $module = 'admin';
 
-    private $title = 'Admin';
+    private $title = 'Tài khoản quản trị';
 
     public function __construct()
     {

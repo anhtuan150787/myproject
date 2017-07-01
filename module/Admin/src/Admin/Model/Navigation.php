@@ -8,9 +8,16 @@ class Navigation {
         $this->tableGateway = $tableGateway;
     }
 
-    public function getNavigationList($parent = 0, $level = -1, $data = array())
+    public function getNavigationList($group_navigation_id = '', $parent = 0, $level = -1, $data = array())
     {
-        $sql = 'SELECT * FROM navigation WHERE navigation_parent = ' . $parent . ' ORDER BY navigation_position ASC';
+        $sql = 'SELECT *
+                FROM navigation
+                LEFT JOIN group_navigation ON navigation.group_navigation_id=group_navigation.group_navigation_id
+                WHERE navigation_parent = ' . $parent;
+        if ($group_navigation_id != null) {
+            $sql .= ' AND navigation.group_navigation_id = ' . $group_navigation_id;
+        }
+        $sql .= ' ORDER BY navigation_position ASC';
         $statement = $this->tableGateway->getAdapter()->query($sql);
         $result = $statement->execute();
 
@@ -22,13 +29,20 @@ class Navigation {
             $data[$navigation_id] = (array) $row;
             $data[$navigation_id]['navigation_level'] = $level;
 
-            $sql = 'SELECT * FROM navigation WHERE navigation_parent = ' . $navigation_id . ' ORDER BY navigation_position ASC';
+            $sql = 'SELECT *
+                    FROM navigation
+                    LEFT JOIN group_navigation ON navigation.group_navigation_id=group_navigation.group_navigation_id
+                    WHERE navigation_parent = ' . $navigation_id;
+            if ($group_navigation_id != null) {
+                $sql .= ' AND navigation.group_navigation_id = ' . $group_navigation_id;
+            }
+            $sql .= ' ORDER BY navigation_position ASC';
 
             $statement = $this->tableGateway->getAdapter()->query($sql);
             $result = $statement->execute();
 
             if ($result->count() > 0) {
-                $data = $this->getNavigationList($navigation_id, $level, $data);
+                $data = $this->getNavigationList($group_navigation_id, $navigation_id, $level, $data);
             }
         }
         return $data;

@@ -16,7 +16,7 @@ class GroupAdmin extends Form {
                 'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Tên group',
+                'label' => "Tên nhóm quản trị",
                 'label_attributes' => ['class' => 'control-label col-lg-2'],
             ],
         ]);
