@@ -23,8 +23,6 @@ class NavigationController extends AbstractActionController
 
     private $module = 'navigation';
 
-    private $title = 'Menu';
-
     public function __construct()
     {
         $this->status = [
@@ -49,9 +47,8 @@ class NavigationController extends AbstractActionController
         $records = $model->getNavigationList($group_navigation_id);
 
         $groupNavigation = $groupNavigationModel->fetchRow($group_navigation_id);
-        $this->title = $this->title . ' / ' . $groupNavigation['group_navigation_name'];
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'groupNavigation' => $groupNavigation]);
 
         return $view;
     }
@@ -129,9 +126,7 @@ class NavigationController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $this->title = $this->title . ' / ' . $groupNavigation['group_navigation_name'];
-
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title, 'groupNavigation' => $groupNavigation]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'groupNavigation' => $groupNavigation]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -216,9 +211,7 @@ class NavigationController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $this->title = $this->title . ' / ' . $groupNavigation['group_navigation_name'];
-
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title, 'groupNavigation' => $groupNavigation]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'groupNavigation' => $groupNavigation]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;

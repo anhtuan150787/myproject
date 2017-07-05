@@ -28,7 +28,7 @@
                                 <a href="<?php echo $this->url('admin/' . $module, array('action' => 'edit'), array('query' => array('id' => $record['news_category_id']))); ?>">
                                     <i class="icon-edit"></i>
                                 </a>
-                                <a onclick="return confirmDelete()"
+                                <a onclick="return confirmDeleteMessage('Khi bạn xóa Danh mục này, các bài viết thuộc Danh mục cũng sẽ được xóa!')"
                                    href="<?php echo $this->url('admin/' . $module, array('action' => 'delete'), array('query' => array('id' => $record['news_category_id']))); ?>">
                                     <i class="icon-remove"></i>
                                 </a>

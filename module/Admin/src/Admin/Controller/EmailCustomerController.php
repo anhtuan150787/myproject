@@ -20,8 +20,6 @@ class EmailCustomerController extends AbstractActionController
 
     private $module = 'email-customer';
 
-    private $title = 'Email đăng ký nhận tin';
-
     public function indexAction()
     {
         $view = new ViewModel();
@@ -32,7 +30,7 @@ class EmailCustomerController extends AbstractActionController
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
         $records->setItemCountPerPage(20);
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
 
         return $view;
     }

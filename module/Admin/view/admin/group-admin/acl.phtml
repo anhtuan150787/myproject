@@ -1,5 +1,3 @@
-<?php echo $this->partial('admin/partial/title', array('moduleTitle' => 'Phân quyền')); ?>
-
 <div class="row-fluid">
     <div class="span12">
         <div class="box">
@@ -63,6 +61,7 @@
                     </div>
                 </div>
                 <div class="form-actions" style="float: right">
+                    <input type="button" onclick="location.href='<?php echo $this->url('admin/' . $module);?>'" name="back" id="back" class="btn btn-default" value="Quay lại">
                     <?php echo $this->formSubmit($form->get('submit')); ?>
                     <?php echo $this->formHidden($form->get('csrf')); ?>
                 </div>

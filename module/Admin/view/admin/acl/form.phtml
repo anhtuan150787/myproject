@@ -61,6 +61,7 @@
                 </div>
 
                 <div class="form-actions">
+                    <input type="button" onclick="location.href='<?php echo $this->url('admin/' . $module);?>'" name="back" id="back" class="btn btn-default" value="Quay lại">
                     <?php echo $this->formSubmit($form->get('submit')); ?>
                     <?php echo $this->formHidden($form->get('csrf')); ?>
                 </div>

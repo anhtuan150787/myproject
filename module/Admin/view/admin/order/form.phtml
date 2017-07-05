@@ -44,8 +44,6 @@
                     <thead>
                     <tr>
                         <th>Sản phẩm</th>
-                        <th>Màu</th>
-                        <th>Size</th>
                         <th>Mã</th>
                         <th>Đơn giá (VND)</th>
                         <th>Số lượng</th>
@@ -61,12 +59,6 @@
                                      style="float: left; width: 75px; height: 75px">&nbsp;&nbsp;<?php echo $this->escapeHtml($v['product_name']); ?>
                             </td>
                             <td>
-                                <?php echo $v['color']; ?>
-                            </td>
-                            <td>
-                                <?php echo $v['size']; ?>
-                            </td>
-                            <td>
                                 <?php echo $v['product_code']; ?>
                             </td>
                             <td style="width: 150px;"
@@ -77,15 +69,15 @@
                         </tr>
                     <?php } ?>
                     <tr>
-                        <td colspan="6" class="text-right" style="text-align: right">Tổng tiền (VND)</td>
+                        <td colspan="4" class="text-right" style="text-align: right">Tổng tiền (VND)</td>
                         <td colspan="1" class="price-order"><?php echo $this->currency($order['amount']); ?></td>
                     </tr>
                     <tr>
-                        <td colspan="6" class="text-right" style="text-align: right">Phí vận chuyển (VND)</td>
+                        <td colspan="4" class="text-right" style="text-align: right">Phí vận chuyển (VND)</td>
                         <td colspan="1" class="price-order"><?php echo $this->currency($order['fee']); ?></td>
                     </tr>
                     <tr>
-                        <td colspan="6" class="text-right" style="text-align: right">Tổng cộng (VND)</td>
+                        <td colspan="4" class="text-right" style="text-align: right">Tổng cộng (VND)</td>
                         <td colspan="1" class="price-order"><?php echo $this->currency($order['amountTotal']); ?></td>
                     </tr>
                     </tbody>
@@ -102,6 +94,7 @@
                 </div>
 
                 <div class="form-actions">
+                    <input type="button" onclick="location.href='<?php echo $this->url('admin/' . $module);?>'" name="back" id="back" class="btn btn-default" value="Quay lại">
                     <?php echo $this->formSubmit($form->get('submit')); ?>
                     <?php echo $this->formHidden($form->get('csrf')); ?>
                 </div>

@@ -2,25 +2,33 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <div class="box">
+        <div class="box box-bordered box-color">
             <div class="box-title">
                 <h3><i class="icon-edit"></i> Form</h3>
             </div>
-            <div class="box-content">
+            <div class="box-content nopadding">
                 <?php
-                $form->setAttributes(['action' => '', 'class' => 'form-horizontal', 'id' => 'frm']);
+                $form->setAttributes(['action' => '', 'class' => 'form-horizontal form-bordered', 'id' => 'frm']);
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 ?>
+
                     <div class="control-group">
-                        <label for="textfield" class="control-label"><?php echo $this->formLabel($form->get('template_name')); ?></label>
+                        <label class="control-label col-lg-2" for="group_navigation_id">Giao diện</label>
+                        <div class="controls">
+                            <strong><?php echo $this->escapeHtml($groupTemplate['group_template_name']);?></strong>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <?php echo $this->formLabel($form->get('template_name')); ?>
                         <div class="controls">
                             <?php echo $this->formElement($form->get('template_name')); ?>
                             <?php echo $this->formElementErrors($form->get('template_name'), array('class' => 'error-message')); ?>
                         </div>
                     </div>
 
-                    <?php if ($record['template_type'] == 'picture') {?>
+
                         <div class="control-group">
                             <?php echo $this->formLabel($form->get('template_picture')); ?>
                             <div class="controls">
@@ -48,26 +56,35 @@
                         </div>
 
                         <div class="control-group">
-                            <label for="textfield" class="control-label"><?php echo $this->formLabel($form->get('template_url')); ?></label>
+                            <?php echo $this->formLabel($form->get('template_url')); ?>
                             <div class="controls">
                                 <?php echo $this->formElement($form->get('template_url')); ?>
                                 <?php echo $this->formElementErrors($form->get('template_url'), array('class' => 'error-message')); ?>
                             </div>
                         </div>
 
-                    <?php } elseif ($record['template_type'] == 'content') {?>
+
 
                     <div class="control-group">
-                        <label for="textfield" class="control-label"><?php echo $this->formLabel($form->get('template_content')); ?></label>
+                        <?php echo $this->formLabel($form->get('template_content')); ?>
                         <div class="controls">
                             <?php echo $this->formElement($form->get('template_content')); ?>
                             <?php echo $this->formElementErrors($form->get('template_content'), array('class' => 'error-message')); ?>
                         </div>
                     </div>
 
-                    <?php }?>
+
+
+                    <div class="control-group">
+                        <?php echo $this->formLabel($form->get('template_status')); ?>
+                        <div class="controls">
+                            <?php echo $this->formElement($form->get('template_status')); ?>
+                            <?php echo $this->formElementErrors($form->get('template_status'), array('class' => 'error-message')); ?>
+                        </div>
+                    </div>
 
                     <div class="form-actions">
+                        <input type="button" onclick="location.href='<?php echo $this->url('admin/template', array('action' => 'index'), array('query' => array('group_template_id' => $_GET['group_template_id'])));?>'" name="back" id="back" class="btn btn-default" value="Quay lại">
                         <?php echo $this->formSubmit($form->get('submit')); ?>
                         <?php echo $this->formHidden($form->get('csrf')); ?>
                     </div>

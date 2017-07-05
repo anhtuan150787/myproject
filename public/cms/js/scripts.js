@@ -37,3 +37,9 @@ function confirmDelete() {
         return false;
     }
 }
+
+function confirmDeleteMessage(message) {
+    if (!confirm(message)) {
+        return false;
+    }
+}

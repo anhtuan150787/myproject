@@ -2413,7 +2413,8 @@ a:focus {
 
 #main .breadcrumbs {
     *zoom: 1;
-    background: #f4f4f4
+    background: #f4f4f4;
+    margin: 10px 0;
 }
 
 #main .breadcrumbs:after {

@@ -22,8 +22,6 @@ class ProductCategoryController extends AbstractActionController
 
     private $module = 'product-category';
 
-    private $title = 'Danh mục sản phẩm';
-
     public function __construct()
     {
         $this->status = [
@@ -39,7 +37,7 @@ class ProductCategoryController extends AbstractActionController
 
         $records = $model->getProductCategoryList();
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
 
         return $view;
     }
@@ -79,7 +77,7 @@ class ProductCategoryController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -125,7 +123,7 @@ class ProductCategoryController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'record' => $record, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'record' => $record, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;

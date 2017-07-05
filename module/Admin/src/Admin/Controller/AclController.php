@@ -22,8 +22,6 @@ class AclController extends AbstractActionController
 
     private $module = 'acl';
 
-    private $title = 'Quyền truy cập';
-
     public function __construct()
     {
         $this->status = [
@@ -45,7 +43,7 @@ class AclController extends AbstractActionController
             $records = $cache->get('admin_acl');
         }
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
 
         return $view;
     }
@@ -91,7 +89,7 @@ class AclController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -143,7 +141,7 @@ class AclController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;

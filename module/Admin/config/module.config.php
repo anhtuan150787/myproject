@@ -345,6 +345,22 @@ return array(
                         ),
                     ),
 
+                    'group-template' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/group-template[/:action]',
+                            'constraints' => [
+                                'controller' => 'Admin\Controller\GroupTemplate',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'Admin\Controller',
+                                'controller' => 'Admin\Controller\GroupTemplate',
+                                'action' => 'index',
+                            ],
+                        ),
+                    ),
+
                 ),
 
             ],
@@ -378,6 +394,7 @@ return array(
             'Admin\Controller\Contact' => 'Admin\Controller\ContactController',
             'Admin\Controller\PostGet' => 'Admin\Controller\PostGetController',
             'Admin\Controller\GroupNavigation' => 'Admin\Controller\GroupNavigationController',
+            'Admin\Controller\GroupTemplate' => 'Admin\Controller\GroupTemplateController',
         ),
     ),
 

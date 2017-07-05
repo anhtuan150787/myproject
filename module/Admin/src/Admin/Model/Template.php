@@ -13,10 +13,21 @@ class Template {
         $this->tableGateway = $tableGateway;
     }
 
-    public function fetchAll()
+    public function fetchAll($group_template_id)
     {
         $select = new Select('template');
-        $select->order('template_id DESC');
+        $select->join('group_template', 'template.group_template_id=group_template.group_template_id','group_template_name', 'left');
+        $where = '';
+        $predicate = new  \Zend\Db\Sql\Where();
+
+        $where = $predicate->isNotNull('template_id');
+
+        if ($group_template_id && $group_template_id != '') {
+            $where->and;
+            $where = $predicate->equalTo('template.group_template_id', $group_template_id);
+        }
+        $select->where($where);
+        $select->order('template.template_id DESC');
 
         $paginatorAdapter   = new DbSelect($select, $this->tableGateway->getAdapter());
         $result             = new Paginator($paginatorAdapter);
@@ -27,6 +38,15 @@ class Template {
     public function getAll()
     {
         $sql = 'SELECT * FROM template';
+        $statement = $this->tableGateway->getAdapter()->query($sql);
+        $result = $statement->execute();
+
+        return $result;
+    }
+
+    public function fetchAllWhereGroup($group_template_id)
+    {
+        $sql = 'SELECT * FROM template WHERE group_template_id = ' . $group_template_id;
         $statement = $this->tableGateway->getAdapter()->query($sql);
         $result = $statement->execute();
 

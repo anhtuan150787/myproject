@@ -32,8 +32,7 @@
                                 <a href="<?php echo $this->url('admin/navigation', array('action' => 'index'), array('query' => array('group_navigation_id' => $record['group_navigation_id']))); ?>">
                                     <i class="icon-list"></i>
                                 </a>
-                                <a onclick="return confirmDelete()"
-                                   href="<?php echo $this->url('admin/' . $module, array('action' => 'delete'), array('query' => array('id' => $record['group_navigation_id']))); ?>">
+                                <a onclick="return confirmDeleteMessage('Khi bạn xóa Menu này, các liên kết thuộc Menu cũng sẽ được xóa!')" href="<?php echo $this->url('admin/' . $module, array('action' => 'delete'), array('query' => array('id' => $record['group_navigation_id']))); ?>">
                                     <i class="icon-remove"></i>
                                 </a>
                             </td>

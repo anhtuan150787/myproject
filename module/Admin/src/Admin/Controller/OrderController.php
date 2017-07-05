@@ -23,8 +23,6 @@ class OrderController extends AbstractActionController
 
     private $module = 'order';
 
-    private $title = 'Quản lý đơn hàng';
-
     public function __construct()
     {
         $this->status = [
@@ -63,7 +61,7 @@ class OrderController extends AbstractActionController
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
         $records->setItemCountPerPage(20);
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'search' => $search, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'search' => $search, 'module' => $this->module]);
 
         return $view;
     }
@@ -116,7 +114,7 @@ class OrderController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'record' => $record, 'order' => $order, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'record' => $record, 'order' => $order, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;

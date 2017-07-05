@@ -22,8 +22,6 @@ class MenuController extends AbstractActionController
 
     private $module = 'menu';
 
-    private $title = 'Menu';
-
     public function __construct()
     {
         $this->status = [
@@ -45,7 +43,7 @@ class MenuController extends AbstractActionController
             $records = $cache->get('admin_menu');
         }
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
 
         return $view;
     }
@@ -79,7 +77,7 @@ class MenuController extends AbstractActionController
             }
         }
 
-        $menuRoot = $model->getMenuRoot();
+        $menuRoot = $model->getMenuList();
         $optionsMenuRoot = array(0 => '--- Gốc ---');
         foreach ($menuRoot as $k => $v) {
             $optionsMenuRoot[$v['menu_id']] = str_repeat('__', $v['menu_level']) . ' ' . $v['menu_name'];
@@ -89,7 +87,7 @@ class MenuController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -128,7 +126,7 @@ class MenuController extends AbstractActionController
 
         $form->bind($record);
 
-        $menuRoot = $model->getMenuRoot();
+        $menuRoot = $model->getMenuList();
         $optionsMenuRoot = array(0 => '--- Gốc ---');
         foreach ($menuRoot as $k => $v) {
             $optionsMenuRoot[$v['menu_id']] = str_repeat('__', $v['menu_level']) . ' ' . $v['menu_name'];
@@ -139,7 +137,7 @@ class MenuController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;

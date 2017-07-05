@@ -20,8 +20,6 @@ class WebsiteController extends AbstractActionController
 
     private $module = 'website';
 
-    private $title = 'Thông tin Website';
-
     public function editAction()
     {
         $actionTitle = 'Cập nhật';
@@ -79,7 +77,7 @@ class WebsiteController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'record' => $record, 'actionTitle' => $actionTitle, 'message' => $message, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'record' => $record, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;

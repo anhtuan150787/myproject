@@ -24,8 +24,6 @@ class GroupAdminController extends AbstractActionController
 
     private $module = 'group-admin';
 
-    private $title = 'Nhóm quản trị';
-
     public function __construct()
     {
         $this->status = [
@@ -43,7 +41,7 @@ class GroupAdminController extends AbstractActionController
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
         $records->setItemCountPerPage(20);
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
 
         return $view;
     }
@@ -75,7 +73,7 @@ class GroupAdminController extends AbstractActionController
         $form->get('group_admin_status')->setOptions(array('value_options' => $this->status));
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -112,7 +110,7 @@ class GroupAdminController extends AbstractActionController
         $form->get('group_admin_status')->setOptions(array('value_options' => $this->status));
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -233,7 +231,8 @@ class GroupAdminController extends AbstractActionController
             'groupAcls' => $groupAcls,
             'acls' => $acls,
             'form' => $form,
-            'groupInfo' => $groupInfo
+            'groupInfo' => $groupInfo,
+            'module' => $this->module
         ]);
 
         return $view;

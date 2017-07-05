@@ -21,8 +21,6 @@ class GroupNavigationController extends AbstractActionController
 
     private $module = 'group-navigation';
 
-    private $title = 'Menu';
-
     public function __construct()
     {
         $this->status = [
@@ -42,7 +40,7 @@ class GroupNavigationController extends AbstractActionController
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
         $records->setItemCountPerPage(20);
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
 
         return $view;
     }
@@ -74,7 +72,7 @@ class GroupNavigationController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -112,7 +110,7 @@ class GroupNavigationController extends AbstractActionController
 
         $data['form'] = $form;
 
-        $view->setVariables(['form' => $form, 'record' => $record, 'actionTitle' => $actionTitle, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['form' => $form, 'record' => $record, 'actionTitle' => $actionTitle, 'module' => $this->module]);
         $view->setTemplate('admin/' . $this->module . '/form.phtml');
 
         return $view;
@@ -127,9 +125,16 @@ class GroupNavigationController extends AbstractActionController
         }
 
         $model  = $this->getServiceLocator()->get('GroupNavigationModel');
+        $navigationModel  = $this->getServiceLocator()->get('NavigationModel');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {
+
+                $navigations = $navigationModel->getNavigationList($v);
+                foreach($navigations as $vv) {
+                    $navigationModel->delete($vv['navigation_id']);
+                }
+
                 $model->delete($v);
             }
         }

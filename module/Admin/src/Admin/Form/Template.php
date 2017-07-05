@@ -57,6 +57,17 @@ class Template extends Form {
             ],
         ]);
 
+        $this->add([
+            'name' => 'template_status',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => [
+                'class' => 'form-control',
+            ],
+            'options' => [
+                'label' => 'Trạng thái',
+                'label_attributes' => ['class' => 'control-label col-lg-2'],
+            ],
+        ]);
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Csrf',

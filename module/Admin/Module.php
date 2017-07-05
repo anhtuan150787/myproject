@@ -14,6 +14,7 @@ use Admin\Model\Contact;
 use Admin\Model\EmailCustomer;
 use Admin\Model\GroupAcl;
 use Admin\Model\GroupNavigation;
+use Admin\Model\GroupTemplate;
 use Admin\Model\Navigation;
 use Admin\Model\News;
 use Admin\Model\NewsCategory;
@@ -168,6 +169,11 @@ class Module
                     $tableGateway = new TableGateway('group_navigation', $dbAdapter);
                     return new GroupNavigation($tableGateway);
                 },
+                'GroupTemplateModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend/Db/Adapter/Adapter');
+                    $tableGateway = new TableGateway('group_template', $dbAdapter);
+                    return new GroupTemplate($tableGateway);
+                },
             ),
         );
     }
@@ -193,7 +199,9 @@ class Module
             if ($auth->hasIdentity()) {
                 $user = $auth->getIdentity();
 
-                //Menu
+                /*
+                 * Menu
+                 */
                 if (!$cache->checkItem('permission_menu_' . $user->group_admin_id)) {
                     $menu = $groupMenuModel->getGroupMenu($user->group_admin_id);
                     $cache->set('permission_menu_' . $user->group_admin_id, $menu);
@@ -201,8 +209,74 @@ class Module
                     $menu = $cache->get('permission_menu_' . $user->group_admin_id);
                 }
 
+                /*
+                 * Get module title
+                 */
+                foreach ($menu as $v) {
+                    if (str_replace('-', '', $v['menu_url']) == $module . '/' . $controller) {
+                        $moduleCurrentTitle = $v['menu_name'];
+                        $moduleCurrentUrl = $v['menu_url'];
+                    }
+                }
+
+                $serverUrl = $e->getApplication()->getServiceManager()->get('ViewHelperManager')->get('serverUrl')->__invoke();
+
+                /*
+                 * Breadcrumb
+                 */
+                $breadcrumbsHtml = '<div class="breadcrumbs"><ul>';
+                $breadcrumbsHtml .= '<li><a href="' . $serverUrl . '/' . $module . '">' . ucfirst($module) . '</a></li>';
+
+                foreach ($menu as $v) {
+                    if ($v['menu_parent'] == 0) {
+                        foreach ($menu as $vv) {
+
+                                if ($vv['menu_parent'] == $v['menu_id']) {
+
+                                    if (str_replace('-', '', $vv['menu_url']) == $module . '/' . $controller) {
+                                        $breadcrumbModuleParentName = $v['menu_name'];
+
+                                        $breadcrumbModuleLevel2Name = $moduleCurrentTitle;
+                                        $breadcrumbModuleLevel2Url = $vv['menu_url'];
+
+                                        break;
+
+                                    } else {
+
+                                        foreach ($menu as $vvv) {
+                                            if ($vvv['menu_parent'] == $vv['menu_id']) {
+
+                                                if (str_replace('-', '', $vvv['menu_url']) == $module . '/' . $controller) {
+                                                    $breadcrumbModuleParentName = $v['menu_name'];
+
+                                                    $breadcrumbModuleLevel2Name = $vv['menu_name'];
+                                                    $breadcrumbModuleLevel2Url = $vv['menu_url'];
+
+                                                    $breadcrumbModuleLevel3Name = $vvv['menu_name'];
+                                                    $breadcrumbModuleLevel3Url = $vvv['menu_url'];
+
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                        }
+                    }
+                }
+
+                $breadcrumbsHtml .= '<li><i class="icon-angle-right"></i><a href="#">' . $breadcrumbModuleParentName . '</a></li>';
+                $breadcrumbsHtml .= '<li><i class="icon-angle-right"></i><a href="' . $serverUrl . '/' . $breadcrumbModuleLevel2Url . '">' . $breadcrumbModuleLevel2Name . '</a></li>';
+                if ($breadcrumbModuleLevel3Name != '') {
+                    $breadcrumbsHtml .= '<li><i class="icon-angle-right"></i><a href="' . $serverUrl . '/' . $breadcrumbModuleLevel3Url . '">' . $breadcrumbModuleLevel3Name . '</a></li>';
+                }
+                $breadcrumbsHtml .= '</ul><div class="close-bread"><a href="#"><i class="icon-remove"></i></a></div></div>';
+
                 $viewModel->menu = $menu;
                 $viewModel->user = $user;
+                $viewModel->moduleCurrentTitle = $moduleCurrentTitle;
+                $viewModel->breadcrumbsHtml = $breadcrumbsHtml;
             }
 
             $viewModel->controller_name = $controller;

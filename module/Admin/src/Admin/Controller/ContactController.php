@@ -20,8 +20,6 @@ class ContactController extends AbstractActionController
 
     private $module = 'contact';
 
-    private $title = 'Liên hệ khách hàng';
-
     public function indexAction()
     {
         $view = new ViewModel();
@@ -32,7 +30,7 @@ class ContactController extends AbstractActionController
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
         $records->setItemCountPerPage(20);
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'title' => $this->title]);
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
 
         return $view;
     }

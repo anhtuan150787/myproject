@@ -64,7 +64,7 @@ class Website extends Form {
                 'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Icon',
+                'label' => 'Favicon',
                 'label_attributes' => ['class' => 'control-label col-lg-2'],
             ],
         ]);
