@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 01, 2017 at 07:32 PM
+-- Generation Time: Jul 05, 2017 at 07:54 PM
 -- Server version: 5.5.55-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.21
+-- PHP Version: 5.6.30-12~ubuntu14.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -35,46 +35,36 @@ CREATE TABLE IF NOT EXISTS `acl` (
   `acl_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `acl_parent` int(11) NOT NULL,
   PRIMARY KEY (`acl_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=113 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=123 ;
 
 --
 -- Dumping data for table `acl`
 --
 
 INSERT INTO `acl` (`acl_id`, `acl_module`, `acl_controller`, `acl_action`, `acl_status`, `acl_name`, `acl_parent`) VALUES
-(1, 'admin', 'index', 'index', 1, 'Home', 0),
-(2, 'admin', 'build', 'index', 1, 'Danh sách', 3),
-(3, NULL, NULL, NULL, 1, 'Quản lý build', 0),
-(4, 'admin', 'build', 'add', 1, 'Thêm', 3),
-(5, 'admin', 'build', 'delete', 1, 'Xóa', 3),
-(6, 'admin', 'build', 'edit', 1, 'Cập nhật', 3),
-(7, '', '', '', 1, 'Group Admin', 0),
+(1, 'admin', 'index', 'index', 1, 'Trang chủ', 0),
+(7, '', '', '', 1, 'Nhóm quản trị', 0),
 (8, 'admin', 'groupadmin', 'index', 1, 'Danh sách', 7),
 (9, 'admin', 'groupadmin', 'add', 1, 'Thêm', 7),
 (10, 'admin', 'groupadmin', 'edit', 1, 'Cập nhật', 7),
 (11, 'admin', 'groupadmin', 'delete', 1, 'Xóa', 7),
-(12, NULL, NULL, NULL, 1, 'Admin', 0),
+(12, '', '', '', 1, 'Tài khoản quản trị', 0),
 (13, 'admin', 'admin', 'index', 1, 'Danh sách', 12),
 (14, 'admin', 'admin', 'add', 1, 'Thêm', 12),
 (15, 'admin', 'admin', 'delete', 1, 'Xóa', 12),
 (16, 'admin', 'admin', 'edit', 1, 'Cập nhật', 12),
-(17, NULL, NULL, NULL, 1, 'Menu', 0),
+(17, '', '', '', 1, 'Menu CMS', 0),
 (18, 'admin', 'menu', 'index', 1, 'Danh sách', 17),
 (19, 'admin', 'menu', 'add', 1, 'Thêm', 17),
 (20, 'admin', 'menu', 'delete', 1, 'Xóa', 17),
 (21, 'admin', 'menu', 'edit', 1, 'Cập nhật', 17),
-(22, '', '', '', 1, 'Acl', 0),
+(22, '', '', '', 1, 'Quyền', 0),
 (23, 'admin', 'acl', 'index', 1, 'Danh sách', 22),
 (24, 'admin', 'acl', 'add', 1, 'Thêm', 22),
 (25, 'admin', 'acl', 'delete', 1, 'Xóa', 22),
 (26, 'admin', 'acl', 'edit', 1, 'Cập nhật', 22),
-(29, '', '', '', 1, 'Group menu', 0),
-(30, 'admin', 'groupmenu', 'index', 1, 'Danh sách', 29),
-(31, 'admin', 'groupmenu', 'add', 1, 'Thêm', 29),
-(32, 'admin', 'groupmenu', 'delete', 1, 'Xóa', 29),
-(33, 'admin', 'groupmenu', 'edit', 1, 'Cập nhật', 29),
 (35, 'admin', 'groupadmin', 'acl', 1, 'Phân quyền', 7),
-(36, '', '', '', 1, 'Navigation', 0),
+(36, '', '', '', 1, 'Menu', 0),
 (37, 'admin', 'navigation', 'index', 1, 'Danh sách', 36),
 (38, 'admin', 'navigation', 'add', 1, 'Thêm', 36),
 (39, 'admin', 'navigation', 'delete', 1, 'Xóa', 36),
@@ -112,22 +102,7 @@ INSERT INTO `acl` (`acl_id`, `acl_module`, `acl_controller`, `acl_action`, `acl_
 (71, '', '', '', 1, 'Giao diện', 0),
 (72, 'admin', 'template', 'index', 1, 'Danh sách', 71),
 (73, 'admin', 'template', 'edit', 1, 'Cập nhật', 71),
-(74, 'admin', 'product', 'color', 1, 'Danh sách màu sản phẩm', 62),
-(75, 'admin', 'product', 'color-add', 1, 'Thêm màu sản phẩm', 62),
-(76, '', '', '', 1, 'Màu sản phẩm', 0),
-(77, 'admin', 'color', 'index', 1, 'Danh sách', 76),
-(78, 'admin', 'color', 'add', 1, 'Thêm', 76),
-(79, 'admin', 'color', 'edit', 1, 'Cập nhật', 76),
-(80, 'admin', 'color', 'delete', 1, 'Xóa', 76),
-(81, '', '', '', 1, 'Kích thước', 0),
-(82, 'admin', 'size', 'index', 1, 'Danh sách', 81),
-(83, 'admin', 'size', 'add', 1, 'Thêm', 81),
-(84, 'admin', 'size', 'edit', 1, 'Cập nhật', 81),
-(85, 'admin', 'size', 'delete', 1, 'Xóa', 81),
-(87, 'admin', 'product', 'color-edit', 1, 'Cập nhật màu sản phẩm', 62),
-(88, 'admin', 'product', 'color-delete', 1, 'Xóa màu sản phẩm', 62),
-(89, 'admin', 'product', 'delete-color-picture', 1, 'Xóa hình trong Màu sản phẩm', 62),
-(90, '', '', '', 1, 'Website', 0),
+(90, '', '', '', 1, 'Cấu hình Website', 0),
 (91, 'admin', 'website', 'edit', 1, 'Cập nhật thông tin website', 90),
 (92, 'admin', 'website', 'delete-picture', 1, 'Xóa icon Website', 90),
 (93, 'admin', 'template', 'delete-picture', 1, 'Xóa hình', 71),
@@ -138,16 +113,18 @@ INSERT INTO `acl` (`acl_id`, `acl_module`, `acl_controller`, `acl_action`, `acl_
 (98, 'admin', 'contact', 'index', 1, 'Danh sách', 97),
 (99, 'admin', 'contact', 'export', 1, 'Xuất Excel', 97),
 (100, 'admin', 'contact', 'delete', 1, 'Xóa', 97),
-(101, '', '', '', 1, 'Cấu trúc câu', 0),
-(102, 'admin', 'structure', 'index', 1, 'Danh sách', 101),
-(103, 'admin', 'structure', 'edit', 1, 'Cập nhật', 101),
-(104, 'admin', 'structure', 'add', 1, 'Thêm', 101),
-(105, 'admin', 'structure', 'delete', 1, 'Xóa', 101),
-(106, '', '', '', 1, 'Từ vựng', 0),
-(107, 'admin', 'vocabulary', 'index', 1, 'Danh sách', 106),
-(108, 'admin', 'vocabulary', 'add', 1, 'Thêm', 106),
-(109, 'admin', 'vocabulary', 'edit', 1, 'Cập nhật', 106),
-(110, 'admin', 'vocabulary', 'delete', 1, 'Xóa', 106);
+(111, '', '', '', 1, 'Nhóm menu', 0),
+(112, 'admin', 'groupnavigation', 'index', 1, 'Danh sách', 111),
+(113, 'admin', 'groupnavigation', 'add', 1, 'Thêm', 111),
+(114, 'admin', 'groupnavigation', 'delete', 1, 'Xóa', 111),
+(115, 'admin', 'groupnavigation', 'edit', 1, 'Cập nhật', 111),
+(116, '', '', '', 1, 'Nhóm giao diện', 0),
+(117, 'admin', 'grouptemplate', 'index', 1, 'Danh sách', 116),
+(118, 'admin', 'grouptemplate', 'add', 1, 'Thêm', 116),
+(119, 'admin', 'grouptemplate', 'edit', 1, 'Cập nhật', 116),
+(120, 'admin', 'grouptemplate', 'delete', 1, 'Xóa', 116),
+(121, 'admin', 'template', 'delete', 1, 'Xóa', 71),
+(122, 'admin', 'template', 'add', 1, 'Thêm', 71);
 
 -- --------------------------------------------------------
 
@@ -164,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `group_admin_id` int(11) NOT NULL,
   `admin_status` int(11) NOT NULL,
   PRIMARY KEY (`admin_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `admin`
@@ -341,18 +318,18 @@ CREATE TABLE IF NOT EXISTS `group_acl` (
   `group_admin_id` int(11) NOT NULL,
   `group_acl_status` int(11) NOT NULL,
   PRIMARY KEY (`group_acl_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=171 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=183 ;
 
 --
 -- Dumping data for table `group_acl`
 --
 
 INSERT INTO `group_acl` (`group_acl_id`, `acl_id`, `group_admin_id`, `group_acl_status`) VALUES
-(1, 2, 1, 1),
+(1, 2, 1, 0),
 (2, 1, 1, 1),
-(3, 4, 1, 1),
-(4, 5, 1, 1),
-(5, 6, 1, 1),
+(3, 4, 1, 0),
+(4, 5, 1, 0),
+(5, 6, 1, 0),
 (6, 8, 1, 1),
 (7, 9, 1, 1),
 (8, 10, 1, 1),
@@ -369,17 +346,17 @@ INSERT INTO `group_acl` (`group_acl_id`, `acl_id`, `group_admin_id`, `group_acl_
 (19, 24, 1, 1),
 (20, 25, 1, 1),
 (21, 26, 1, 1),
-(22, 30, 1, 1),
-(23, 31, 1, 1),
-(24, 32, 1, 1),
-(25, 33, 1, 1),
+(22, 30, 1, 0),
+(23, 31, 1, 0),
+(24, 32, 1, 0),
+(25, 33, 1, 0),
 (26, 35, 1, 1),
 (27, 7, 1, 1),
 (28, 12, 1, 1),
-(29, 3, 1, 1),
+(29, 3, 1, 0),
 (30, 17, 1, 1),
 (31, 22, 1, 1),
-(32, 29, 1, 1),
+(32, 29, 1, 0),
 (33, 36, 1, 1),
 (34, 37, 1, 1),
 (35, 38, 1, 1),
@@ -418,21 +395,21 @@ INSERT INTO `group_acl` (`group_acl_id`, `acl_id`, `group_admin_id`, `group_acl_
 (132, 71, 1, 1),
 (133, 72, 1, 1),
 (134, 73, 1, 1),
-(135, 74, 1, 1),
-(136, 75, 1, 1),
-(137, 76, 1, 1),
-(138, 77, 1, 1),
-(139, 78, 1, 1),
-(140, 79, 1, 1),
-(141, 80, 1, 1),
-(142, 81, 1, 1),
-(143, 82, 1, 1),
-(144, 83, 1, 1),
-(145, 84, 1, 1),
-(146, 85, 1, 1),
-(147, 87, 1, 1),
-(148, 88, 1, 1),
-(149, 89, 1, 1),
+(135, 74, 1, 0),
+(136, 75, 1, 0),
+(137, 76, 1, 0),
+(138, 77, 1, 0),
+(139, 78, 1, 0),
+(140, 79, 1, 0),
+(141, 80, 1, 0),
+(142, 81, 1, 0),
+(143, 82, 1, 0),
+(144, 83, 1, 0),
+(145, 84, 1, 0),
+(146, 85, 1, 0),
+(147, 87, 1, 0),
+(148, 88, 1, 0),
+(149, 89, 1, 0),
 (150, 90, 1, 1),
 (151, 91, 1, 1),
 (152, 92, 1, 1),
@@ -444,16 +421,28 @@ INSERT INTO `group_acl` (`group_acl_id`, `acl_id`, `group_admin_id`, `group_acl_
 (158, 98, 1, 1),
 (159, 99, 1, 1),
 (160, 100, 1, 1),
-(161, 101, 1, 1),
-(162, 102, 1, 1),
-(163, 103, 1, 1),
-(164, 104, 1, 1),
-(165, 105, 1, 1),
-(166, 106, 1, 1),
-(167, 107, 1, 1),
-(168, 108, 1, 1),
-(169, 109, 1, 1),
-(170, 110, 1, 1);
+(161, 101, 1, 0),
+(162, 102, 1, 0),
+(163, 103, 1, 0),
+(164, 104, 1, 0),
+(165, 105, 1, 0),
+(166, 106, 1, 0),
+(167, 107, 1, 0),
+(168, 108, 1, 0),
+(169, 109, 1, 0),
+(170, 110, 1, 0),
+(171, 111, 1, 1),
+(172, 112, 1, 1),
+(173, 113, 1, 1),
+(174, 114, 1, 1),
+(175, 115, 1, 1),
+(176, 116, 1, 1),
+(177, 117, 1, 1),
+(178, 118, 1, 1),
+(179, 119, 1, 1),
+(180, 120, 1, 1),
+(181, 121, 1, 1),
+(182, 122, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -466,7 +455,7 @@ CREATE TABLE IF NOT EXISTS `group_admin` (
   `group_admin_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `group_admin_status` int(1) NOT NULL,
   PRIMARY KEY (`group_admin_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `group_admin`
@@ -502,7 +491,7 @@ INSERT INTO `group_menu` (`group_menu_id`, `group_admin_id`, `menu_id`, `group_m
 (6, 1, 12, 0),
 (7, 1, 13, 0),
 (8, 1, 14, 1),
-(9, 1, 15, 1),
+(9, 1, 15, 0),
 (10, 1, 16, 1),
 (11, 1, 17, 1),
 (12, 1, 18, 1),
@@ -512,7 +501,7 @@ INSERT INTO `group_menu` (`group_menu_id`, `group_admin_id`, `menu_id`, `group_m
 (16, 1, 22, 1),
 (26, 1, 23, 1),
 (27, 1, 24, 1),
-(28, 1, 25, 1),
+(28, 1, 25, 0),
 (29, 1, 26, 0),
 (30, 1, 27, 0),
 (31, 1, 28, 1),
@@ -520,12 +509,52 @@ INSERT INTO `group_menu` (`group_menu_id`, `group_admin_id`, `menu_id`, `group_m
 (33, 1, 30, 1),
 (34, 1, 31, 1),
 (35, 1, 32, 1),
-(36, 1, 33, 0),
+(36, 1, 33, 1),
 (37, 1, 34, 0),
-(38, 1, 35, 0),
-(39, 1, 36, 0),
-(40, 1, 37, 0),
+(38, 1, 35, 1),
+(39, 1, 36, 1),
+(40, 1, 37, 1),
 (41, 1, 38, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `group_navigation`
+--
+
+CREATE TABLE IF NOT EXISTS `group_navigation` (
+  `group_navigation_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_navigation_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `group_navigation_status` int(1) NOT NULL,
+  PRIMARY KEY (`group_navigation_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `group_navigation`
+--
+
+INSERT INTO `group_navigation` (`group_navigation_id`, `group_navigation_name`, `group_navigation_status`) VALUES
+(11, 'menu top', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `group_template`
+--
+
+CREATE TABLE IF NOT EXISTS `group_template` (
+  `group_template_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_template_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `group_template_status` int(1) NOT NULL,
+  PRIMARY KEY (`group_template_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `group_template`
+--
+
+INSERT INTO `group_template` (`group_template_id`, `group_template_name`, `group_template_status`) VALUES
+(5, 'tesest2', 1);
 
 -- --------------------------------------------------------
 
@@ -540,35 +569,37 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `menu_status` int(11) NOT NULL,
   `menu_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
 
 --
 -- Dumping data for table `menu`
 --
 
 INSERT INTO `menu` (`menu_id`, `menu_name`, `menu_parent`, `menu_status`, `menu_url`) VALUES
-(6, 'Group admin', 10, 1, 'admin/group-admin'),
-(7, 'Admin', 10, 1, 'admin/admin'),
+(6, 'Nhóm quản trị', 10, 1, 'admin/group-admin'),
+(7, 'Tài khoản quản trị', 10, 1, 'admin/admin'),
 (8, 'Menu', 10, 1, 'admin/menu'),
-(9, 'Acl', 10, 1, 'admin/acl'),
-(10, 'System', 0, 1, '#'),
-(14, 'Giao diện', 0, 1, '#'),
-(15, 'Menu top', 14, 1, 'admin/navigation'),
+(9, 'Quyền', 10, 1, 'admin/acl'),
+(10, 'Cấu hình CMS', 0, 1, ''),
+(14, 'Giao diện', 0, 1, ''),
 (16, 'Bài viết', 0, 1, ''),
 (17, 'Trang nội dung', 16, 1, 'admin/page'),
-(18, 'Danh mục Blog', 16, 1, 'admin/news-category'),
-(19, 'Blog', 16, 1, 'admin/news'),
+(18, 'Danh mục bài viết', 16, 1, 'admin/news-category'),
+(19, 'Bài viết', 16, 1, 'admin/news'),
 (20, 'Sản phẩm', 0, 1, ''),
 (21, 'Danh mục sản phẩm', 20, 1, 'admin/product-category'),
 (22, 'Sản phẩm', 20, 1, 'admin/product'),
-(23, 'Giỏ hàng', 0, 1, '#'),
+(23, 'Giỏ hàng', 0, 1, ''),
 (24, 'Quản lý đơn hàng', 23, 1, 'admin/order'),
-(25, 'Giao diện', 14, 1, 'admin/template'),
 (28, 'Thông tin Website', 29, 1, 'admin/website'),
-(29, 'Website', 0, 1, ''),
+(29, 'Cấu hình Website', 0, 1, ''),
 (30, 'Khách hàng', 0, 1, ''),
 (31, 'Email đăng ký', 30, 1, 'admin/email-customer'),
-(32, 'Liên hệ', 30, 1, 'admin/contact');
+(32, 'Liên hệ', 30, 1, 'admin/contact'),
+(33, 'Nhóm menu', 14, 1, 'admin/group-navigation'),
+(35, 'Nhóm giao diện', 14, 1, 'admin/group-template'),
+(36, 'Giao diện', 35, 1, 'admin/template'),
+(37, 'Menu', 33, 1, 'admin/navigation');
 
 -- --------------------------------------------------------
 
@@ -584,23 +615,16 @@ CREATE TABLE IF NOT EXISTS `navigation` (
   `navigation_parent` int(11) NOT NULL,
   `navigation_position` int(11) NOT NULL,
   `navigation_url_select` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `group_navigation_id` int(11) NOT NULL,
   PRIMARY KEY (`navigation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `navigation`
 --
 
-INSERT INTO `navigation` (`navigation_id`, `navigation_name`, `navigation_url`, `navigation_status`, `navigation_parent`, `navigation_position`, `navigation_url_select`) VALUES
-(1, 'Trang chủ', './', 1, 0, 1, ''),
-(2, 'Sản phẩm', 'san-pham', 1, 0, 2, ''),
-(3, 'Bộ sưu tập', '', 1, 0, 5, 'bo-suu-tap-nc-2'),
-(4, 'Liên hệ', 'lien-he', 1, 0, 6, ''),
-(6, 'Boots', '', 1, 2, 0, 'boots-pc-1'),
-(7, 'Sale', 'san-pham-sale', 1, 0, 4, ''),
-(8, 'Espadrilles', '', 1, 2, 2, 'espadrilles-pc-2'),
-(9, 'Flats', '', 1, 2, 3, 'flats-pc-3'),
-(10, 'Mới', 'san-pham', 1, 0, 3, '');
+INSERT INTO `navigation` (`navigation_id`, `navigation_name`, `navigation_url`, `navigation_status`, `navigation_parent`, `navigation_position`, `navigation_url_select`, `group_navigation_id`) VALUES
+(23, 'asdasd', '', 1, 0, 0, 'mua-hang-p-2', 11);
 
 -- --------------------------------------------------------
 
@@ -617,16 +641,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `news_picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `news_category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`news_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
-
---
--- Dumping data for table `news`
---
-
-INSERT INTO `news` (`news_id`, `news_title`, `news_quote`, `news_content`, `news_status`, `news_picture`, `news_category_id`) VALUES
-(4, 'More from our blog', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur turpis lorem, maximus id luctus nec, suscipit non quam.</p>', '<div id="breadcrumb" class="desktop-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur turpis lorem, maximus id luctus nec, suscipit non quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut eleifend malesuada aliquam. Praesent tincidunt dui velit, vitae feugiat nulla pulvinar ac. Nunc auctor volutpat urna eget posuere. Nulla posuere ex sit amet libero rutrum fringilla. Aliquam a augue vulputate, viverra diam a, varius nibh. Donec consectetur aliquet justo et suscipit. Etiam sed massa nunc.</div>\r\n<div class="desktop-12">&nbsp;</div>\r\n<div class="desktop-12"><img src="/pictures/1175x774-3_1000x.jpg" alt="" width="1000" height="659" /></div>\r\n<div class="desktop-12">&nbsp;</div>\r\n<div class="desktop-12">\r\n<p>Nunc semper sapien vitae felis laoreet, ut vehicula sem placerat. Etiam malesuada lacus sit amet justo efficitur porttitor. Curabitur quis nisi ut augue blandit sollicitudin quis a orci. Ut at neque eu metus ultricies pellentesque at ut sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi vestibulum nisi consequat dui tincidunt lacinia. Phasellus feugiat ullamcorper arcu nec fermentum. Suspendisse potenti. Aenean eleifend dui eget laoreet molestie. Praesent a arcu bibendum, condimentum orci vel, iaculis quam. Aenean non placerat ex. Nunc odio ligula, porttitor sit amet pharetra id, dignissim dapibus erat. Vestibulum non consectetur tortor. Vestibulum eget laoreet nisi.</p>\r\n<p>Ut ut ornare turpis. Etiam id sem tristique, pulvinar nunc vitae, venenatis ipsum. Phasellus tristique dapibus congue. Morbi elementum justo eu eleifend gravida. Etiam mollis tristique eros tempus pretium. Quisque egestas nisl arcu, vitae porta mi posuere at. Aenean mattis a ante nec pulvinar. Suspendisse sit amet odio sed urna consequat tincidunt. Integer a euismod nunc. Nunc sed euismod tellus, vitae sodales leo.</p>\r\n</div>', 1, 'news_1491122888_1175x774-3_1000x.jpg', 2),
-(5, 'More from our blog', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur turpis lorem, maximus id luctus nec, suscipit non quam.</p>', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur turpis lorem, maximus id luctus nec, suscipit non quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut eleifend malesuada aliquam. Praesent tincidunt dui velit, vitae feugiat nulla pulvinar ac. Nunc auctor volutpat urna eget posuere. Nulla posuere ex sit amet libero rutrum fringilla. Aliquam a augue vulputate, viverra diam a, varius nibh. Donec consectetur aliquet justo et suscipit. Etiam sed massa nunc.</p>\r\n<p>&nbsp;</p>\r\n<p><img src="/pictures/charles-keith-stories-robyn-kotze-2-blog-2.jpg" alt="" width="720" height="480" /></p>\r\n<p>Nunc semper sapien vitae felis laoreet, ut vehicula sem placerat. Etiam malesuada lacus sit amet justo efficitur porttitor. Curabitur quis nisi ut augue blandit sollicitudin quis a orci. Ut at neque eu metus ultricies pellentesque at ut sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi vestibulum nisi consequat dui tincidunt lacinia. Phasellus feugiat ullamcorper arcu nec fermentum. Suspendisse potenti. Aenean eleifend dui eget laoreet molestie. Praesent a arcu bibendum, condimentum orci vel, iaculis quam. Aenean non placerat ex. Nunc odio ligula, porttitor sit amet pharetra id, dignissim dapibus erat. Vestibulum non consectetur tortor. Vestibulum eget laoreet nisi.</p>\r\n<p>Ut ut ornare turpis. Etiam id sem tristique, pulvinar nunc vitae, venenatis ipsum. Phasellus tristique dapibus congue. Morbi elementum justo eu eleifend gravida. Etiam mollis tristique eros tempus pretium. Quisque egestas nisl arcu, vitae porta mi posuere at. Aenean mattis a ante nec pulvinar. Suspendisse sit amet odio sed urna consequat tincidunt. Integer a euismod nunc. Nunc sed euismod tellus, vitae sodales leo.</p>', 1, 'news_1491122961_charles-keith-stories-robyn-kotze-2-blog-2.jpg', 2),
-(6, 'More from our blog', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur turpis lorem, maximus id luctus nec, suscipit non quam.</p>', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur turpis lorem, maximus id luctus nec, suscipit non quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut eleifend malesuada aliquam. Praesent tincidunt dui velit, vitae feugiat nulla pulvinar ac. Nunc auctor volutpat urna eget posuere. Nulla posuere ex sit amet libero rutrum fringilla. Aliquam a augue vulputate, viverra diam a, varius nibh. Donec consectetur aliquet justo et suscipit. Etiam sed massa nunc.</p>\r\n<p>&nbsp;</p>\r\n<p><img src="/pictures/charles-keith-stories-robyn-kotze-2-blog-1.jpg" alt="" width="720" height="480" /></p>\r\n<p>Nunc semper sapien vitae felis laoreet, ut vehicula sem placerat. Etiam malesuada lacus sit amet justo efficitur porttitor. Curabitur quis nisi ut augue blandit sollicitudin quis a orci. Ut at neque eu metus ultricies pellentesque at ut sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi vestibulum nisi consequat dui tincidunt lacinia. Phasellus feugiat ullamcorper arcu nec fermentum. Suspendisse potenti. Aenean eleifend dui eget laoreet molestie. Praesent a arcu bibendum, condimentum orci vel, iaculis quam. Aenean non placerat ex. Nunc odio ligula, porttitor sit amet pharetra id, dignissim dapibus erat. Vestibulum non consectetur tortor. Vestibulum eget laoreet nisi.</p>\r\n<p>Ut ut ornare turpis. Etiam id sem tristique, pulvinar nunc vitae, venenatis ipsum. Phasellus tristique dapibus congue. Morbi elementum justo eu eleifend gravida. Etiam mollis tristique eros tempus pretium. Quisque egestas nisl arcu, vitae porta mi posuere at. Aenean mattis a ante nec pulvinar. Suspendisse sit amet odio sed urna consequat tincidunt. Integer a euismod nunc. Nunc sed euismod tellus, vitae sodales leo.</p>', 1, 'news_1495428075_17333218_769276043240522_1165939258423246848_n.jpg', 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -640,14 +655,7 @@ CREATE TABLE IF NOT EXISTS `news_category` (
   `news_category_parent` int(11) NOT NULL,
   `news_category_status` int(11) NOT NULL,
   PRIMARY KEY (`news_category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
-
---
--- Dumping data for table `news_category`
---
-
-INSERT INTO `news_category` (`news_category_id`, `news_category_name`, `news_category_parent`, `news_category_status`) VALUES
-(2, 'Bộ sưu tập', 0, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -712,8 +720,6 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
   `product_id` int(11) NOT NULL,
   `product_picture` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `product_code` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `color` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `size` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`order_detail_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
@@ -721,27 +727,27 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
 -- Dumping data for table `order_detail`
 --
 
-INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_name`, `product_price`, `quality`, `product_id`, `product_picture`, `product_code`, `color`, `size`) VALUES
-(1, 1, 'ANKLE BOOT HEELS', 700000, 4, 1, 'product_1491120796_2017-L2-CK1-90280010-22-5.jpg', 'CK1-90280010_CAMEL', 'Black', '37'),
-(2, 2, 'BASIC PENNY LOAFERS', 600000, 1, 9, 'product_1492000106_2017-L3-CK1-70380574-08-2.jpg', 'CK1-70380574_RED', 'Black', '37'),
-(3, 3, 'BASIC PENNY LOAFERS', 600000, 1, 8, 'product_1491999897_2017-L3-CK1-70380574-23-3.jpg', 'CK1-70380574_YELLOW', 'Black', '37'),
-(4, 4, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL', 'Black', '37'),
-(5, 5, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL', 'Camel', '38'),
-(6, 6, 'ESPADRILLE FLATFORM SLIP-ONS', 600000, 1, 7, 'product_1491995964_2016-L2-CK1-80190043-01-3-500.jpg', 'CK1-80190043_BROWN', 'Black', '37'),
-(7, 7, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL', 'Black', '37'),
-(8, 8, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL', 'Black', '37'),
-(9, 9, 'ANKLE BOOT HEELS', 1000000, 1, 5, 'product_1491312145_2016-L7-SL1-90900002-02-1.jpg', 'CK1-90280010_CAMEL', 'Camel', '38'),
-(10, 10, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL', 'Camel', '38'),
-(11, 11, 'BASIC PENNY LOAFERS', 600000, 1, 8, 'product_1491999897_2017-L3-CK1-70380574-23-3.jpg', 'CK1-70380574_YELLOW', 'Black', '37'),
-(12, 12, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL', 'Camel', '38'),
-(13, 13, 'BASIC PENNY LOAFERS', 600000, 1, 8, 'product_1491999897_2017-L3-CK1-70380574-23-3.jpg', 'CK1-70380574_YELLOW', 'Camel', '37'),
-(14, 14, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL', 'Camel', '37'),
-(15, 15, 'ESPADRILLE FLATFORM SLIP-ONS', 600000, 1, 6, 'product_1491995659_2016-L2-CK1-80190043-02-2-500.jpg', 'CK1-80190043_BROWN', 'Camel', '38'),
-(16, 16, 'BASIC PENNY LOAFERS', 600000, 1, 8, 'product_1491999897_2017-L3-CK1-70380574-23-3.jpg', 'CK1-70380574_YELLOW', 'Camel', '38'),
-(17, 17, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL', 'Camel', '38'),
-(18, 18, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL', 'Black', '37'),
-(19, 19, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL', 'Black', '37'),
-(20, 20, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL', 'Camel', '38');
+INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_name`, `product_price`, `quality`, `product_id`, `product_picture`, `product_code`) VALUES
+(1, 1, 'ANKLE BOOT HEELS', 700000, 4, 1, 'product_1491120796_2017-L2-CK1-90280010-22-5.jpg', 'CK1-90280010_CAMEL'),
+(2, 2, 'BASIC PENNY LOAFERS', 600000, 1, 9, 'product_1492000106_2017-L3-CK1-70380574-08-2.jpg', 'CK1-70380574_RED'),
+(3, 3, 'BASIC PENNY LOAFERS', 600000, 1, 8, 'product_1491999897_2017-L3-CK1-70380574-23-3.jpg', 'CK1-70380574_YELLOW'),
+(4, 4, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL'),
+(5, 5, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL'),
+(6, 6, 'ESPADRILLE FLATFORM SLIP-ONS', 600000, 1, 7, 'product_1491995964_2016-L2-CK1-80190043-01-3-500.jpg', 'CK1-80190043_BROWN'),
+(7, 7, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL'),
+(8, 8, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL'),
+(9, 9, 'ANKLE BOOT HEELS', 1000000, 1, 5, 'product_1491312145_2016-L7-SL1-90900002-02-1.jpg', 'CK1-90280010_CAMEL'),
+(10, 10, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL'),
+(11, 11, 'BASIC PENNY LOAFERS', 600000, 1, 8, 'product_1491999897_2017-L3-CK1-70380574-23-3.jpg', 'CK1-70380574_YELLOW'),
+(12, 12, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL'),
+(13, 13, 'BASIC PENNY LOAFERS', 600000, 1, 8, 'product_1491999897_2017-L3-CK1-70380574-23-3.jpg', 'CK1-70380574_YELLOW'),
+(14, 14, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL'),
+(15, 15, 'ESPADRILLE FLATFORM SLIP-ONS', 600000, 1, 6, 'product_1491995659_2016-L2-CK1-80190043-02-2-500.jpg', 'CK1-80190043_BROWN'),
+(16, 16, 'BASIC PENNY LOAFERS', 600000, 1, 8, 'product_1491999897_2017-L3-CK1-70380574-23-3.jpg', 'CK1-70380574_YELLOW'),
+(17, 17, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL'),
+(18, 18, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL'),
+(19, 19, 'ANKLE BOOT HEELS', 800000, 1, 3, 'product_1491311946_2016-L7-SL1-90300043-01-5.jpg', 'CK1-90280010_CAMEL'),
+(20, 20, 'ANKLE BOOT HEELS', 900000, 1, 4, 'product_1491312032_2016-L7-SL1-90360039-01-5.jpg', 'CK1-90280010_CAMEL');
 
 -- --------------------------------------------------------
 
@@ -755,7 +761,7 @@ CREATE TABLE IF NOT EXISTS `page` (
   `page_content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `page_status` int(11) NOT NULL,
   PRIMARY KEY (`page_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `page`
@@ -784,7 +790,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `product_type_new` int(1) NOT NULL,
   `product_type_sale` int(1) NOT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -798,16 +804,7 @@ CREATE TABLE IF NOT EXISTS `product_category` (
   `product_category_parent` int(11) NOT NULL,
   `product_category_status` int(11) NOT NULL,
   PRIMARY KEY (`product_category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `product_category`
---
-
-INSERT INTO `product_category` (`product_category_id`, `product_category_name`, `product_category_parent`, `product_category_status`) VALUES
-(1, 'Boots', 0, 1),
-(2, 'Espadrilles', 0, 1),
-(3, 'Flats', 0, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -822,15 +819,17 @@ CREATE TABLE IF NOT EXISTS `template` (
   `template_picture` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `template_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `template_type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `group_template_id` int(11) NOT NULL,
+  `template_status` int(1) NOT NULL,
   PRIMARY KEY (`template_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `template`
 --
 
-INSERT INTO `template` (`template_id`, `template_name`, `template_content`, `template_picture`, `template_url`, `template_type`) VALUES
-(3, 'Phần banner trang chủ', '', 'template_1495428733_17438229_191890364645222_7140066770898911232_n.jpg', '', 'picture');
+INSERT INTO `template` (`template_id`, `template_name`, `template_content`, `template_picture`, `template_url`, `template_type`, `group_template_id`, `template_status`) VALUES
+(9, 'asds', '', '', '', '', 5, 1);
 
 -- --------------------------------------------------------
 

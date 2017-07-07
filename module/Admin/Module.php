@@ -266,8 +266,12 @@ class Module
                     }
                 }
 
-                $breadcrumbsHtml .= '<li><i class="icon-angle-right"></i><a href="#">' . $breadcrumbModuleParentName . '</a></li>';
-                $breadcrumbsHtml .= '<li><i class="icon-angle-right"></i><a href="' . $serverUrl . '/' . $breadcrumbModuleLevel2Url . '">' . $breadcrumbModuleLevel2Name . '</a></li>';
+                if ($breadcrumbModuleParentName != '') {
+                    $breadcrumbsHtml .= '<li><i class="icon-angle-right"></i><a href="#">' . $breadcrumbModuleParentName . '</a></li>';
+                }
+                if ($breadcrumbModuleLevel2Name != '') {
+                    $breadcrumbsHtml .= '<li><i class="icon-angle-right"></i><a href="' . $serverUrl . '/' . $breadcrumbModuleLevel2Url . '">' . $breadcrumbModuleLevel2Name . '</a></li>';
+                }
                 if ($breadcrumbModuleLevel3Name != '') {
                     $breadcrumbsHtml .= '<li><i class="icon-angle-right"></i><a href="' . $serverUrl . '/' . $breadcrumbModuleLevel3Url . '">' . $breadcrumbModuleLevel3Name . '</a></li>';
                 }
