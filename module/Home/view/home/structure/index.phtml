@@ -1,9 +1,0 @@
-<?php
-$countPer = ceil($countAll/50);
-for($i = 1; $i <= $countPer; $i++) {
-
-    $end = 1 * $i * 50;
-    $start = $end - 50;
-
-    echo ' <button type="button" class="btn btn-default" onclick="location.href=\'' . $this->url('home-structure-confirm') . '?end=' . $end . '&start=' . $start . '\'">' . $start . ' - ' . $end . '</button> ';
-}

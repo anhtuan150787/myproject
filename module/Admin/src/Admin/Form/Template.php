@@ -121,7 +121,7 @@ class Template extends Form {
                 [
                     'name' => 'Zend\Validator\File\Size',
                     'options' => [
-                        'max' => '1MB' //1MB
+                        'max' => '2MB' //1MB
                     ],
                 ],
                 [

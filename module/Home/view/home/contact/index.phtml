@@ -1,68 +1,55 @@
-<style>
-    input[type="text"], input[type="password"], input[type="email"], textarea, select {
-        margin-bottom: 0px;
-    }
-    div#contactFormWrapper p {
-        margin-bottom: 20px;
-    }
-    label.error {
-        padding-top: 5px;
-    }
-</style>
 
+<div class="col-md-12">
+    <div class="panel panel-primary group-item">
+        <div class="panel-heading"><h3 class="panel-title">Liên hệ</h3></div>
+        <div class="panel-body ">
 
-<div class="desktop-12 mobile-3" id="nav-border"></div>
-<?php echo $breadcrumbs; ?>
+            <div class="col-md-12">
+                <?php echo $templateData[16]['template_content']; ?>
+            </div>
 
-<div id="page" class="desktop-12 tablet-6 mobile-3">
-    <h1>Liên hệ</h1>
-</div>
-
-<div class="desktop-6 tablet-6 mobile-3">
-    <?php
-    $form->setAttributes(['action' => '', 'class' => 'contact-form', 'id' => 'contact_form']);
-    $form->prepare();
-    echo $this->form()->openTag($form);
-    ?>
-
-        <div id="contactFormWrapper">
-            <div class="desktop-12 mobile-3">
-                <p>
+            <div class="col-md-6 contact">
+                <?php
+                $form->setAttributes(['action' => '', 'class' => 'contact-form', 'id' => 'contact_form']);
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                ?>
+                <div class="form-group">
                     <?php echo $this->formLabel($form->get('contact_fullname')); ?>
                     <?php echo $this->formElement($form->get('contact_fullname')); ?>
                     <?php echo $this->formElementErrors($form->get('contact_fullname'), array('class' => 'error-message')); ?>
-                </p>
-            </div>
-            <div class="desktop-12 mobile-3">
-                <p>
+                </div>
+                <div class="form-group">
                     <?php echo $this->formLabel($form->get('contact_email')); ?>
                     <?php echo $this->formElement($form->get('contact_email')); ?>
                     <?php echo $this->formElementErrors($form->get('contact_email'), array('class' => 'error-message')); ?>
-                </p>
-            </div>
-            <div class="desktop-12 mobile-3">
-                <p>
+                </div>
+                <div class="form-group">
                     <?php echo $this->formLabel($form->get('contact_phone')); ?>
                     <?php echo $this->formElement($form->get('contact_phone')); ?>
                     <?php echo $this->formElementErrors($form->get('contact_phone'), array('class' => 'error-message')); ?>
-                </p>
-            </div>
-            <div class="desktop-12 mobile-3">
-                <p>
+                </div>
+
+                <div class="form-group">
                     <?php echo $this->formLabel($form->get('contact_content')); ?>
                     <?php echo $this->formElement($form->get('contact_content')); ?>
                     <?php echo $this->formElementErrors($form->get('contact_content'), array('class' => 'error-message')); ?>
-                </p>
-            </div>
-            <div class="desktop-12 mobile-3">
-                <p>
-                    <?php echo $this->formSubmit($form->get('submit')); ?>
-                    <?php echo $this->formHidden($form->get('csrf')); ?>
-                </p>
+                </div>
+
+                <div class="form-group captcha">
+                    <?php echo $this->formRow($form->get('Captcha'));?>
+                    <?php echo $this->formElementerrors($form->get('Captcha'), ['class' => 'error-message']); ?>
+                </div>
+
+
+                <?php echo $this->formSubmit($form->get('submit')); ?>
+                <?php echo $this->formHidden($form->get('csrf')); ?>
+
+                <?php echo $this->form()->closeTag(); ?>
+
             </div>
         </div>
-
-    <?php echo $this->form()->closeTag(); ?>
+    </div>
 </div>
 
 <script>
@@ -101,6 +88,13 @@
                     maxlength: 'Lời nhắn không quá 300 ký tự',
                 },
             }
+        });
+
+        $('div.captcha img').click(function(){
+            $.get('<?php echo $this->url('captcha');?>', function(data) {
+                $('div.captcha img').attr('src', data.url);
+                $('input[name="Captcha[id]"]').val(data.id);
+            });
         });
     });
 </script>

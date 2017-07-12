@@ -25,25 +25,16 @@ class NewsController extends AbstractActionController
         $id = $data['id'];
         $newsCategory = $newsCategoryModel->fetchRow($id);
 
-
-        $breadcrumbs = '<div id="breadcrumb" class="desktop-12">
-                            <a href="./" class="homepage-link">Trang chủ</a>
-                            <span class="separator">»</span>
-                            <span class="page-title">' . $newsCategory['news_category_name'] . '</span>
-                        </div>';
-
         $news = $model->getListNewsByCategory($id);
         $news->setCurrentPageNumber($this->params()->fromQuery('page', 1));
-        $news->setItemCountPerPage(18);
+        $news->setItemCountPerPage(6);
 
         $view->setVariables([
             'news' => $news,
             'newsCategory' => $newsCategory,
             'name' => $data['name'],
             'id' => $data['id'],
-            'breadcrumbs' => $breadcrumbs,
         ]);
-
 
         return $view;
     }
@@ -61,18 +52,11 @@ class NewsController extends AbstractActionController
         $newsCategory = $newsCategoryModel->fetchRow($news['news_category_id']);
         $newsOther = $model->getNewsOther($news['news_category_id']);
 
-        $breadcrumbs = '<div id="breadcrumb" class="desktop-12">
-                            <a href="./" class="homepage-link">Trang chủ</a>
-                            <span class="separator">»</span>
-                            <a href="' . $this->url()->fromRoute('home-news-category', array('name' => $functions->formatTitle($newsCategory['news_category_name']), 'id' => $newsCategory['news_category_id'])) . '">' . $newsCategory['news_category_name'] . '</a>
-                            <span class="separator">»</span>
-                            <span class="page-title">' . $news['news_title'] . '</span>
-                        </div>';
 
         $view->setVariables([
             'news' => $news,
             'newsOther' => $newsOther,
-            'breadcrumbs' => $breadcrumbs,
+            'newsCategory' => $newsCategory
         ]);
 
         return $view;

@@ -78,7 +78,7 @@ class Product extends Form {
                 //'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Sản phẩm Sale',
+                'label' => 'Sản phẩm nổi bật',
                 'label_attributes' => ['class' => 'control-label col-lg-2'],
                 'checked_value' => '1',
                 'unchecked_value' => '0'
@@ -186,7 +186,7 @@ class Product extends Form {
                 [
                     'name' => 'Zend\Validator\File\Size',
                     'options' => [
-                        'max' => '1MB' //1MB
+                        'max' => '2MB' //1MB
                     ],
                 ],
                 [

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 05, 2017 at 07:54 PM
+-- Generation Time: Jul 12, 2017 at 10:19 AM
 -- Server version: 5.5.55-0ubuntu0.14.04.1
 -- PHP Version: 5.6.30-12~ubuntu14.04.1+deb.sury.org+1
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `myproject`
+-- Database: `gachbetong`
 --
 
 -- --------------------------------------------------------
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `acl` (
   `acl_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `acl_parent` int(11) NOT NULL,
   PRIMARY KEY (`acl_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=123 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=124 ;
 
 --
 -- Dumping data for table `acl`
@@ -124,7 +124,8 @@ INSERT INTO `acl` (`acl_id`, `acl_module`, `acl_controller`, `acl_action`, `acl_
 (119, 'admin', 'grouptemplate', 'edit', 1, 'Cập nhật', 116),
 (120, 'admin', 'grouptemplate', 'delete', 1, 'Xóa', 116),
 (121, 'admin', 'template', 'delete', 1, 'Xóa', 71),
-(122, 'admin', 'template', 'add', 1, 'Thêm', 71);
+(122, 'admin', 'template', 'add', 1, 'Thêm', 71),
+(123, 'admin', 'order', 'delete', 1, 'Xóa', 68);
 
 -- --------------------------------------------------------
 
@@ -276,15 +277,18 @@ CREATE TABLE IF NOT EXISTS `contact` (
   `contact_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `contact_phone` int(11) NOT NULL,
   `contact_content` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+  `contact_date` datetime NOT NULL,
   PRIMARY KEY (`contact_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `contact`
 --
 
-INSERT INTO `contact` (`contact_id`, `contact_fullname`, `contact_email`, `contact_phone`, `contact_content`) VALUES
-(5, 'tu nguyen', 'dd@gmail.com', 1234033187, 'Test lời nhắn trong liên hệ');
+INSERT INTO `contact` (`contact_id`, `contact_fullname`, `contact_email`, `contact_phone`, `contact_content`, `contact_date`) VALUES
+(7, 'test', 'anhtuan150787@yahoo.com', 944112211, '234234', '2017-07-07 19:32:06'),
+(8, 'Test test', 'anhtuan150787@yahoo.com', 944112211, 'test test', '2017-07-10 19:48:06'),
+(9, 'Test test', 'anhtuan150787@yahoo.com', 944112211, 'test test', '2017-07-10 19:49:02');
 
 -- --------------------------------------------------------
 
@@ -318,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `group_acl` (
   `group_admin_id` int(11) NOT NULL,
   `group_acl_status` int(11) NOT NULL,
   PRIMARY KEY (`group_acl_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=183 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=184 ;
 
 --
 -- Dumping data for table `group_acl`
@@ -442,7 +446,8 @@ INSERT INTO `group_acl` (`group_acl_id`, `acl_id`, `group_admin_id`, `group_acl_
 (179, 119, 1, 1),
 (180, 120, 1, 1),
 (181, 121, 1, 1),
-(182, 122, 1, 1);
+(182, 122, 1, 1),
+(183, 123, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -499,15 +504,15 @@ INSERT INTO `group_menu` (`group_menu_id`, `group_admin_id`, `menu_id`, `group_m
 (14, 1, 20, 1),
 (15, 1, 21, 1),
 (16, 1, 22, 1),
-(26, 1, 23, 1),
-(27, 1, 24, 1),
+(26, 1, 23, 0),
+(27, 1, 24, 0),
 (28, 1, 25, 0),
 (29, 1, 26, 0),
 (30, 1, 27, 0),
 (31, 1, 28, 1),
 (32, 1, 29, 1),
 (33, 1, 30, 1),
-(34, 1, 31, 1),
+(34, 1, 31, 0),
 (35, 1, 32, 1),
 (36, 1, 33, 1),
 (37, 1, 34, 0),
@@ -527,14 +532,14 @@ CREATE TABLE IF NOT EXISTS `group_navigation` (
   `group_navigation_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `group_navigation_status` int(1) NOT NULL,
   PRIMARY KEY (`group_navigation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `group_navigation`
 --
 
 INSERT INTO `group_navigation` (`group_navigation_id`, `group_navigation_name`, `group_navigation_status`) VALUES
-(11, 'menu top', 1);
+(12, 'Menu top', 1);
 
 -- --------------------------------------------------------
 
@@ -547,14 +552,17 @@ CREATE TABLE IF NOT EXISTS `group_template` (
   `group_template_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `group_template_status` int(1) NOT NULL,
   PRIMARY KEY (`group_template_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `group_template`
 --
 
 INSERT INTO `group_template` (`group_template_id`, `group_template_name`, `group_template_status`) VALUES
-(5, 'tesest2', 1);
+(6, 'Header', 1),
+(7, 'Banner slide', 1),
+(8, 'Footer', 1),
+(9, 'Liên hê', 1);
 
 -- --------------------------------------------------------
 
@@ -617,14 +625,18 @@ CREATE TABLE IF NOT EXISTS `navigation` (
   `navigation_url_select` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `group_navigation_id` int(11) NOT NULL,
   PRIMARY KEY (`navigation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `navigation`
 --
 
 INSERT INTO `navigation` (`navigation_id`, `navigation_name`, `navigation_url`, `navigation_status`, `navigation_parent`, `navigation_position`, `navigation_url_select`, `group_navigation_id`) VALUES
-(23, 'asdasd', '', 1, 0, 0, 'mua-hang-p-2', 11);
+(24, 'Trang chủ', '/', 1, 0, 1, '', 12),
+(25, 'Giới thiệu', '', 1, 0, 2, 'gioi-thieu-p-3', 12),
+(26, 'Sản phẩm', 'san-pham', 1, 0, 3, '', 12),
+(27, 'Tin tức', '', 1, 0, 4, 'tin-tuc-nc-1', 12),
+(28, 'Liên hệ', 'lien-he', 1, 0, 5, '', 12);
 
 -- --------------------------------------------------------
 
@@ -641,7 +653,18 @@ CREATE TABLE IF NOT EXISTS `news` (
   `news_picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `news_category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`news_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`news_id`, `news_title`, `news_quote`, `news_content`, `news_status`, `news_picture`, `news_category_id`) VALUES
+(1, 'Không tìm thấy chất kích thích trong 19 trâu chọi Đồ Sơn', '<p>19/31 tr&acirc;u chọi ở Đồ Sơn được kết luận &acirc;m t&iacute;nh với chất k&iacute;ch th&iacute;ch, tăng lực, ri&ecirc;ng tr&acirc;u h&uacute;c chết chủ chưa c&oacute; kết quả x&eacute;t nghiệm.</p>', '<p class="Normal" style="text-align: center;"><img src="/pictures/contents/trau-choi-9193-1499575091.jpg" alt="" width="500" height="289" /></p>\r\n<p class="Normal">Ng&agrave;y 9/7, một l&atilde;nh đạo UBND quận Đồ Sơn (Hải Ph&ograve;ng) cho biết 19 trong số 31 con tr&acirc;u tham gia v&ograve;ng loại Lễ hội chọi tr&acirc;u Đồ Sơn 2017 đ&atilde; c&oacute; kết quả &acirc;m t&iacute;nh với chất k&iacute;ch th&iacute;ch, tăng lực.</p>\r\n<p class="Normal">Ri&ecirc;ng mẫu phẩm tr&acirc;u số 18 - con tr&acirc;u h&uacute;c chết chủ của m&igrave;nh - đang chờ kết quả từ Bộ C&ocirc;ng an.</p>\r\n<p class="Normal">Trong số 31 tr&acirc;u thi đấu v&ograve;ng loại, chỉ 19 con được lấy mẫu nước tiểu v&agrave; m&aacute;u do số c&ograve;n lại thua trận bị giết thịt gần hết, ngo&agrave;i ra số &iacute;t chủ tr&acirc;u kh&ocirc;ng hợp t&aacute;c lấy mẫu với l&yacute; do t&acirc;m linh.</p>\r\n<p class="Normal">Trước đ&oacute; s&aacute;ng 1/7, tại&nbsp;v&ograve;ng đấu loại Lễ hội chọi tr&acirc;u quận Đồ Sơn, hơn 30 tr&acirc;u tham gia 16 trận đấu. Đến trận 14, tr&acirc;u số 18 h&uacute;c chủ l&agrave; &ocirc;ng Đinh Xu&acirc;n Hướng ngay trong sới chọi. &Ocirc;ng Hướng tử vong sau nhiều giờ cấp cứu.</p>\r\n<p class="Normal">UBND TP Hải Ph&ograve;ng đ&atilde; chỉ đạo dừng lễ hội chọi tr&acirc;u 2017; x&eacute;t nghiệm chất k&iacute;ch th&iacute;ch với c&aacute;c con tr&acirc;u.&nbsp;Ng&agrave;y 4/7,&nbsp;Ban tổ chức lễ hội đ&atilde; họp b&agrave;n, cho ph&eacute;p chủ tr&acirc;u tự lấy mẫu nước tiểu hoặc mẫu m&aacute;u của tr&acirc;u nh&agrave; rồi gửi l&ecirc;n Trung t&acirc;m văn h&oacute;a quận Đồ Sơn để chuyển tiếp C&ocirc;ng an Hải Ph&ograve;ng.</p>\r\n<p class="Normal">C&aacute;ch thức n&agrave;y được một số chuy&ecirc;n gia nhận x&eacute;t thiếu kh&aacute;ch quan v&agrave; ch&iacute;nh x&aacute;c C&oacute; loại chất k&iacute;ch th&iacute;ch chỉ t&aacute;c dụng trong một đến 5 tiếng. Nếu để 3-4 ng&agrave;y sau mới lấy mẫu, chất k&iacute;ch th&iacute;ch đ&atilde; đủ thời gian giải ph&oacute;ng hết khỏi cơ thể người hoặc động vật.</p>', 1, 'news_1499591580_trau-choi-9193-1499575091.jpg', 1),
+(2, 'Doanh nghiệp quân đội đang kinh doanh những lĩnh vực gì', '<p>D&ugrave; số lượng kh&ocirc;ng qu&aacute; nhiều nhưng c&aacute;c doanh nghiệp quốc ph&ograve;ng đang giữ vị thế lớn ở nhiều lĩnh vực.</p>', '<p class="Normal" style="text-align: center;"><img src="/pictures/contents/22a4e52c-ac31-432e-bf77-0c670f-1558-2415-1499476232.jpg" alt="" width="500" height="351" /></p>\r\n<p class="Normal">Bộ Quốc ph&ograve;ng hiện l&agrave; bộ trực tiếp quản l&yacute; nhiều tập đo&agrave;n, tổng c&ocirc;ng ty với hơn 20 doanh nghiệp trực thuộc. Do đặc th&ugrave; hoạt động, c&aacute;c tập đo&agrave;n, tổng c&ocirc;ng ty thuộc Bộ Quốc ph&ograve;ng hoạt động tr&ecirc;n rất nhiều lĩnh vực kh&aacute;c nhau, từ x&acirc;y dựng - bất động sản, viễn th&ocirc;ng, t&agrave;i ch&iacute;nh, logistics, cơ kh&iacute;, xăng dầu, cho tới n&ocirc;ng nghiệp.</p>\r\n<p class="Normal">Trong đ&oacute;, nhiều doanh nghiệp hoạt động đang trở th&agrave;nh những doanh nghiệp top đầu trong lĩnh vực kinh doanh của m&igrave;nh như Viettel, Ng&acirc;n h&agrave;ng Qu&acirc;n đội, Tổng c&ocirc;ng ty T&acirc;n Cảng S&agrave;i G&ograve;n, Tổng c&ocirc;ng ty Xăng dầu Qu&acirc;n đội hay Tổng c&ocirc;ng ty Đ&ocirc;ng Bắc...</p>\r\n<p class="Normal">Đứng đầu trong danh s&aacute;ch n&agrave;y l&agrave; Tập đo&agrave;n Viễn th&ocirc;ng Qu&acirc;n đội (Viettel). D&ugrave; chỉ l&agrave; doanh nghiệp duy nhất của Bộ Quốc ph&ograve;ng hoạt động trong lĩnh vực viễn th&ocirc;ng nhưng Viettel lại l&agrave; đơn vị đang giữ vị thế lớn nhất tr&ecirc;n thị trường v&agrave; tạo sự c&aacute;ch biệt lớn với hai nh&agrave; mạng đứng sau l&agrave; VinaPhone v&agrave; Mobifone.</p>\r\n<p class="Normal">Năm 2016, Viettel đạt hơn 226.000 tỷ đồng doanh thu, xấp xỉ 10 tỷ USD v&agrave; hơn 43.000 tỷ đồng lợi nhuận trước thuế. Tổng doanh thu của Viettel cũng gấp gần 3 lần doanh thu của VinaPhone v&agrave; Mobifone cộng lại, đồng thời l&agrave; đơn vị đang đ&oacute;ng g&oacute;p v&agrave;o ng&acirc;n s&aacute;ch lớn nhất trong số c&aacute;c doanh nghiệp quốc ph&ograve;ng, đạt tr&ecirc;n 40.000 tỷ đồng.</p>', 1, 'news_1499591668_22a4e52c-ac31-432e-bf77-0c670f-1558-2415-1499476232.jpg', 1),
+(3, 'VTV và SCIC xin rút khỏi dự án tháp truyền hình cao nhất thế giới', '<p>VTV xin tho&aacute;i vốn để tập trung v&agrave;o ph&aacute;t triển truyền h&igrave;nh, trong khi SCIC cho rằng dự &aacute;n kh&ocirc;ng nằm trong danh mục Nh&agrave; nước cần chi phối.&nbsp;</p>', '<div class="fck_detail width_common block_ads_connect">\r\n<p class="Normal">Bộ T&agrave;i ch&iacute;nh vừa c&oacute; c&ocirc;ng văn gửi Văn ph&ograve;ng Ch&iacute;nh phủ b&aacute;o c&aacute;o về dự &aacute;n Th&aacute;p truyền h&igrave;nh Việt Nam v&agrave; phương &aacute;n t&aacute;i cơ cấu vốn đầu tư tại C&ocirc;ng ty cổ phần Th&aacute;p truyền h&igrave;nh Việt Nam.</p>\r\n<p class="Normal">Cơ quan n&agrave;y cho biết, từ cuối th&aacute;ng 5, Đ&agrave;i truyền h&igrave;nh Việt Nam (VTV) đ&atilde; c&oacute; c&ocirc;ng văn đề nghị tho&aacute;i to&agrave;n bộ hoặc phần lớn vốn tại c&ocirc;ng ty tr&ecirc;n. Điều đ&oacute; cũng đồng nghĩa VTV sẽ kh&ocirc;ng tham gia đầu tư dự &aacute;n Th&aacute;p truyền h&igrave;nh Việt Nam - một trong những th&aacute;p theo dự kiến ban đầu sẽ thuộc loại cao nhất thế giới. L&yacute; do của đơn vị n&agrave;y l&agrave; hiện cần tập trung ưu ti&ecirc;n d&agrave;nh nguồn lực đầu tư cho sản xuất chương tr&igrave;nh v&agrave; ph&aacute;t triển kinh doanh trong lĩnh vực truyền h&igrave;nh.&nbsp;</p>\r\n<p class="Normal">Tại c&ocirc;ng văn n&ecirc;u tr&ecirc;n, VTV cũng cho biết Tổng c&ocirc;ng ty Đầu tư v&agrave; Kinh doanh vốn Nh&agrave; nước (SCIC) chủ trương đưa C&ocirc;ng ty cổ phần Th&aacute;p truyền h&igrave;nh Việt Nam v&agrave;o danh mục điều chỉnh triển khai tho&aacute;i vốn (r&uacute;t 100% vốn khỏi c&ocirc;ng ty) do dự &aacute;n kh&ocirc;ng nằm trong danh mục hiện hữu m&agrave; Nh&agrave; nước cần chi phối hoặc đầu tư g&oacute;p vốn trong định hướng ph&aacute;t triển của SCIC.&nbsp;Mặt kh&aacute;c, theo b&aacute;o c&aacute;o của VTV th&igrave; hiện tại dự &aacute;n chưa được Thủ tướng ph&ecirc; duyệt, chưa triển khai thực hiện.</p>\r\n<p class="Normal">Do vậy, Bộ T&agrave;i ch&iacute;nh đề nghị Văn ph&ograve;ng Ch&iacute;nh phủ y&ecirc;u cầu chủ đầu tư dự &aacute;n b&aacute;o c&aacute;o lại Thủ tướng về sự cần thiết phải triển khai dự &aacute;n, mục ti&ecirc;u v&agrave; năng lực thực hiện dự &aacute;n của chủ đầu tư. Trường hợp VTV v&agrave; SCIC kh&ocirc;ng tham gia dự &aacute;n đồng nghĩa với việc Nh&agrave; nước kh&ocirc;ng đầu tư vốn v&agrave;o dự &aacute;n.</p>\r\n<p class="Normal">Bộ T&agrave;i ch&iacute;nh cũng đề nghị VTV v&agrave; SCIC y&ecirc;u cầu c&ocirc;ng ty tổ chức Đại hội đồng cổ đ&ocirc;ng để x&aacute;c định lại sự cần thiết, mục ti&ecirc;u của dự &aacute;n, b&aacute;o c&aacute;o Thủ tướng xem x&eacute;t quyết định.&nbsp;</p>\r\n<p class="Normal">Trước đ&oacute;, dự &aacute;n Th&aacute;p truyền h&igrave;nh Việt Nam được Thủ tướng đồng &yacute; về chủ trương nghi&ecirc;n cứu, hợp t&aacute;c đầu tư từ đầu năm 2015. C&ocirc;ng tr&igrave;nh dự kiến được x&acirc;y dựng tr&ecirc;n khu đất hơn 14 ha tại khu trung t&acirc;m đ&ocirc; thị T&acirc;y Hồ T&acirc;y. Đ&acirc;y được đ&aacute;nh gi&aacute; l&agrave; dự &aacute;n tầm cỡ quốc tế, c&oacute; t&iacute;nh chất đặc th&ugrave; n&ecirc;n cần c&oacute; cơ chế đặc biệt do Thủ tướng quyết định về vốn, h&igrave;nh thức giao đất v&agrave; phương thức chọn nh&agrave; thầu. Dự &aacute;n cũng được &aacute;p dụng ch&iacute;nh s&aacute;ch ưu đ&atilde;i cao nhất theo quy định của ph&aacute;p luật.</p>\r\n<p class="Normal">Tập đo&agrave;n BRG được lựa chọn sau khi Thủ tướng cho ph&eacute;p Đ&agrave;i Truyền h&igrave;nh Việt Nam chọn th&ecirc;m đối t&aacute;c l&agrave; doanh nghiệp tư nh&acirc;n c&oacute; năng lực t&agrave;i ch&iacute;nh v&agrave; kinh doanh, g&oacute;p vốn c&ugrave;ng tham gia dự &aacute;n.</p>\r\n<p class="Normal">Khi đ&oacute;, l&atilde;nh đạo VTV cũng cho biết độ cao của th&aacute;p sẽ l&agrave; 636m, hơn th&aacute;p cao nhất ch&acirc;u &Aacute; hiện nay l&agrave; Sky Tree ở Tokyo - Nhật Bản (634m) v&agrave; th&aacute;p truyền h&igrave;nh Quảng Ch&acirc;u - Trung Quốc (600m) v&agrave; sẽ thuộc loại cao nhất trong số th&aacute;p truyền h&igrave;nh đ&atilde; được x&acirc;y dựng tr&ecirc;n thế giới.&nbsp;</p>\r\n<p class="Normal">C&ocirc;ng ty Cổ phần Th&aacute;p truyền h&igrave;nh được cấp giấy chứng nhận đăng k&yacute; v&agrave;o cuối năm 2015 với số vốn điều lệ 600 tỷ đồng. Theo b&aacute;o c&aacute;o của VTV, đến nay 3 đơn vị g&oacute;p vốn mới g&oacute;p được 150 tỷ đồng.&nbsp;</p>\r\n</div>\r\n<div class="author_mail width_common">&nbsp;</div>', 1, 'news_1499591844_thaptruyenhinh-1499488361_180x108.jpg', 1),
+(4, 'Đông Nam Á sắp soán ngôi Trung Quốc về hút đầu tư hậu cần', '<p>Sự b&ugrave;ng nổ thương mại điện tử c&ugrave;ng chi ph&iacute; sản xuất thấp đang khiến nhiều nh&agrave; sản xuất dịch chuyển từ Trung Quốc sang Đ&ocirc;ng Nam &Aacute;.</p>', '<p class="Normal">Trưởng bộ phận Nghi&ecirc;n cứu Thị trường vốn Đ&ocirc;ng Nam &Aacute; Jones Lang LaSalle (JLL), Regina Lim cho biết điểm đến của ng&agrave;nh hậu cần đang c&oacute; sự dịch chuyển mạnh mẽ từ Trung Quốc sang Đ&ocirc;ng Nam &Aacute;. Nguy&ecirc;n nh&acirc;n chủ yếu l&agrave; b&agrave;i to&aacute;n chi ph&iacute; cạnh tranh.</p>\r\n<p class="Normal">Mức lương của Trung Quốc hiện cao hơn 3-4 lần so với trước đ&acirc;y trong khi mức lương nội địa tối thiểu ở một số nước Đ&ocirc;ng Nam &Aacute; lại rẻ hơn. Điều n&agrave;y đang thu h&uacute;t c&aacute;c nh&agrave; sản xuất thiết lập nh&agrave; m&aacute;y tại đ&acirc;y nhằm phục vụ cho số đ&ocirc;ng người ti&ecirc;u d&ugrave;ng ng&agrave;y c&agrave;ng tăng l&ecirc;n. Sản lượng sản xuất của Indonesia c&oacute; thể tăng l&ecirc;n 6,5% trong nửa thập ni&ecirc;n tới, so với 5% hiện tại. C&ograve;n Việt Nam lại l&agrave; quốc gia nổi bật với lực lượng lao động l&agrave;nh nghề v&agrave; chi ph&iacute; tương đối thấp.</p>\r\n<p class="Normal" style="text-align: center;"><img src="/pictures/contents/a-tb-bds-hau-can-kcn-4782-1499432648.jpg" alt="" width="500" height="300" /></p>\r\n<p class="Normal">Theo chuy&ecirc;n gia JLL, quy m&ocirc; thị trường của Đ&ocirc;ng Nam &Aacute; v&agrave; tiềm năng ng&agrave;nh ti&ecirc;u d&ugrave;ng tại đ&acirc;y đang cực kỳ hấp dẫn. Đến năm 2050, Hiệp hội c&aacute;c Quốc gia Đ&ocirc;ng Nam &Aacute; (ASEAN) sẽ c&oacute; quy m&ocirc; tương đương với ch&acirc;u &Acirc;u, trở th&agrave;nh khu kinh tế lớn thứ tư thế giới, sau Trung Quốc, Ấn Độ v&agrave; Mỹ. C&aacute;c nước Đ&ocirc;ng Nam &Aacute; sẽ trở th&agrave;nh c&aacute;c cường quốc; Indonesia được dự b&aacute;o l&agrave; nền kinh tế lớn thứ tư tr&ecirc;n thế giới, trong khi Philippines v&agrave; Việt Nam đứng thứ 19 v&agrave; 20.</p>\r\n<p class="Normal">Nghi&ecirc;n cứu của Google v&agrave; Temasek nhấn mạnh th&ecirc;m tiềm năng của khu vực, dự b&aacute;o rằng thị trường thương mại điện tử c&oacute; thể tăng trưởng từ 5,5 tỷ USD năm 2015 l&ecirc;n 88 tỷ USD năm 2025, trong đ&oacute; Indonesia chiếm 52% thị trường.</p>\r\n<p class="Normal">Nh&acirc;n khẩu học trẻ trong khu vực sẽ sớm th&uacute;c đẩy thời đại của thương mại điện tử. Giới trẻ ở Đ&ocirc;ng Nam &Aacute; rất th&agrave;nh thạo trong việc sử dụng c&aacute;c phương tiện truyền th&ocirc;ng x&atilde; hội v&agrave; họ đang sử dụng c&ocirc;ng nghệ để kh&aacute;m ph&aacute; nhiều hơn. Người ti&ecirc;u d&ugrave;ng dần bỏ qua m&aacute;y t&iacute;nh v&agrave; đang sử dụng điện thoại th&ocirc;ng minh để mua sắm. 20-30% người ở Đ&ocirc;ng Nam &Aacute; đ&atilde; mua sắm trực tuyến qua internet mỗi th&aacute;ng, tương đương Mỹ hoặc Anh.</p>\r\n<p class="Normal">Thị trường tiềm năng n&agrave;y đ&atilde; nằm trong tầm ngắm của c&aacute;c &ocirc;ng lớn thương mại điện tử. Alibaba vừa gia tăng cổ phần của m&igrave;nh trong trang thương mại điện tử lớn nhất khu vực &ndash; Lazada Group, đưa tổng số cổ phần l&ecirc;n 95% v&agrave; ra mắt nền tảng Tmall đang thịnh h&agrave;nh ở Malaysia v&agrave; Singapore. Tập đo&agrave;n n&agrave;y cũng đang thiết lập c&aacute;c trung t&acirc;m hậu cần ở Malaysia v&agrave; Th&aacute;i Lan.</p>\r\n<p class="Normal">Th&aacute;ng trước, Reebonz - thương hiệu thương mại điện tử cao cấp đ&atilde; khai trương một Trung t&acirc;m Thương mại Điện tử c&oacute; diện t&iacute;ch 18.580 m2 tại Singapore, trong khi Singpost đ&atilde; giới thiệu một trụ sở hậu cần thương mại điện tử trị gi&aacute; 131 triệu USD tại C&ocirc;ng vi&ecirc;n Logistics Tampines ở Singapore.</p>\r\n<p class="Normal" style="text-align: center;">&nbsp;</p>', 1, 'news_1499592065_a-tb-bds-hau-can-kcn-4782-1499432648.jpg', 1),
+(5, 'Sản lượng Ôtô Trường Hải giảm hơn 5.200 xe', '<p>Thị trường &ocirc;t&ocirc; giảm nhẹ trong nửa đầu năm 2017 v&agrave; Trường Hải l&agrave; nh&agrave; sản xuất c&oacute; số giảm tuyệt đối lớn nhất, hơn 5.200 xe.</p>', '<p class="Normal">Theo số liệu của Hiệp hội c&aacute;c nh&agrave; sản xuất &ocirc;t&ocirc; Việt Nam (VAMA), nh&agrave; sản xuất Trường Hải b&aacute;n được hơn 47.800 xe trong 6 th&aacute;ng đầu năm. So với c&ugrave;ng kỳ 2016, doanh số giảm 10%, tương đương với hơn 5.200 xe. Đ&acirc;y l&agrave; mức giảm cao nhất trong c&aacute;c nh&agrave; sản xuất &ocirc;t&ocirc; nửa đầu năm nay do Trường Hải cũng l&agrave; đơn vị c&oacute; sản lượng đứng đầu thị trường.</p>\r\n<p class="Normal">Tất cả c&aacute;c thương hiệu m&agrave; Trường Hải lắp r&aacute;p đều ghi nhận doanh số giảm. Trong đ&oacute;, Kia giảm 12%, tương đương hơn 1.600 xe; Mazda giảm 8%, tương đương gần 1.200 xe. Ri&ecirc;ng ti&ecirc;u thụ của Peugeot giảm đến 61%, tương đương hơn 200 xe.</p>\r\n<p class="Normal">T&igrave;nh h&igrave;nh kinh doanh của Trường Hải suy giảm diễn ra trong bối cảnh thị trường &ocirc;t&ocirc; Việt Nam nửa đầu năm kh&ocirc;ng c&oacute; tăng trưởng, thậm ch&iacute; l&agrave; giảm nhẹ. VAMA cho hay, ti&ecirc;u thụ xe to&agrave;n thị trường s&aacute;u th&aacute;ng qua đạt khoảng 134.200 chiếc, giảm 1% so với c&ugrave;ng kỳ năm ngo&aacute;i.</p>\r\n<p class="Normal">&nbsp;</p>\r\n<p class="Normal" style="text-align: center;"><img src="/pictures/contents/thaco-2387-1499402334.jpg" alt="" width="500" height="302" /></p>\r\n<p class="Normal">Đ&acirc;y kh&ocirc;ng phải l&agrave; kết quả bất ngờ khi thị trường li&ecirc;n tục ghi nhận những dấu hiệu kh&ocirc;ng mấy s&aacute;ng sủa trong v&agrave;i th&aacute;ng gần đ&acirc;y. Hồi th&aacute;ng 4/2016, sản lượng xe b&aacute;n ra bỗng dưng lao dốc kỳ lạ, giảm đến 15% so với th&aacute;ng 4/2016. Th&aacute;ng 6 vừa rồi, ti&ecirc;u thụ &ocirc;t&ocirc; c&oacute; phần ổn định hơn nhưng cũng giảm 0,2% so với th&aacute;ng 6/2016.</p>\r\n<p class="Normal">Theo nhiều l&yacute; giải, ti&ecirc;u thụ &ocirc;t&ocirc; đang c&oacute; chiều hướng sụt giảm một phần do nhiều người đang c&oacute; t&acirc;m l&yacute; đợi đến đầu năm 2018, thời điểm thuế nhập khẩu &ocirc;t&ocirc; nguy&ecirc;n chiếc từ khu vực ASEAN v&agrave;o Việt Nam giảm xuống c&ograve;n 0% so với mức 30% như hiện nay. Tuy nhi&ecirc;n, trong một dự b&aacute;o đưa ra cuối th&aacute;ng rồi, chủ tịch VAMA Toru Kinoshita cho rằng, thị trường nửa cuối năm vẫn sẽ tăng trưởng. Do đ&oacute;, VAMA giữ nguy&ecirc;n dự b&aacute;o ti&ecirc;u thụ &ocirc;t&ocirc; tăng 10% trong năm 2017 đ&atilde; được đưa ra đầu năm.</p>\r\n<p class="Normal">X&eacute;t kỹ hơn, thị trường 6 th&aacute;ng qua suy giảm sản lượng ở mảng xe lắp r&aacute;p trong nước, với mức 6%. Trong khi đ&oacute;, sản lượng xe nhập khẩu b&aacute;n ra vẫn tăng 15%. Kh&aacute;c với Trường Hải, h&agrave;ng loạt đơn vị vừa sản xuất vừa nhập khẩu đều b&aacute;o c&aacute;o sản lượng ti&ecirc;u thụ tăng.</p>\r\n<p class="Normal">So với nửa đầu năm ngo&aacute;i, Toyota b&aacute;n được nhiều hơn gần 4.800 xe, tương đương tăng trưởng 19%. Mercedes-Benz cũng b&aacute;n th&ecirc;m được hơn 900 chiếc, tăng trưởng đến 37%. GM Việt Nam v&agrave; Mitsubishi cũng tăng ở mức hai con số. Sản lượng xe ti&ecirc;u thụ của Ford tăng nhưng khi&ecirc;m tốn ở mức 4%.</p>\r\n<p class="Normal">Li&ecirc;n tục những th&aacute;ng qua, để thu h&uacute;t người mua, nhiều h&atilde;ng li&ecirc;n doanh lắp r&aacute;p &ocirc;t&ocirc; trong nước kh&ocirc;ng ngần ngại đưa ra c&aacute;c chương tr&igrave;nh khuyến m&atilde;i, giảm gi&aacute; l&ecirc;n đến gần trăm triệu đồng mỗi xe, một động th&aacute;i chưa c&oacute; tiền lệ trong ng&agrave;nh kinh doanh &ocirc;t&ocirc; v&agrave;i năm trước đ&acirc;y.</p>\r\n<p class="Normal">Tuy nhi&ecirc;n, chủ tịch VAMA cũng nhận định, c&aacute;c h&atilde;ng v&agrave; đại l&yacute; sẽ kh&oacute; l&ograve;ng giảm th&ecirc;m trong&nbsp;6 th&aacute;ng c&ograve;n lại v&igrave; c&aacute;c mức gi&aacute; hiện nay đ&atilde; gần như "chạm đ&aacute;y" đối với c&aacute;c nh&agrave; lắp r&aacute;p trong nước.</p>', 1, 'news_1499592005_thaco-2387-1499402334.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -655,7 +678,14 @@ CREATE TABLE IF NOT EXISTS `news_category` (
   `news_category_parent` int(11) NOT NULL,
   `news_category_status` int(11) NOT NULL,
   PRIMARY KEY (`news_category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `news_category`
+--
+
+INSERT INTO `news_category` (`news_category_id`, `news_category_name`, `news_category_parent`, `news_category_status`) VALUES
+(1, 'Tin tức', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -761,15 +791,14 @@ CREATE TABLE IF NOT EXISTS `page` (
   `page_content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `page_status` int(11) NOT NULL,
   PRIMARY KEY (`page_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `page`
 --
 
 INSERT INTO `page` (`page_id`, `page_title`, `page_content`, `page_status`) VALUES
-(1, 'Giới thiệu', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur turpis lorem, maximus id luctus nec, suscipit non quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut eleifend malesuada aliquam. Praesent tincidunt dui velit, vitae feugiat nulla pulvinar ac. Nunc auctor volutpat urna eget posuere. Nulla posuere ex sit amet libero rutrum fringilla. Aliquam a augue vulputate, viverra diam a, varius nibh. Donec consectetur aliquet justo et suscipit. Etiam sed massa nunc.</p>', 1),
-(2, 'Mua hàng', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur turpis lorem, maximus id luctus nec, suscipit non quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut eleifend malesuada aliquam. Praesent tincidunt dui velit, vitae feugiat nulla pulvinar ac. Nunc auctor volutpat urna eget posuere. Nulla posuere ex sit amet libero rutrum fringilla. Aliquam a augue vulputate, viverra diam a, varius nibh. Donec consectetur aliquet justo et suscipit. Etiam sed massa nunc.</p>', 1);
+(3, 'Giới thiệu', '<p style="text-align: center;"><strong><span style="font-size: 12pt; color: #ff0000;">C&Ocirc;NG TY TNHH SẢN XUẤT V&Agrave; THƯƠNG MẠI VLXD TO&Agrave;N PH&Aacute;T H&Agrave; NỘI&nbsp;</span></strong></p>\r\n<div class="pt20 bold">\r\n<p><cite>C&ocirc;ng ty TNHH sản xuất v&agrave; thương mại VLXD To&agrave;n Ph&aacute;t H&agrave; Nội được th&agrave;nh lập tại x&atilde; Ngọc Mỹ, huyện Quốc Oai, tp H&agrave; Nội. Lĩnh vực hoạt động ch&iacute;nh&nbsp; l&agrave; sản xuất v&agrave; kinh doanh vật liệu x&acirc;y dựng, với sản phẩm cốt l&otilde;i l&agrave; gạch kh&ocirc;ng nung Terrazzo. Đ&acirc;y l&agrave; loại vật liệu đang được sử dụng rộng r&atilde;i ở nhiều loại c&ocirc;ng tr&igrave;nh với gi&aacute; th&agrave;nh kh&ocirc;ng cao.</cite></p>\r\n<p><cite>Gạch Terrazzo l&agrave; loại gạch c&oacute; nhiều t&iacute;nh năng rất ưu việt: So với đ&aacute; tự nhi&ecirc;n, Gạch Terrazzo nhẹ hơn, kinh tế hơn, m&agrave;u sắc phong ph&uacute;, kh&ocirc;ng bị đơn điệu như đ&aacute;, c&oacute; thể v&aacute;t cạnh soi r&atilde;nh để chống trơn với độ ch&iacute;nh x&aacute;c cao. So với gạch Ceramic, Gạch Terrazzo c&oacute; khả năng chịu tải trọng cao, chịu m&agrave;i m&ograve;n tốt, chống nước, kh&ocirc;ng cong v&ecirc;nh, dung sai k&iacute;ch thước nhỏ, m&agrave;u sắc đồng đều, mạch l&aacute;t đều, tự đ&aacute;nh b&oacute;ng l&agrave;m mới bề mặt sau một thời gian sử dụng. Ngo&agrave;i ra, đ&acirc;y cũng l&agrave; loại gạch c&oacute; t&iacute;nh ứng dụng cao, c&oacute; thể sử dụng l&agrave;m s&acirc;n vườn, vỉa h&egrave;, lối đi, sảnh &hellip; ở rất nhiều loại c&ocirc;ng tr&igrave;nh như văn ph&ograve;ng, c&aacute;c nh&agrave; cao ốc, resort, kh&aacute;ch sạn&hellip;..<br /><br />X&aacute;c định r&otilde; mục ti&ecirc;u cung cấp sản phẩm&nbsp;&nbsp;cho mọi loại đối tượng từ c&aacute;c hộ gia đ&igrave;nh tới c&aacute;c c&ocirc;ng tr&igrave;nh nh&agrave; cao tầng, khu đ&ocirc; thị&hellip; C&ocirc;ng ty đ&atilde; đầu tư hệ thống d&acirc;y chuyền m&aacute;y m&oacute;c thiết bị sản xuất c&ocirc;ng nghiệp - hiện đại, tr&igrave;nh độ tự động ho&aacute; cao, sản lượng sản xuất cao v&agrave; ổn định. Sản phẩm Gạch Terrazzo của C&ocirc;ng ty </cite><em>đ&atilde;&nbsp;được chứng nhận đạt &nbsp;chuẩn&nbsp;chất lượng theo&nbsp;<strong>TCVN 7744:2013</strong></em></p>\r\n</div>', 1);
 
 -- --------------------------------------------------------
 
@@ -790,7 +819,21 @@ CREATE TABLE IF NOT EXISTS `product` (
   `product_type_new` int(1) NOT NULL,
   `product_type_sale` int(1) NOT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `product_name`, `product_code`, `product_price`, `product_description`, `product_status`, `product_picture`, `product_category_id`, `product_price_old`, `product_type_new`, `product_type_sale`) VALUES
+(1, 'Gạch bê tông', '', 0, '<p>K&iacute;ch Thước: 30x30 cm/ 40x40 cm<br />M&agrave;u: Xanh</p>\r\n<p>Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.</p>', 1, 'product_1499349159_X1.jpg', 1, 0, 1, 1),
+(2, 'Gạch bê tông', '', 0, '<p>K&iacute;ch Thước: 30x30 cm/ 40x40 cm<br />M&agrave;u: Xanh</p>\r\n<p>Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.</p>', 1, 'product_1499261717_TP-129-G09V.jpg', 1, 0, 1, 1),
+(3, 'Gạch bê tông', '', 0, '<p>K&iacute;ch Thước: 30x30 cm/ 40x40 cm<br />M&agrave;u: Xanh</p>\r\n<p>Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.</p>', 1, 'product_1499261731_TP-141-G07D_GẠCH TERRAZZO.jpg', 1, 0, 1, 1),
+(4, 'Gạch bê tông', '', 0, '<p>K&iacute;ch Thước: 30x30 cm/ 40x40 cm<br />M&agrave;u: Xanh</p>\r\n<p>Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.</p>', 1, 'product_1499261744_TP-141-G07G_GẠCH TERRAZZO.jpg', 1, 0, 1, 1),
+(5, 'Gạch bê tông', '', 0, '<p>K&iacute;ch Thước: 30x30 cm/ 40x40 cm<br />M&agrave;u: Xanh</p>\r\n<p>Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.</p>', 1, 'product_1499261755_TP-165-G16V_GẠCH TERRAZZO.jpg', 1, 0, 1, 1),
+(6, 'Gạch bê tông', '', 0, '<p>K&iacute;ch Thước: 30x30 cm/ 40x40 cm<br />M&agrave;u: Xanh</p>\r\n<p>Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.</p>', 1, 'product_1499261771_TP-1001-G06G_GẠCH TERRAZZO.jpg', 1, 0, 1, 1),
+(7, 'Gạch bê tông', '', 0, '<p>K&iacute;ch Thước: 30x30 cm/ 40x40 cm<br />M&agrave;u: Xanh</p>\r\n<p>Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.</p>', 1, 'product_1499349126_TP-2046-G18D GHÉP 8 VIÊN (1).JPG', 1, 0, 1, 1),
+(8, 'Gạch bê tông', '', 0, '<p>K&iacute;ch Thước: 30x30 cm/ 40x40 cm<br />M&agrave;u: Xanh</p>\r\n<p>Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.Gạch nội thất l&agrave; loại gạch phẳng c&oacute; nổi mặt đ&aacute; thường được d&ugrave;ng cho c&aacute;c hội trường lớn, h&agrave;nh lang v&agrave; thậm ch&iacute; ph&ograve;ng l&agrave;m việc tại c&aacute;c t&ograve;a nh&agrave; lớn hoặc c&aacute;c địa điểm c&ocirc;ng cộng như bệnh viện, trường học, cơ quan h&agrave;nh ch&iacute;nh &hellip;. Ưu điểm của loại gạch n&agrave;y l&agrave; dễ lau ch&ugrave;i v&agrave; v&acirc;n đ&aacute; s&aacute;ng đẹp.</p>', 1, 'product_1499261800_TP-5393-G17X.jpg', 1, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -804,7 +847,20 @@ CREATE TABLE IF NOT EXISTS `product_category` (
   `product_category_parent` int(11) NOT NULL,
   `product_category_status` int(11) NOT NULL,
   PRIMARY KEY (`product_category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `product_category`
+--
+
+INSERT INTO `product_category` (`product_category_id`, `product_category_name`, `product_category_parent`, `product_category_status`) VALUES
+(1, 'Gạch nội thất', 0, 1),
+(2, 'Gạch ngoại thất', 0, 1),
+(3, 'Gạch Block', 0, 1),
+(4, 'Gạch Tezzarro', 0, 1),
+(5, 'Gạch ốp Taluy', 0, 1),
+(6, 'Gạch bờ kè', 0, 1),
+(7, 'Gạch xây không nung', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -822,14 +878,20 @@ CREATE TABLE IF NOT EXISTS `template` (
   `group_template_id` int(11) NOT NULL,
   `template_status` int(1) NOT NULL,
   PRIMARY KEY (`template_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `template`
 --
 
 INSERT INTO `template` (`template_id`, `template_name`, `template_content`, `template_picture`, `template_url`, `template_type`, `group_template_id`, `template_status`) VALUES
-(9, 'asds', '', '', '', '', 5, 1);
+(10, 'Logo', '', 'news_1499260617_logo.png', '', '', 6, 1),
+(11, 'Nội dung footer', '<p>C&Ocirc;NG TY TNHH SẢN XUẤT V&Agrave; THƯƠNG MẠI VLXD TO&Agrave;N PH&Aacute;T H&Agrave; NỘI<br /> Địa chỉ: X&oacute;m Cốc - Ph&uacute; Mỹ - Ngọc Mỹ - Quốc Oai - H&agrave; Nội<br /> Phone: 0984.038.959/ 0433 844 515 DĐ: 0984.038.959<br /> Email: toanphathanoi.ltd@gmail.comWebsite: www.toanphathanoi.com</p>', '', '', '', 8, 1),
+(12, 'Banner 1', '<p>Bề mặt b&oacute;ng đẹp, nổi khối, v&acirc;n c&oacute; chiều s&acirc;u. Mẫu m&atilde; đa dạng, tinh tế về kiểu d&aacute;ng : rẻ quạt, mai r&ugrave;a, cữ thập.... Ph&ugrave; hợp với xu hướng thiết kế hiện đại với mức gi&aacute; hợp l&yacute;. Gạch To&agrave;n Ph&aacute;t lu&ocirc;n th&acirc;n thiện với mọi c&ocirc;ng tr&igrave;nh</p>', 'news_1499260735_banner1.jpg', '', '', 7, 1),
+(13, 'Banner 2', '<p>Bề mặt b&oacute;ng đẹp, nổi khối, v&acirc;n c&oacute; chiều s&acirc;u. Mẫu m&atilde; đa dạng, tinh tế về kiểu d&aacute;ng : rẻ quạt, mai r&ugrave;a, cữ thập.... Ph&ugrave; hợp với xu hướng thiết kế hiện đại với mức gi&aacute; hợp l&yacute;. Gạch To&agrave;n Ph&aacute;t lu&ocirc;n th&acirc;n thiện với mọi c&ocirc;ng tr&igrave;nh</p>', 'news_1499260916_banner2.png', '', '', 7, 1),
+(14, 'Banner 3', '<p>Bề mặt b&oacute;ng đẹp, nổi khối, v&acirc;n c&oacute; chiều s&acirc;u. Mẫu m&atilde; đa dạng, tinh tế về kiểu d&aacute;ng : rẻ quạt, mai r&ugrave;a, cữ thập.... Ph&ugrave; hợp với xu hướng thiết kế hiện đại với mức gi&aacute; hợp l&yacute;. Gạch To&agrave;n Ph&aacute;t lu&ocirc;n th&acirc;n thiện với mọi c&ocirc;ng tr&igrave;nh</p>', 'news_1499260926_banner3.jpg', '', '', 7, 1),
+(15, 'Banner 4', '<p>Bề mặt b&oacute;ng đẹp, nổi khối, v&acirc;n c&oacute; chiều s&acirc;u. Mẫu m&atilde; đa dạng, tinh tế về kiểu d&aacute;ng : rẻ quạt, mai r&ugrave;a, cữ thập.... Ph&ugrave; hợp với xu hướng thiết kế hiện đại với mức gi&aacute; hợp l&yacute;. Gạch To&agrave;n Ph&aacute;t lu&ocirc;n th&acirc;n thiện với mọi c&ocirc;ng tr&igrave;nh</p>', 'news_1499260937_banner4.jpg', '', '', 7, 1),
+(16, 'Thông tin liên hệ', '<p><strong><span style="font-size: 10pt;">C&Ocirc;NG TY TNHH SẢN XUẤT V&Agrave; THƯƠNG MẠI VLXD TO&Agrave;N PH&Aacute;T H&Agrave; NỘI</span></strong></p>\r\n<p><span style="font-size: 10pt;">Địa chỉ: X&oacute;m Cốc - Ph&uacute; Mỹ - Ngọc Mỹ - Quốc Oai - H&agrave; Nội</span></p>\r\n<p><span style="font-size: 10pt;">Số điện thoại: 0984.038.959/ 0433 844 515<span class="pl20">DĐ: 0984.038.959</span></span></p>\r\n<p><span style="font-size: 10pt;">Email: toanphathanoi.ltd@gmail.com<span class="pl20">Website: www.toanphathanoi.com</span></span></p>', '', '', '', 9, 1);
 
 -- --------------------------------------------------------
 
@@ -852,7 +914,7 @@ CREATE TABLE IF NOT EXISTS `website` (
 --
 
 INSERT INTO `website` (`website_id`, `website_title`, `website_description`, `website_keyword`, `website_name`, `website_icon`) VALUES
-(1, 'kaylee', 'kaylee', 'asaskaylee', 'kaylee', 'favico_1495428489_17438229_191890364645222_7140066770898911232_n.jpg');
+(1, 'Gạch bê tông', 'Gạch bê tông', 'Gạch bê tông', 'Gạch bê tông', 'favico_1495428489_17438229_191890364645222_7140066770898911232_n.jpg');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

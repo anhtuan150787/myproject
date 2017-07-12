@@ -1,21 +1,9 @@
-<div class="desktop-12 mobile-3" id="nav-border"></div>
-<?php echo $breadcrumbs; ?>
-
-<div id="shopify-section-collection-template" class="shopify-section">
-    <div data-section-id="collection-template">
-        <div id="collection-description" class="desktop-12 mobile-3">
-            <h1>Sản phẩm mới</h1>
-        </div>
-        <div class="clear"></div>
-
-        <?php echo $this->partial('home/partial/product-left'); ?>
-
-
-        <div class="desktop-10 tablet-4 mobile-3">
-            <div id="product-loop">
-                <?php echo $this->partial('home/partial/product-item', array('products' => $productData)); ?>
-            </div>
-            <?php echo $this->paginationControl($products, 'sliding', 'home/partial/paginator', array('url' => $this->url('product-all'))); ?>
+<div class="col-md-12">
+    <div class="panel panel-primary group-item">
+        <div class="panel-heading"><h3 class="panel-title">Sản phẩm</h3></div>
+        <div class="panel-body">
+            <?php echo $this->partial('home/partial/product-item', array('products' => $products)); ?>
         </div>
     </div>
+    <?php echo $this->paginationControl($products, 'sliding', 'home/partial/paginator', array('url' => $this->url('home-product-category', array('name' => $name, 'id' => $id)))); ?>
 </div>

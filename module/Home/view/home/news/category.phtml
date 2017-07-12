@@ -1,11 +1,23 @@
-<div class="desktop-12 mobile-3" id="nav-border"></div>
-<?php echo $breadcrumbs; ?>
-<div id="page" class="desktop-12 tablet-6 mobile-3 page-template" data-section-id="">
-
-    <h1><?php echo $this->escapeHtml($newsCategory['news_category_name']); ?></h1>
-
-    <ul id="featured-posts">
-        <?php echo $this->partial('home/partial/blog-item', array('news' => $news)); ?>
-    </ul>
-    <?php echo $this->paginationControl($news, 'sliding', 'home/partial/paginator', array('url' => $this->url('home-news-category', array('name' => $name, 'id' => $id)))); ?>
+<div class="col-md-12">
+    <div class="panel panel-primary group-item">
+        <div class="panel-heading"><h3 class="panel-title"><?php echo $this->escapeHtml($newsCategory['news_category_name']);?></h3></div>
+        <div class="panel-body">
+            <?php foreach($news as $v) {?>
+                <div class="media">
+                    <div class="col-md-2 col-xs-12 col-sm-12 media-left" style="padding-right: 10px">
+                        <a href="<?php echo $this->url('home-news-detail', array('name' => $this->functions()->formatTitle($v['news_title']), 'id' => $v['news_id']));?>">
+                            <img class="media-object thumbnail" src="<?php echo $this->serverUrl() . '/public/thumbs/timthumb.php?src=' . $this->basePath() . '/public/pictures/news/' . $v['news_picture'];?>&w=130&h=108">
+                        </a>
+                    </div>
+                    <div class="col-md-10 col-xs-12 col-sm-12 media-body" style="padding-left: 10px">
+                        <a href="<?php echo $this->url('home-news-detail', array('name' => $this->functions()->formatTitle($v['news_title']), 'id' => $v['news_id']));?>"><h5 class="media-heading"><?php echo $this->escapeHtml($v['news_title']);?></h5></a>
+                        <?php echo $v['news_quote'];?>
+                    </div>
+                </div>
+            <?php }?>
+            <div class="col-md-12 col-sm-12" style="text-align:right;">
+                <?php echo $this->paginationControl($news, 'sliding', 'home/partial/paginator', array('url' => $this->url('home-news-category', array('name' => $name, 'id' => $id)))); ?>
+            </div>
+        </div>
+    </div>
 </div>

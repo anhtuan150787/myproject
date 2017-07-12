@@ -266,40 +266,6 @@ return array(
                     ],
                 ),
             ],
-            'home-structure' => [
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/home-structure',
-                    'defaults' => [
-                        '__NAMESPACE__' => 'Home\Controller',
-                        'controller' => 'Home\Controller\Structure',
-                        'action' => 'index',
-                    ],
-                ),
-            ],
-            'home-structure-confirm' => [
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/home-structure-confirm',
-                    'defaults' => [
-                        '__NAMESPACE__' => 'Home\Controller',
-                        'controller' => 'Home\Controller\Structure',
-                        'action' => 'confirm',
-                    ],
-                ),
-            ],
-            'home-structure-process' => [
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/home-structure-process',
-                    'defaults' => [
-                        '__NAMESPACE__' => 'Home\Controller',
-                        'controller' => 'Home\Controller\Structure',
-                        'action' => 'process',
-                    ],
-                ),
-            ],
-
         ),
     ),
     'controllers' => array(
@@ -311,7 +277,6 @@ return array(
             'Home\Controller\Order' => 'Home\Controller\OrderController',
             'Home\Controller\Contact' => 'Home\Controller\ContactController',
             'Home\Controller\Captcha' => 'Home\Controller\CaptchaController',
-            'Home\Controller\Structure' => 'Home\Controller\StructureController',
         ),
     ),
     'translator' => [
@@ -336,7 +301,6 @@ return array(
             'layout/layout'             => __DIR__ . '/../view/layout/home.phtml',
             'home/partial/paginator' => __DIR__ . '/../view/partial/paginator.phtml',
             'home/partial/product-item' => __DIR__ . '/../view/partial/product-item.phtml',
-            'home/partial/blog-item' => __DIR__ . '/../view/partial/blog-item.phtml',
             'home/layout/footer' => __DIR__ . '/../view/layout/footer.phtml',
             'home/layout/header' => __DIR__ . '/../view/layout/header.phtml',
             'home/layout/nav' => __DIR__ . '/../view/layout/nav.phtml',

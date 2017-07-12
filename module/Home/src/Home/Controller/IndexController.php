@@ -25,46 +25,13 @@ class IndexController extends AbstractActionController
         $view = new ViewModel();
 
         $productModel = $this->getServiceLocator()->get('FrontProductModel');
-        $newsModel = $this->getServiceLocator()->get('FrontNewsModel');
-        $templateModel = $this->getServiceLocator()->get('FrontTemplateModel');
 
-        //Giao dien
-        $template = $templateModel->getAll();
-        $templateData = [];
-        foreach($template as $v) {
-            $templateData[$v['template_id']] = $v;
-        }
+        $productHots = $productModel->getProductHot();
+        $productNews = $productModel->getProductNew();
 
-        //San pham moi - 6 cai
-        $homeProductNew = $productModel->getHomeNewFront(6);
+        $view->setVariables(['productHots' => $productHots, 'productNews' => $productNews]);
 
-        //Blog moi - 3 cai
-        $homeBlogNew = $newsModel->getHomeNewFront(3);
-
-        $view->setVariables([
-            'homeProductNew' => $homeProductNew,
-            'homeBlogNew' => $homeBlogNew,
-            'template' => $templateData,
-        ]);
         return $view;
     }
 
-    public function emailCustomerAction()
-    {
-        $session = new Container('email_customer');
-        $email = $this->params()->fromPost('email');
-        $emailCustomerModel = $this->getServiceLocator()->get('FrontEmailCustomerModel');
-
-        if (!$session->offsetExists('email')) {
-            $params = [];
-            $params['email_customer_name'] = $email;
-            $emailCustomerModel->save($params);
-
-            $session->offsetSet('email', $email);
-        }
-
-        echo json_encode(array('return' => 1));
-
-        return $this->response;
-    }
 }

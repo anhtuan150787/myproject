@@ -24,16 +24,9 @@ class PageController extends AbstractActionController
 
         $page = $model->fetchRow($id);
 
-        $breadcrumbs = '<div id="breadcrumb" class="desktop-12">
-                            <a href="./" class="homepage-link">Trang chủ</a>
-                            <span class="separator">»</span>
-                            <span class="page-title">' . $page['page_title'] . '</span>
-
-                        </div>';
-
         $view->setVariables([
             'page' => $page,
-            'breadcrumbs' => $breadcrumbs,
+
         ]);
 
         return $view;

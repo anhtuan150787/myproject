@@ -49,15 +49,21 @@ class Product {
         return $result->current();
     }
 
-    public function getHomeNewFront($limit)
-    {
-        $sql = 'SELECT * FROM product WHERE product_status = 1 ORDER BY product_id DESC LIMIT ' . $limit;
+    public function getProductHot() {
+        $sql = 'SELECT * FROM product WHERE product_status = 1 AND product_type_sale = 1 ORDER BY product_id DESC LIMIT 8';
         $statement = $this->tableGateway->getAdapter()->query($sql);
         $result = $statement->execute();
 
-        $data = $this->getProductDetailByResultList($result);
+        return $result;
+    }
 
-        return $data;
+    public function getProductNew()
+    {
+        $sql = 'SELECT * FROM product WHERE product_status = 1 AND product_type_new = 1 ORDER BY product_id DESC LIMIT 8';
+        $statement = $this->tableGateway->getAdapter()->query($sql);
+        $result = $statement->execute();
+
+        return $result;
     }
 
     public function getListProductByCategory($productCategoryId = null, $search = array())
@@ -67,10 +73,7 @@ class Product {
             'product_category', 'product.product_category_id=product_category.product_category_id',
             array('product_category_name'), 'left'
         );
-        $select->join(
-            'product_detail', 'product.product_id=product_detail.product_id',
-            array('color_id', 'size_id'), 'left'
-        );
+
 
         $predicate = new  \Zend\Db\Sql\Where();
         if ($productCategoryId != null) {
@@ -171,7 +174,7 @@ class Product {
 
     public function getProductOther($productCategoryId, $productId)
     {
-        $sql = 'SELECT * FROM product WHERE product_category_id = ' . $productCategoryId  . ' AND product_id <> '. $productId . ' ORDER BY product_id DESC LIMIT 6';
+        $sql = 'SELECT * FROM product WHERE product_category_id = ' . $productCategoryId  . ' AND product_id <> '. $productId . ' AND product_status = 1 ORDER BY product_id DESC LIMIT 8';
         $statement = $this->tableGateway->getAdapter()->query($sql);
         $result = $statement->execute();
 

@@ -11,34 +11,23 @@ namespace Home\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Zend\Authentication\AuthenticationService;
-
+use Zend\View\Model\JsonModel;
 use Zend\Form\Element\Captcha;
 use Zend\Captcha\Image as CaptchaImage;
-use Zend\View\Model\JsonModel;
 
 class CaptchaController extends AbstractActionController
 {
     public function indexAction() {
-        $dirdata = 'public';
-        $urlcaptcha = '/captcha';
-        $element = new CaptchaImage(  array(
-                'font' => $dirdata . '/fonts/arial.ttf',
-                'width' => 150,
-                'height' => 50,
-                'dotNoiseLevel' => 10,
-                'lineNoiseLevel' => 3)
-        );
-        $element->setImgDir($dirdata.'/captcha');
-        $element->setImgUrl($urlcaptcha);
-        $element->setWordlen(4);
-        $element->generate();
+        $configCaptcha = include 'config/captcha.php';
+
+        $captchaImage = new CaptchaImage($configCaptcha);
+        $captchaImage->generate();
 
         $basePath = $this->getServiceLocator()->get('ViewHelperManager')->get('basePath');
 
         return new JsonModel([
-            'id' => $element->getId(),
-            'url' => $basePath($element->getImgUrl() . $element->getId() . $element->getSuffix())
+            'id' => $captchaImage->getId(),
+            'url' => $basePath($captchaImage->getImgUrl() . $captchaImage->getId() . $captchaImage->getSuffix())
         ]);
     }
 

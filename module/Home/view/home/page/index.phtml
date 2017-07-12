@@ -1,11 +1,8 @@
-<div class="desktop-12 mobile-3" id="nav-border"></div>
-<?php echo $breadcrumbs; ?>
-<div id="page" class="desktop-12 tablet-6 mobile-3 page-template" data-section-id="">
-
-    <h1><?php echo $this->escapeHtml($page['page_title']); ?></h1>
-
-    <div class="rte">
-        <?php echo $page['page_content']; ?>
+<div class="col-md-12">
+    <div class="panel panel-primary group-item">
+        <div class="panel-heading"><h3 class="panel-title"><?php echo $this->escapeHtml($page['page_title']); ?></h3></div>
+        <div class="panel-body">
+            <?php echo $page['page_content']; ?>
+        </div>
     </div>
-
 </div>

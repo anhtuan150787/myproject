@@ -152,7 +152,7 @@ class Module
             $controller = strtolower($controllerArr[2]);
             $module = strtolower($controllerArr[0]);
 
-            if ($module == 'home') {
+            if ($module == strtolower(__NAMESPACE__)) {
                 $c->layout('layout/layout');
 
                 $dbAdapter = $e->getApplication()->getServiceManager()->get('Zend\Db\Adapter\Adapter');
@@ -167,6 +167,34 @@ class Module
                 $navigations = $this->getNavigationList($dbAdapter);
                 $viewModel->navigations = $navigations;
 
+                //Load Danh muc san pham
+                $sql = 'SELECT * FROM product_category WHERE product_category_status = 1 ORDER BY product_category_id ASC';
+                $statement = $dbAdapter->query($sql);
+                $result = $statement->execute();
+                $viewModel->productCategorys = $result;
+
+                //Load san pham moi
+                $sql = 'SELECT * FROM product WHERE product_status = 1 AND product_type_new = 1  ORDER BY product_id DESC LIMIT 6';
+                $statement = $dbAdapter->query($sql);
+                $result = $statement->execute();
+                $viewModel->productNews = $result;
+
+                //Load tin tuc moi
+                $sql = 'SELECT * FROM news WHERE news_status = 1  ORDER BY news_id DESC LIMIT 6';
+                $statement = $dbAdapter->query($sql);
+                $result = $statement->execute();
+                $viewModel->newsNew = $result;
+
+                //Load template
+                $statement = $dbAdapter->query('SELECT * FROM template');
+                $template = $statement->execute();
+                $templateData = [];
+                foreach($template as $v) {
+                    $templateData[$v['template_id']] = $v;
+                }
+                $viewModel->template = $templateData;
+
+
                 $session = new Container('cart');
                 if ($session->offsetExists('order')) {
                     $order = $session->offsetGet('order');
@@ -178,7 +206,7 @@ class Module
 
     public function getNavigationList($dbAdapter, $parent = 0, $level = -1, $data = array())
     {
-        $sql = 'SELECT * FROM navigation WHERE navigation_parent = ' . $parent . ' AND navigation_status = 1 ORDER BY navigation_position ASC';
+        $sql = 'SELECT * FROM navigation WHERE group_navigation_id=12 AND navigation_parent = ' . $parent . ' AND navigation_status = 1 ORDER BY navigation_position ASC';
         $statement = $dbAdapter->query($sql);
         $result = $statement->execute();
 
@@ -190,7 +218,7 @@ class Module
             $data[$navigation_id] = (array) $row;
             $data[$navigation_id]['navigation_level'] = $level;
 
-            $sql = 'SELECT * FROM navigation WHERE navigation_parent = ' . $navigation_id . ' AND navigation_status = 1 ORDER BY navigation_position ASC';
+            $sql = 'SELECT * FROM navigation WHERE group_navigation_id=12 AND navigation_parent = ' . $navigation_id . ' AND navigation_status = 1 ORDER BY navigation_position ASC';
 
             $statement = $dbAdapter->query($sql);
             $result = $statement->execute();

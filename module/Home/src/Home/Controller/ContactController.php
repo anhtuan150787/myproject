@@ -32,22 +32,51 @@ class ContactController extends AbstractActionController
                 $params['contact_email']    = $this->params()->fromPost('contact_email');
                 $params['contact_phone']    = $this->params()->fromPost('contact_phone');
                 $params['contact_content']  = $this->params()->fromPost('contact_content');
+                $params['contact_date']     = date('Y-m-d H:i:s');
 
                 $model->save($params);
+
+
+                $patterns = [];
+                $patterns[0] = '/{fullname}/';
+                $patterns[1] = '/{email}/';
+                $patterns[2] = '/{phone}/';
+                $patterns[3] = '/{content}/';
+
+                $replacements = [];
+                $replacements[0] = $params['contact_fullname'];
+                $replacements[1] = $params['contact_email'];
+                $replacements[2] = $params['contact_phone'];
+                $replacements[3] = $params['contact_content'];
+
+                $bodyMail = file_get_contents('data/email-template/contact.php');
+                $bodyMail = preg_replace($patterns, $replacements, $bodyMail);
+
+                $sendMail = $this->getServiceLocator()->get('send_mail');
+
+                $config = include 'config/mailer.php';
+                $sendMail->setTo($config['to_second']);
+                $sendMail->setSubject('Liên hệ');
+                $sendMail->setBody($bodyMail);
+                $sendMail->action();
+
 
                 $this->redirect()->toRoute('home-lien-he-success');
             }
         }
 
-        $breadcrumbs = '<div id="breadcrumb" class="desktop-12">
-                            <a href="./" class="homepage-link">Trang chủ</a>
-                            <span class="separator">»</span>
-                            <span class="page-title">Liên hệ</span>
-                        </div>';
+        //Load template
+        $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $statement = $dbAdapter->query('SELECT * FROM template');
+        $template = $statement->execute();
+        $templateData = [];
+        foreach($template as $v) {
+            $templateData[$v['template_id']] = $v;
+        }
 
         $view->setVariables([
             'form' => $form,
-            'breadcrumbs' => $breadcrumbs,
+            'templateData' => $templateData,
         ]);
 
         return $view;
@@ -56,14 +85,19 @@ class ContactController extends AbstractActionController
     public function successAction() {
         $view = new ViewModel();
 
-        $breadcrumbs = '<div id="breadcrumb" class="desktop-12">
-                            <a href="./" class="homepage-link">Trang chủ</a>
-                            <span class="separator">»</span>
-                            <span class="page-title">Liên hệ</span>
-                        </div>';
+        //Load template
+        $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $statement = $dbAdapter->query('SELECT * FROM template');
+        $template = $statement->execute();
+        $templateData = [];
+        foreach($template as $v) {
+            $templateData[$v['template_id']] = $v;
+        }
+
+
 
         $view->setVariables([
-            'breadcrumbs' => $breadcrumbs,
+            'templateData' => $templateData,
         ]);
 
         return $view;

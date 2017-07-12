@@ -1,8 +1,18 @@
-<!-- Main component for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <h1>Cấu trúc câu</h1>
-    <p>Mỗi bài kiểm tra gồm 50 câu.</p>
-    <p>
-        <a class="btn btn-lg btn-primary" href="<?php echo $this->url('home-structure');?>" role="button">Kiểm tra &raquo;</a>
-    </p>
+<div class="col-md-12">
+    <div class="panel panel-primary group-item">
+        <div class="panel-heading"><h3 class="panel-title">Sản phẩm nổi bật</h3></div>
+        <div class="panel-body">
+            <?php echo $this->partial('home/partial/product-item', array('products' => $productHots)); ?>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="panel panel-primary group-item">
+        <div class="panel-heading"><h3 class="panel-title">Sản phẩm mới</h3></div>
+        <div class="panel-body">
+            <?php echo $this->partial('home/partial/product-item', array('products' => $productNews)); ?>
+
+        </div>
+    </div>
 </div>
