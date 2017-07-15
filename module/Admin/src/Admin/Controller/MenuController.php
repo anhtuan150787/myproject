@@ -13,11 +13,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\Menu;
+use Admin\Controller\MasterController;
 
-class MenuController extends AbstractActionController
+class MenuController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'menu';
@@ -33,15 +32,9 @@ class MenuController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $cache = $this->getServiceLocator()->get('cache');
-        $model = $this->getServiceLocator()->get('MenuModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Menu');
 
-        if (!$cache->checkItem('admin_menu')) {
-            $records = $model->getMenuList();
-            $cache->set('admin_menu', $records);
-        } else {
-            $records = $cache->get('admin_menu');
-        }
+        $records = $model->getMenuList();
 
         $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
 
@@ -55,8 +48,7 @@ class MenuController extends AbstractActionController
         $form = new Menu();
         $form->init();
 
-        $cache = $this->getServiceLocator()->get('cache');
-        $model = $this->getServiceLocator()->get('MenuModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Menu');
 
         if ($this->getRequest()->isPost()) {
 
@@ -69,8 +61,6 @@ class MenuController extends AbstractActionController
                 $input['menu_status']        = $this->params()->fromPost('menu_status');
                 $input['menu_url']        = $this->params()->fromPost('menu_url');
                 $model->save($input);
-
-                $cache->clear('admin_menu');
 
                 $this->flashMessenger()->addMessage('Thêm thành công.');
                 $this->redirect()->toRoute('admin/' . $this->module);
@@ -100,8 +90,7 @@ class MenuController extends AbstractActionController
         $form = new Menu();
         $form->init();
 
-        $cache = $this->getServiceLocator()->get('cache');
-        $model = $this->getServiceLocator()->get('MenuModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Menu');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -116,8 +105,6 @@ class MenuController extends AbstractActionController
                 $input['menu_status']        = $this->params()->fromPost('menu_status');
                 $input['menu_url']        = $this->params()->fromPost('menu_url');
                 $model->save($input, $id);
-
-                $cache->clear('admin_menu');
 
                 $this->flashMessenger()->addMessage('Cập nhật thành công.');
                 $this->redirect()->toRoute('admin/' . $this->module);
@@ -151,16 +138,13 @@ class MenuController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('MenuModel');
-        $cache = $this->getServiceLocator()->get('cache');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Menu');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {
                 $model->delete($v);
             }
         }
-
-        $cache->clear('admin_menu');
 
         $this->flashMessenger()->addMessage('Xóa thành công');
         $this->redirect()->toRoute('admin/' . $this->module);

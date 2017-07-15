@@ -13,11 +13,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\Template;
+use Admin\Controller\MasterController;
 
-class TemplateController extends AbstractActionController
+class TemplateController extends MasterController
 {
-    use MasterTrait;
-
     private $module = 'template';
 
     public function __construct()
@@ -38,8 +37,8 @@ class TemplateController extends AbstractActionController
             $this->redirect()->toRoute('admin/group-template');
         }
 
-        $model = $this->getServiceLocator()->get('TemplateModel');
-        $groupTemplateModel = $this->getServiceLocator()->get('GroupTemplateModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Template');
+        $groupTemplateModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupTemplate');
 
         $records = $model->fetchAll($group_template_id);
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
@@ -66,8 +65,8 @@ class TemplateController extends AbstractActionController
         }
 
         $uploadService = $this->getServiceLocator()->get('upload_file');
-        $model = $this->getServiceLocator()->get('TemplateModel');
-        $groupTemplateModel = $this->getServiceLocator()->get('GroupTemplateModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Template');
+        $groupTemplateModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupTemplate');
 
         if ($this->getRequest()->isPost()) {
             $pictureInfo = $this->params()->fromFiles('template_picture');
@@ -128,8 +127,8 @@ class TemplateController extends AbstractActionController
         }
 
         $uploadService = $this->getServiceLocator()->get('upload_file');
-        $model = $this->getServiceLocator()->get('TemplateModel');
-        $groupTemplateModel = $this->getServiceLocator()->get('GroupTemplateModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Template');
+        $groupTemplateModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupTemplate');
 
 
         $id = $this->params()->fromQuery('id');
@@ -201,7 +200,7 @@ class TemplateController extends AbstractActionController
             $this->redirect()->toRoute('admin/group-template');
         }
 
-        $model  = $this->getServiceLocator()->get('TemplateModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Template');
 
 
         if (is_array($id)) {
@@ -221,7 +220,7 @@ class TemplateController extends AbstractActionController
     public function deletePictureAction()
     {
         $id     = $this->params()->fromPost('id');
-        $model  = $this->getServiceLocator()->get('TemplateModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Template');
         $record = $model->fetchRow($id);
 
         unlink('public/pictures/templates/' . $record['template_picture']);

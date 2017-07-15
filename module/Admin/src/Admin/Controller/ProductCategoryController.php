@@ -13,11 +13,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\ProductCategory;
+use Admin\Controller\MasterController;
 
-class ProductCategoryController extends AbstractActionController
+class ProductCategoryController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'product-category';
@@ -33,7 +32,7 @@ class ProductCategoryController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('ProductCategoryModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('ProductCategory');
 
         $records = $model->getProductCategoryList();
 
@@ -90,7 +89,7 @@ class ProductCategoryController extends AbstractActionController
         $form = new ProductCategory();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('ProductCategoryModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('ProductCategory');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -137,8 +136,8 @@ class ProductCategoryController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('ProductCategoryModel');
-        $productModel = $this->getServiceLocator()->get('ProductModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('ProductCategory');
+        $productModel = $this->getServiceLocator()->get('ModelGateway')->getModel('Product');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {

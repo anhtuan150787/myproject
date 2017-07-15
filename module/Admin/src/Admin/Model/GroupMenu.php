@@ -1,14 +1,29 @@
 <?php
 namespace Admin\Model;
 
-class GroupMenu {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class GroupMenu extends Master {
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'group_menu';
+        parent::__construct($services);
+
+        $this->cache = $this->services->get('cache');
     }
 
-    public function getGroupMenu($group_admin_id, $parent = 0, $level = -1, $data = array())
+    public function getGroupMenu($group_admin_id, $parent = 0, $level = -1, $data = array()) {
+        if (!$this->cache->setNameSpace('group_menu')->checkItem('group_menu_model_' . $group_admin_id)) {
+            $result = $this->getGroupMenuList($group_admin_id, $parent, $level, $data);
+            $this->cache->setNameSpace('group_menu')->set('group_menu_model_' . $group_admin_id, $result);
+            return $result;
+        } else {
+            return $this->cache->setNameSpace('group_menu')->get('group_menu_model_' . $group_admin_id);
+        }
+    }
+
+    public function getGroupMenuList($group_admin_id, $parent = 0, $level = -1, $data = array())
     {
         $sql = 'SELECT * FROM group_menu as gm
                 LEFT JOIN menu as m ON gm.menu_id=m.menu_id
@@ -36,7 +51,7 @@ class GroupMenu {
             $result = $statement->execute();
 
             if ($result->count() > 0) {
-                $data = $this->getGroupMenu($group_admin_id, $menu_id, $level, $data);
+                $data = $this->getGroupMenuList($group_admin_id, $menu_id, $level, $data);
             }
         }
         return $data;
@@ -45,6 +60,8 @@ class GroupMenu {
     public function saveWhere($data, $where)
     {
         $this->tableGateway->update($data, $where);
+
+        $this->cache->setNameSpace('group_menu')->clearByNameSpace();
     }
 
     public function save($data, $id = null)
@@ -54,6 +71,7 @@ class GroupMenu {
         } else {
             $this->tableGateway->update($data, array('group_menu_id' => $id));
         }
+        $this->cache->setNameSpace('group_menu')->clearByNameSpace();
     }
 
     public function checkExistMenu($groupAdminId, $menu_id)
@@ -67,5 +85,7 @@ class GroupMenu {
 
     public function deleteWhere($where) {
         $this->tableGateway->delete($where);
+
+        $this->cache->setNameSpace('group_menu')->clearByNameSpace();
     }
 }

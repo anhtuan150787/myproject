@@ -6,11 +6,14 @@ use Zend\Db\Sql\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class Website {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class Website extends Master{
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'website';
+        parent::__construct($services);
     }
 
     public function save($data, $id = null)

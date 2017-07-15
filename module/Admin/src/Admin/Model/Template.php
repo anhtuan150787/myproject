@@ -6,11 +6,14 @@ use Zend\Db\Sql\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class Template {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class Template extends Master{
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'template';
+        parent::__construct($services);
     }
 
     public function fetchAll($group_template_id)

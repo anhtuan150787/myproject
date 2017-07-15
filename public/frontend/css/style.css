@@ -15,8 +15,9 @@ body { background: url("../img/background.jpg") repeat;  }
 
 .end-box {  padding:25px;  color: white;  }
 
-.banner {height: 135px;}
-.banner .logo {position: relative; top: 0; width: 100px; height: 100px; margin-top: 10px;}
+.banner {height: 160px;}
+.banner .logo {float:left; top: 0; margin-top: 10px; width: 135px}
+.banner .logo img {width: 130px; height: 135px;}
 
 .navbar-default .navbar-nav > li > a {color: white}
 .navbar-default .navbar-nav > li > a:hover {color: white; background-color: #1b68aa;}
@@ -30,7 +31,8 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
 
 .group-item {border: 1px solid #ddd;}
 .group-item .thumbnail {border: none; margin-bottom: 0;}
-.group-item h5 { margin-top: 5px; margin-bottom: 5px;}
+.group-item h5 { margin-top: 5px; margin-bottom: 5px; color: #0067bf; font-weight: bold}
+.group-item h5 a {color: #0067bf;}
 
 .list-group-item {border: 1px solid #ddd; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd}
 .panel-body {padding: 10px;}

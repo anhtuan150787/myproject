@@ -13,11 +13,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\Acl;
+use Admin\Controller\MasterController;
 
-class AclController extends AbstractActionController
+class AclController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'acl';
@@ -33,15 +32,9 @@ class AclController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $cache = $this->getServiceLocator()->get('cache');
-        $model = $this->getServiceLocator()->get('AclModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Acl');
 
-        if (!$cache->checkItem('admin_acl')) {
-            $records = $model->getAclList();
-            $cache->set('admin_acl', $records);
-        } else {
-            $records = $cache->get('admin_acl');
-        }
+        $records = $model->getAclList();
 
         $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
 
@@ -55,8 +48,7 @@ class AclController extends AbstractActionController
         $form = new Acl();
         $form->init();
 
-        $cache = $this->getServiceLocator()->get('cache');
-        $model = $this->getServiceLocator()->get('AclModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Acl');
 
         if ($this->getRequest()->isPost()) {
 
@@ -71,8 +63,6 @@ class AclController extends AbstractActionController
                 $input['acl_name']          = $this->params()->fromPost('acl_name');
                 $input['acl_parent']        = $this->params()->fromPost('acl_parent');
                 $model->save($input);
-
-                $cache->clear('admin_acl');
 
                 $this->flashMessenger()->addMessage('Thêm thành công.');
                 $this->redirect()->toRoute('admin/' . $this->module);
@@ -102,8 +92,7 @@ class AclController extends AbstractActionController
         $form = new Acl();
         $form->init();
 
-        $cache = $this->getServiceLocator()->get('cache');
-        $model = $this->getServiceLocator()->get('AclModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Acl');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -120,8 +109,6 @@ class AclController extends AbstractActionController
                 $input['acl_name']          = $this->params()->fromPost('acl_name');
                 $input['acl_parent']        = $this->params()->fromPost('acl_parent');
                 $model->save($input, $id);
-
-                $cache->clear('admin_acl');
 
                 $this->flashMessenger()->addMessage('Cập nhật thành công.');
                 $this->redirect()->toRoute('admin/' . $this->module);
@@ -155,16 +142,13 @@ class AclController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('AclModel');
-        $cache = $this->getServiceLocator()->get('cache');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Acl');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {
                 $model->delete($v);
             }
         }
-
-        $cache->clear('admin_acl');
 
         $this->flashMessenger()->addMessage('Xóa thành công');
         $this->redirect()->toRoute('admin/' . $this->module);

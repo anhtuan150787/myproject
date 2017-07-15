@@ -6,11 +6,14 @@ use Zend\Db\Sql\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class GroupNavigation {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class GroupNavigation extends Master {
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'group_navigation';
+        parent::__construct($services);
     }
 
     public function fetchAll()

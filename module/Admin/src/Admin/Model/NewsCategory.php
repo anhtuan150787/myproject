@@ -1,11 +1,14 @@
 <?php
 namespace Admin\Model;
 
-class NewsCategory {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class NewsCategory extends Master{
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'news_category';
+        parent::__construct($services);
     }
 
     public function getNewsCategoryList($parent = 0, $level = -1, $data = array())

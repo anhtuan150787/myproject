@@ -14,11 +14,10 @@ use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 
 use Admin\Form\Order;
+use Admin\Controller\MasterController;
 
-class OrderController extends AbstractActionController
+class OrderController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'order';
@@ -36,7 +35,7 @@ class OrderController extends AbstractActionController
     {
         $view = new ViewModel();
         $session = new Container();
-        $model = $this->getServiceLocator()->get('OrderModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Order');
 
         if (!isset($_GET['page'])) {
             $session->offsetUnset('search-order');
@@ -72,8 +71,8 @@ class OrderController extends AbstractActionController
         $form = new Order();
         //$form->init();
 
-        $model = $this->getServiceLocator()->get('OrderModel');
-        $orderDetailModel = $this->getServiceLocator()->get('OrderDetailModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Order');
+        $orderDetailModel = $this->getServiceLocator()->get('ModelGateway')->getModel('OrderDetail');
 
         $id = $this->params()->fromQuery('id');
 
@@ -127,7 +126,7 @@ class OrderController extends AbstractActionController
         } else {
             $id[] = $this->params()->fromQuery('id');
         }
-        $model  = $this->getServiceLocator()->get('OrderModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Order');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {

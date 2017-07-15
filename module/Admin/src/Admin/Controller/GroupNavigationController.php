@@ -12,11 +12,10 @@ namespace Admin\Controller;
 use Admin\Form\GroupNavigation;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Admin\Controller\MasterController;
 
-class GroupNavigationController extends AbstractActionController
+class GroupNavigationController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'group-navigation';
@@ -34,7 +33,7 @@ class GroupNavigationController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('GroupNavigationModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupNavigation');
 
         $records = $model->fetchAll();
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
@@ -52,7 +51,7 @@ class GroupNavigationController extends AbstractActionController
         $form = new GroupNavigation();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('GroupNavigationModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupNavigation');
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
@@ -85,7 +84,7 @@ class GroupNavigationController extends AbstractActionController
         $form = new GroupNavigation();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('GroupNavigationModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupNavigation');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -124,8 +123,8 @@ class GroupNavigationController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('GroupNavigationModel');
-        $navigationModel  = $this->getServiceLocator()->get('NavigationModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupNavigation');
+        $navigationModel  = $this->getServiceLocator()->get('ModelGateway')->getModel('Navigation');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {

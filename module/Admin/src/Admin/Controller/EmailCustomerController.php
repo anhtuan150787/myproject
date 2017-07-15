@@ -14,17 +14,17 @@ use Zend\View\Model\ViewModel;
 
 use Admin\Form\Page;
 
-class EmailCustomerController extends AbstractActionController
-{
-    use MasterTrait;
+use Admin\Controller\MasterController;
 
+class EmailCustomerController extends MasterController
+{
     private $module = 'email-customer';
 
     public function indexAction()
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('EmailCustomerModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('EmailCustomer');
 
         $records = $model->fetchAll();
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
@@ -43,7 +43,7 @@ class EmailCustomerController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('EmailCustomerModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('EmailCustomer');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {
@@ -61,7 +61,7 @@ class EmailCustomerController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('EmailCustomerModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('EmailCustomer');
 
         $records = $model->getAll();
 

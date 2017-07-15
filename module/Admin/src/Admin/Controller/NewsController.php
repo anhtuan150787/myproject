@@ -11,13 +11,13 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
 
 use Admin\Form\News;
+use Admin\Controller\MasterController;
 
-class NewsController extends AbstractActionController
+class NewsController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'news';
@@ -34,14 +34,34 @@ class NewsController extends AbstractActionController
     public function indexAction()
     {
         $view = new ViewModel();
+        $session = new Container();
+        $search = [];
 
-        $model = $this->getServiceLocator()->get('NewsModel');
+        if (!isset($_GET['page'])) {
+            $session->offsetUnset('search-news');
+        }
 
-        $records = $model->fetchAll();
+        if ($session->offsetExists('search-news')) {
+            $search = $session->offsetGet('search-news');
+        }
+
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $search['name'] = ($data['name'] != '') ? $data['name'] : null;
+            $search['category'] = ($data['category'] != '') ? $data['category'] : null;
+            $session->offsetSet('search-news', $search);
+        }
+
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('News');
+        $newsCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
+
+        $records = $model->fetchAll($search);
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
         $records->setItemCountPerPage(20);
 
-        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module]);
+        $newsCategory = $newsCategoryModel->getNewsCategoryList();
+
+        $view->setVariables(['records' => $records, 'status' => $this->status, 'module' => $this->module, 'newsCategory' => $newsCategory, 'search' => $search]);
 
         return $view;
     }
@@ -54,8 +74,8 @@ class NewsController extends AbstractActionController
         $form->init();
 
         $uploadService = $this->getServiceLocator()->get('upload_file');
-        $model = $this->getServiceLocator()->get('NewsModel');
-        $newsCategoryModel = $this->getServiceLocator()->get('NewsCategoryModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('News');
+        $newsCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
 
         if ($this->getRequest()->isPost()) {
             $pictureInfo = $this->params()->fromFiles('news_picture');
@@ -115,8 +135,8 @@ class NewsController extends AbstractActionController
         $form->init();
 
         $uploadService = $this->getServiceLocator()->get('upload_file');
-        $model = $this->getServiceLocator()->get('NewsModel');
-        $newsCategoryModel = $this->getServiceLocator()->get('NewsCategoryModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('News');
+        $newsCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -183,7 +203,7 @@ class NewsController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('NewsModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('News');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {
@@ -202,7 +222,8 @@ class NewsController extends AbstractActionController
     public function deletePictureAction()
     {
         $id     = $this->params()->fromPost('id');
-        $model  = $this->getServiceLocator()->get('NewsModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('News');
+
         $record = $model->fetchRow($id);
 
         unlink('public/pictures/news/' . $record['news_picture']);

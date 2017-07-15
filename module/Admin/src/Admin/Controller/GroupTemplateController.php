@@ -12,11 +12,10 @@ namespace Admin\Controller;
 use Admin\Form\GroupTemplate;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Admin\Controller\MasterController;
 
-class GroupTemplateController extends AbstractActionController
+class GroupTemplateController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'group-template';
@@ -34,7 +33,7 @@ class GroupTemplateController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('GroupTemplateModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupTemplate');
 
         $records = $model->fetchAll();
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
@@ -52,7 +51,7 @@ class GroupTemplateController extends AbstractActionController
         $form = new GroupTemplate();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('GroupTemplateModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupTemplate');
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
@@ -85,7 +84,7 @@ class GroupTemplateController extends AbstractActionController
         $form = new GroupTemplate();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('GroupTemplateModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupTemplate');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -124,8 +123,8 @@ class GroupTemplateController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('GroupTemplateModel');
-        $templateModel  = $this->getServiceLocator()->get('TemplateModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupTemplate');
+        $templateModel  = $this->getServiceLocator()->get('ModelGateway')->getModel('Template');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {

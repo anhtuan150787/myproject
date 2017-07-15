@@ -1,11 +1,14 @@
 <?php
 namespace Admin\Model;
 
-class ProductCategory {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class ProductCategory extends Master {
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'product_category';
+        parent::__construct($services);
     }
 
     public function getProductCategoryList($parent = 0, $level = -1, $data = array())

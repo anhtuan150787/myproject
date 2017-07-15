@@ -14,12 +14,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\GroupAdmin;
+use Admin\Controller\MasterController;
 
-
-class GroupAdminController extends AbstractActionController
+class GroupAdminController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'group-admin';
@@ -35,7 +33,7 @@ class GroupAdminController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('GroupAdminModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupAdmin');
 
         $records = $model->fetchList();
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
@@ -53,7 +51,7 @@ class GroupAdminController extends AbstractActionController
         $form = new GroupAdmin();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('GroupAdminModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupAdmin');
 
         if ($this->getRequest()->isPost()) {
 
@@ -86,7 +84,7 @@ class GroupAdminController extends AbstractActionController
         $form = new GroupAdmin();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('GroupAdminModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupAdmin');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -124,10 +122,10 @@ class GroupAdminController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('GroupAdminModel');
-        $userModel = $this->getServiceLocator()->get('AdminModel');
-        $groupAclModel = $this->getServiceLocator()->get('GroupAclModel');
-        $groupMenuModel = $this->getServiceLocator()->get('GroupMenuModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupAdmin');
+        $userModel = $this->getServiceLocator()->get('ModelGateway')->getModel('Admin');
+        $groupAclModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupAcl');
+        $groupMenuModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupMenu');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {
@@ -149,15 +147,13 @@ class GroupAdminController extends AbstractActionController
         $view = new ViewModel();
         $form =  new GroupAdminAcl();
 
-        $cache  = $this->getServiceLocator()->get('cache');
+        $groupAdminModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupAdmin');
 
-        $groupAdminModel = $this->getServiceLocator()->get('GroupAdminModel');
+        $menuModel  = $this->getServiceLocator()->get('ModelGateway')->getModel('Menu');
+        $groupMenuModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupMenu');
 
-        $menuModel  = $this->getServiceLocator()->get('MenuModel');
-        $groupMenuModel = $this->getServiceLocator()->get('GroupMenuModel');
-
-        $aclModel = $this->getServiceLocator()->get('AclModel');
-        $groupAclModel = $this->getServiceLocator()->get('GroupAclModel');
+        $aclModel = $this->getServiceLocator()->get('ModelGateway')->getModel('Acl');
+        $groupAclModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupAcl');
 
         $id = $this->params()->fromQuery('id');
 
@@ -187,12 +183,6 @@ class GroupAdminController extends AbstractActionController
                 }
             }
 
-            //Cache
-            $cache->clear('permission_menu_' . $id);
-            $cache->clear('permission_group_' . $id);
-            $cache->clear('permission_resource_' . $id);
-            $cache->clear('permission_allow_' . $id);
-
             $this->flashMessenger()->addMessage('Cập nhật quyền thành công');
             $this->redirect()->toRoute('admin/' . $this->module);
         }
@@ -202,26 +192,16 @@ class GroupAdminController extends AbstractActionController
         foreach($groupMenuResults as $v) {
             $groupMenus[$v['menu_id']] = $v;
         }
-        //$menus = $menuModel->getMenuList();
-        if (!$cache->checkItem('admin_menu')) {
-            $menus = $menuModel->getMenuList();
-            $cache->set('admin_menu', $menus);
-        } else {
-            $menus = $cache->get('admin_menu');
-        }
+
+        $menus = $menuModel->getMenuList();
 
         $groupAclResults = $groupAclModel->getGroupAcl($id);
         $groupAcls = [];
         foreach($groupAclResults as $v) {
             $groupAcls[$v['acl_id']] = $v;
         }
-        //$acls = $aclModel->getAclList();
-        if (!$cache->checkItem('admin_acl')) {
-            $acls = $aclModel->getAclList();
-            $cache->set('admin_acl', $acls);
-        } else {
-            $acls = $cache->get('admin_acl');
-        }
+
+        $acls = $aclModel->getAclList();
 
         $groupInfo = $groupAdminModel->fetchRow($id);
 

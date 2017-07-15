@@ -16,10 +16,10 @@ use Zend\View\Model\ViewModel;
 use Admin\Form\Admin;
 use Admin\View\Helper\Encrypt;
 
-class AdminController extends AbstractActionController
-{
-    use MasterTrait;
+use Admin\Controller\MasterController;
 
+class AdminController extends MasterController
+{
     private $status;
 
     private $module = 'admin';
@@ -36,7 +36,7 @@ class AdminController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('AdminModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Admin');
 
         $records = $model->fetchList();
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
@@ -55,8 +55,8 @@ class AdminController extends AbstractActionController
         $form = new Admin();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('AdminModel');
-        $groupModel = $this->getServiceLocator()->get('GroupAdminModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Admin');
+        $groupModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupAdmin');
 
         $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form->setDbAdapter($dbAdapter);
@@ -104,8 +104,8 @@ class AdminController extends AbstractActionController
         $form = new Admin();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('AdminModel');
-        $groupModel = $this->getServiceLocator()->get('GroupAdminModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Admin');
+        $groupModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupAdmin');
 
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
@@ -163,7 +163,7 @@ class AdminController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model = $this->getServiceLocator()->get('AdminModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Admin');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {

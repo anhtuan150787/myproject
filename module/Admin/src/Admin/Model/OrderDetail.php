@@ -6,13 +6,15 @@ use Zend\Db\Sql\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class OrderDetail {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class OrderDetail extends Master{
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'order_detail';
+        parent::__construct($services);
     }
-
 
     public function save($data, $id = null)
     {

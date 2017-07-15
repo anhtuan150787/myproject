@@ -14,11 +14,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\Navigation;
+use Admin\Controller\MasterController;
 
-class NavigationController extends AbstractActionController
+class NavigationController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'navigation';
@@ -40,8 +39,8 @@ class NavigationController extends AbstractActionController
             $this->redirect()->toRoute('admin/group-navigation');
         }
 
-        $model = $this->getServiceLocator()->get('NavigationModel');
-        $groupNavigationModel = $this->getServiceLocator()->get('GroupNavigationModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Navigation');
+        $groupNavigationModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupNavigation');
 
 
         $records = $model->getNavigationList($group_navigation_id);
@@ -67,11 +66,11 @@ class NavigationController extends AbstractActionController
             $this->redirect()->toRoute('admin/group-navigation');
         }
 
-        $model = $this->getServiceLocator()->get('NavigationModel');
-        $productCategoryModel = $this->getServiceLocator()->get('ProductCategoryModel');
-        $newsCategoryModel = $this->getServiceLocator()->get('NewsCategoryModel');
-        $pageModel = $this->getServiceLocator()->get('PageModel');
-        $groupNavigationModel = $this->getServiceLocator()->get('GroupNavigationModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Navigation');
+        $productCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('ProductCategory');
+        $newsCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
+        $pageModel = $this->getServiceLocator()->get('ModelGateway')->getModel('Page');
+        $groupNavigationModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupNavigation');
 
         if ($this->getRequest()->isPost()) {
 
@@ -146,11 +145,11 @@ class NavigationController extends AbstractActionController
             $this->redirect()->toRoute('admin/group-navigation');
         }
 
-        $model = $this->getServiceLocator()->get('NavigationModel');
-        $productCategoryModel = $this->getServiceLocator()->get('ProductCategoryModel');
-        $newsCategoryModel = $this->getServiceLocator()->get('NewsCategoryModel');
-        $pageModel = $this->getServiceLocator()->get('PageModel');
-        $groupNavigationModel = $this->getServiceLocator()->get('GroupNavigationModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Navigation');
+        $productCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('ProductCategory');
+        $newsCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
+        $pageModel = $this->getServiceLocator()->get('ModelGateway')->getModel('Page');
+        $groupNavigationModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupNavigation');
 
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
@@ -232,7 +231,7 @@ class NavigationController extends AbstractActionController
             $this->redirect()->toRoute('admin/group-navigation');
         }
 
-        $model  = $this->getServiceLocator()->get('NavigationModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Navigation');
 
 
         if (is_array($id)) {

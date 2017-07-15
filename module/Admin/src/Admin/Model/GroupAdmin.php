@@ -6,12 +6,14 @@ use Zend\Db\Sql\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class GroupAdmin {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway, $dbAdapter)
+class GroupAdmin extends Master {
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
-        $this->dbAdapter = $dbAdapter;
+        $this->tableName = 'group_admin';
+        parent::__construct($services);
     }
 
     public function fetchList()

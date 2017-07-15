@@ -6,11 +6,14 @@ use Zend\Db\Sql\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class Page {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class Page extends Master {
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'page';
+        parent::__construct($services);
     }
 
     public function fetchAll()

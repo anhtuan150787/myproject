@@ -15,18 +15,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\AuthenticationService;
 
-use Zend\Permissions\Acl\Acl;
-use Zend\Permissions\Acl\Role\GenericRole as Role;
-use Zend\Permissions\Acl\Resource\GenericResource as Resource;
+use Admin\Controller\MasterController;
 
-use Zend\Mail\Storage\Message;
-use Zend\Mail\Transport\Smtp as SmtpTransport;
-use Zend\Mail\Transport\SmtpOptions;
-
-class IndexController extends AbstractActionController
+class IndexController extends MasterController
 {
-    use MasterTrait;
-
     public function indexAction()
     {
         $view = new ViewModel();

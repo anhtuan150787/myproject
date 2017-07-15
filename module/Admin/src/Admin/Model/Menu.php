@@ -1,14 +1,30 @@
 <?php
 namespace Admin\Model;
 
-class Menu {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class Menu extends Master {
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'menu';
+        parent::__construct($services);
+
+        $this->cache = $this->services->get('cache');
     }
 
     public function getMenuList($parent = 0, $level = -1, $data = array())
+    {
+        if (!$this->cache->setNameSpace('menu')->checkItem('menu_model')) {
+            $result = $this->getMenu($parent = 0, $level = -1, $data = array());
+            $this->cache->setNameSpace('menu')->set('menu_model', $result);
+            return $result;
+        } else {
+            return $this->cache->setNameSpace('menu')->get('menu_model');
+        }
+    }
+
+    public function getMenu($parent = 0, $level = -1, $data = array())
     {
         $sql = 'SELECT * FROM menu WHERE menu_parent = ' . $parent;
         $statement = $this->tableGateway->getAdapter()->query($sql);
@@ -28,7 +44,7 @@ class Menu {
             $result = $statement->execute();
 
             if ($result->count() > 0) {
-                $data = $this->getMenuList($menu_id, $level, $data);
+                $data = $this->getMenu($menu_id, $level, $data);
             }
         }
         return $data;
@@ -50,11 +66,15 @@ class Menu {
         } else {
             $this->tableGateway->update($data, array('menu_id' => $id));
         }
+
+        $this->cache->setNameSpace('menu')->clearByNameSpace();
     }
 
     public function delete($id)
     {
         $this->tableGateway->delete(array('menu_id' => $id));
+
+        $this->cache->setNameSpace('menu')->clearByNameSpace();
     }
 
     public function fetchRow($id)

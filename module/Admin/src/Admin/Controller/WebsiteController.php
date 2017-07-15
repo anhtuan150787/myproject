@@ -13,11 +13,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\Website;
+use Admin\Controller\MasterController;
 
-class WebsiteController extends AbstractActionController
+class WebsiteController extends MasterController
 {
-    use MasterTrait;
-
     private $module = 'website';
 
     public function editAction()
@@ -28,7 +27,7 @@ class WebsiteController extends AbstractActionController
         $form->init();
 
         $uploadService = $this->getServiceLocator()->get('upload_file');
-        $model = $this->getServiceLocator()->get('WebsiteModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Website');
         $id = 1;
         $record = $model->fetchRow($id);
 
@@ -86,7 +85,7 @@ class WebsiteController extends AbstractActionController
     public function deletePictureAction()
     {
         $id     = 1;
-        $model  = $this->getServiceLocator()->get('WebsiteModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Website');
         $record = $model->fetchRow($id);
 
         unlink('public/pictures/websites/' . $record['website_icon']);

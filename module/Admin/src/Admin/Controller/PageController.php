@@ -13,11 +13,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\Page;
+use Admin\Controller\MasterController;
 
-class PageController extends AbstractActionController
+class PageController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'page';
@@ -35,7 +34,7 @@ class PageController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('PageModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Page');
 
         $records = $model->fetchAll();
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
@@ -53,7 +52,7 @@ class PageController extends AbstractActionController
         $form = new Page();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('PageModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Page');
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
@@ -87,7 +86,7 @@ class PageController extends AbstractActionController
         $form = new Page();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('PageModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Page');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -127,7 +126,7 @@ class PageController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('PageModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Page');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {

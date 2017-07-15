@@ -6,11 +6,14 @@ use Zend\Db\Sql\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class EmailCustomer {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class EmailCustomer extends Master {
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'email_customer';
+        parent::__construct($services);
     }
 
     public function fetchAll()

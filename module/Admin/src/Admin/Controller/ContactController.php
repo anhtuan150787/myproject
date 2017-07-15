@@ -13,18 +13,17 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\Page;
+use Admin\Controller\MasterController;
 
-class ContactController extends AbstractActionController
+class ContactController extends MasterController
 {
-    use MasterTrait;
-
     private $module = 'contact';
 
     public function indexAction()
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('ContactModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Contact');
 
         $records = $model->fetchAll();
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
@@ -42,7 +41,7 @@ class ContactController extends AbstractActionController
         } else {
             $id[] = $this->params()->fromQuery('id');
         }
-        $model  = $this->getServiceLocator()->get('ContactModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Contact');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {
@@ -60,7 +59,7 @@ class ContactController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('ContactModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Contact');
 
         $records = $model->getAll();
 

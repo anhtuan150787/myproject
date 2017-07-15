@@ -13,11 +13,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\NewsCategory;
+use Admin\Controller\MasterController;
 
-class NewsCategoryController extends AbstractActionController
+class NewsCategoryController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'news-category';
@@ -33,7 +32,7 @@ class NewsCategoryController extends AbstractActionController
     {
         $view = new ViewModel();
 
-        $model = $this->getServiceLocator()->get('NewsCategoryModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
 
         $records = $model->getNewsCategoryList();
 
@@ -49,7 +48,7 @@ class NewsCategoryController extends AbstractActionController
         $form = new NewsCategory();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('NewsCategoryModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
 
         if ($this->getRequest()->isPost()) {
 
@@ -90,7 +89,7 @@ class NewsCategoryController extends AbstractActionController
         $form = new NewsCategory();
         $form->init();
 
-        $model = $this->getServiceLocator()->get('NewsCategoryModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -137,8 +136,8 @@ class NewsCategoryController extends AbstractActionController
             $id[] = $this->params()->fromQuery('id');
         }
 
-        $model  = $this->getServiceLocator()->get('NewsCategoryModel');
-        $newsModel = $this->getServiceLocator()->get('NewsModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
+        $newsModel = $this->getServiceLocator()->get('ModelGateway')->getModel('News');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {

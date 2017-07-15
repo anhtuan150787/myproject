@@ -1,15 +1,33 @@
 <?php
 namespace Admin\Model;
 
-class Acl {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+
+class Acl extends Master {
+
+    private $cache;
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'acl';
+        parent::__construct($services);
+
+        $this->cache = $this->services->get('cache');
     }
 
     public function getAclList($parent = 0, $level = -1, $data = array())
     {
+        if (!$this->cache->setNameSpace('act')->checkItem('acl_model')) {
+            $data = $this->getAcl($parent = 0, $level = -1, $data);
+            $this->cache->setNameSpace('act')->set('acl_model', $data);
+            return $data;
+        } else {
+            return $this->cache->setNameSpace('act')->get('acl_model');
+        }
+    }
+
+    public function getAcl($parent = 0, $level = -1, $data = array()) {
         $sql = 'SELECT * FROM acl WHERE acl_parent = ' . $parent;
         $statement = $this->tableGateway->getAdapter()->query($sql);
         $result = $statement->execute();
@@ -28,7 +46,7 @@ class Acl {
             $result = $statement->execute();
 
             if ($result->count() > 0) {
-                $data = $this->getAclList($acl_id, $level, $data);
+                $data = $this->getAcl($acl_id, $level, $data);
             }
         }
         return $data;
@@ -50,11 +68,13 @@ class Acl {
         } else {
             $this->tableGateway->update($data, array('acl_id' => $id));
         }
+        $this->cache->setNameSpace('act')->clearByNameSpace();
     }
 
     public function delete($id)
     {
         $this->tableGateway->delete(array('acl_id' => $id));
+        $this->cache->setNameSpace('act')->clearByNameSpace();
     }
 
     public function fetchRow($id)

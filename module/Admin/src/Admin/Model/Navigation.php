@@ -1,11 +1,14 @@
 <?php
 namespace Admin\Model;
 
-class Navigation {
+use Admin\Model\Master;
 
-    public function __construct($tableGateway)
+class Navigation extends Master {
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
+        $this->tableName = 'navigation';
+        parent::__construct($services);
     }
 
     public function getNavigationList($group_navigation_id = '', $parent = 0, $level = -1, $data = array())

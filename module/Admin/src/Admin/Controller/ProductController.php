@@ -15,11 +15,10 @@ use Zend\Session\Container;
 use Zend\View\Model\ViewModel;
 
 use Admin\Form\Product;
+use Admin\Controller\MasterController;
 
-class ProductController extends AbstractActionController
+class ProductController extends MasterController
 {
-    use MasterTrait;
-
     private $status;
 
     private $module = 'product';
@@ -54,13 +53,13 @@ class ProductController extends AbstractActionController
             $session->offsetSet('search-product', $search);
         }
 
-        $model = $this->getServiceLocator()->get('ProductModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Product');
 
         $records = $model->fetchAll($search);
         $records->setCurrentPageNumber($this->params()->fromQuery('page', 1));
         $records->setItemCountPerPage(20);
 
-        $productCategoryModel = $this->getServiceLocator()->get('ProductCategoryModel');
+        $productCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('ProductCategory');
         $productCategory = $productCategoryModel->getProductCategoryList();
 
         $view->setVariables(['records' => $records, 'status' => $this->status, 'search' => $search, 'productCategory' => $productCategory, 'module' => $this->module]);
@@ -76,8 +75,8 @@ class ProductController extends AbstractActionController
         $form->init();
 
         $uploadService = $this->getServiceLocator()->get('upload_file');
-        $model = $this->getServiceLocator()->get('ProductModel');
-        $productCategoryModel = $this->getServiceLocator()->get('ProductCategoryModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Product');
+        $productCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('ProductCategory');
 
         if ($this->getRequest()->isPost()) {
             $pictureInfo = $this->params()->fromFiles('product_picture');
@@ -141,8 +140,8 @@ class ProductController extends AbstractActionController
         $form->init();
 
         $uploadService = $this->getServiceLocator()->get('upload_file');
-        $model = $this->getServiceLocator()->get('ProductModel');
-        $productCategoryModel = $this->getServiceLocator()->get('ProductCategoryModel');
+        $model = $this->getServiceLocator()->get('ModelGateway')->getModel('Product');
+        $productCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('ProductCategory');
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
 
@@ -212,7 +211,7 @@ class ProductController extends AbstractActionController
         } else {
             $id[] = $this->params()->fromQuery('id');
         }
-        $model  = $this->getServiceLocator()->get('ProductModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Product');
 
         if (is_array($id)) {
             foreach($id as $k => $v) {
@@ -232,7 +231,7 @@ class ProductController extends AbstractActionController
     public function deletePictureAction()
     {
         $id     = $this->params()->fromPost('id');
-        $model  = $this->getServiceLocator()->get('ProductModel');
+        $model  = $this->getServiceLocator()->get('ModelGateway')->getModel('Product');
         $record = $model->fetchRow($id);
 
         unlink('public/pictures/products/' . $record['product_picture']);

@@ -6,13 +6,15 @@ use Zend\Db\Sql\Sql;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
+use Admin\Model\Master;
 
-class Admin {
 
-    public function __construct($tableGateway, $dbAdapter)
+class Admin extends Master{
+
+    public function __construct($services)
     {
-        $this->tableGateway = $tableGateway;
-        $this->dbAdapter = $dbAdapter;
+        $this->tableName = 'admin';
+        parent::__construct($services);
     }
 
     public function fetchList()
