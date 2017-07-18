@@ -9,9 +9,22 @@ class ProductCategory extends Master {
     {
         $this->tableName = 'product_category';
         parent::__construct($services);
+
+        $this->cache = $this->services->get('cache');
     }
 
     public function getProductCategoryList($parent = 0, $level = -1, $data = array())
+    {
+        if (!$this->cache->setNameSpace('product_category')->checkItem('product_category_model')) {
+            $result = $this->getProductCategory($parent, $level, $data);
+            $this->cache->setNameSpace('product_category')->set('product_category_model', $result);
+            return $result;
+        } else {
+            return $this->cache->setNameSpace('product_category')->get('product_category_model');
+        }
+    }
+
+    public function getProductCategory($parent = 0, $level = -1, $data = array())
     {
         $sql = 'SELECT * FROM product_category WHERE product_category_parent = ' . $parent;
         $statement = $this->tableGateway->getAdapter()->query($sql);
@@ -31,7 +44,7 @@ class ProductCategory extends Master {
             $result = $statement->execute();
 
             if ($result->count() > 0) {
-                $data = $this->getProductCategoryList($product_category_id, $level, $data);
+                $data = $this->getProductCategory($product_category_id, $level, $data);
             }
         }
         return $data;
@@ -44,11 +57,15 @@ class ProductCategory extends Master {
         } else {
             $this->tableGateway->update($data, array('product_category_id' => $id));
         }
+
+        $this->cache->setNameSpace('product_category')->clearByNameSpace();
     }
 
     public function delete($id)
     {
         $this->tableGateway->delete(array('product_category_id' => $id));
+
+        $this->cache->setNameSpace('product_category')->clearByNameSpace();
     }
 
     public function fetchRow($id)

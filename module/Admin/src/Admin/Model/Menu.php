@@ -16,7 +16,7 @@ class Menu extends Master {
     public function getMenuList($parent = 0, $level = -1, $data = array())
     {
         if (!$this->cache->setNameSpace('menu')->checkItem('menu_model')) {
-            $result = $this->getMenu($parent = 0, $level = -1, $data = array());
+            $result = $this->getMenu($parent, $level, $data);
             $this->cache->setNameSpace('menu')->set('menu_model', $result);
             return $result;
         } else {

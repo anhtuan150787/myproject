@@ -18,12 +18,12 @@ class Acl extends Master {
 
     public function getAclList($parent = 0, $level = -1, $data = array())
     {
-        if (!$this->cache->setNameSpace('act')->checkItem('acl_model')) {
-            $data = $this->getAcl($parent = 0, $level = -1, $data);
-            $this->cache->setNameSpace('act')->set('acl_model', $data);
-            return $data;
+        if (!$this->cache->setNameSpace('acl')->checkItem('acl_model')) {
+            $result = $this->getAcl($parent, $level, $data);
+            $this->cache->setNameSpace('acl')->set('acl_model', $result);
+            return $result;
         } else {
-            return $this->cache->setNameSpace('act')->get('acl_model');
+            return $this->cache->setNameSpace('acl')->get('acl_model');
         }
     }
 
@@ -68,13 +68,13 @@ class Acl extends Master {
         } else {
             $this->tableGateway->update($data, array('acl_id' => $id));
         }
-        $this->cache->setNameSpace('act')->clearByNameSpace();
+        $this->cache->setNameSpace('acl')->clearByNameSpace();
     }
 
     public function delete($id)
     {
         $this->tableGateway->delete(array('acl_id' => $id));
-        $this->cache->setNameSpace('act')->clearByNameSpace();
+        $this->cache->setNameSpace('acl')->clearByNameSpace();
     }
 
     public function fetchRow($id)

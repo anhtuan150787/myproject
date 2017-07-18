@@ -27,15 +27,6 @@ class GroupNavigation extends Master {
         return $result;
     }
 
-    public function getAll()
-    {
-        $sql = 'SELECT * FROM group_navigation ORDER BY group_navigation_id DESC';
-        $statement = $this->tableGateway->getAdapter()->query($sql);
-        $result = $statement->execute();
-
-        return $result;
-    }
-
     public function save($data, $id = null)
     {
         if ($id == null) {

@@ -75,7 +75,8 @@
                             <td width="50px">
                                 <?php
                                 if ($record['product_picture'] != '') {
-                                    echo '<img src="' . $this->basePath('pictures/products/' . $record['product_picture']) . '" class="img-thumbnail" style="width: 50px; height: 50px" />';
+                                    //echo '<img src="' . $this->basePath('pictures/products/' . $record['product_picture']) . '" class="img-thumbnail" style="width: 50px; height: 50px" />';
+                                    echo  '<img class="class="img-thumbnail"" src="' .$this->serverUrl() . '/public/thumbs/timthumb.php?src=' . $this->basePath() . '/public/pictures/products/' . $record['product_picture'] . '&w=50px&h=50px">';
                                 } else {
                                     echo '<img src="' . $this->basePath('pictures/no-image.gif') . '" class="img-thumbnail" style="width: 50px; height: 50px" />';
                                 }

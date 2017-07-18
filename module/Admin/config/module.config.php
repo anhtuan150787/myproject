@@ -361,6 +361,22 @@ return array(
                         ),
                     ),
 
+                    'post-get' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/post-get[/:action]',
+                            'constraints' => [
+                                'controller' => 'Admin\Controller\PostGet',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'Admin\Controller',
+                                'controller' => 'Admin\Controller\PostGet',
+                                'action' => 'index',
+                            ],
+                        ),
+                    ),
+
                 ),
 
             ],
@@ -395,6 +411,7 @@ return array(
             'Admin\Controller\PostGet' => 'Admin\Controller\PostGetController',
             'Admin\Controller\GroupNavigation' => 'Admin\Controller\GroupNavigationController',
             'Admin\Controller\GroupTemplate' => 'Admin\Controller\GroupTemplateController',
+            'Admin\Controller\PostGet' => 'Admin\Controller\PostGetController',
         ),
     ),
 

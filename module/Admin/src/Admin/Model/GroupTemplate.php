@@ -27,15 +27,6 @@ class GroupTemplate extends Master {
         return $result;
     }
 
-    public function getAll()
-    {
-        $sql = 'SELECT * FROM group_template ORDER BY group_template_id DESC';
-        $statement = $this->tableGateway->getAdapter()->query($sql);
-        $result = $statement->execute();
-
-        return $result;
-    }
-
     public function save($data, $id = null)
     {
         if ($id == null) {
