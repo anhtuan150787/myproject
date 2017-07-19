@@ -14,6 +14,6 @@
 return array(
     'db' => array(
         'username' => 'root',
-        'password' => 'konokoshino2002',
+        'password' => '',
     ),
 );
