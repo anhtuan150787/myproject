@@ -14,6 +14,7 @@ use Zend\ModuleManager\Listener\ModuleLoaderListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Authentication\AuthenticationService;
 
+use Zend\Navigation\Page\Mvc;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
@@ -54,10 +55,6 @@ class Module
         $moduleRouteListener->attach($eventManager);
 
         $eventManager->attach('dispatch', function (MvcEvent $e) {
-            $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
-            $auth = new AuthenticationService();
-            $groupMenuModel = $e->getApplication()->getServiceManager()->get('ModelGateway')->getModel('GroupMenu');
-            $serverUrl = $e->getApplication()->getServiceManager()->get('ViewHelperManager')->get('serverUrl')->__invoke();
 
             $c = $e->getTarget();
             $match = $e->getRouteMatch();
@@ -66,6 +63,12 @@ class Module
             $module = strtolower($controllerArr[0]);
 
             if ($module == strtolower(__NAMESPACE__)) {
+
+                $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+                $auth = new AuthenticationService();
+                $groupMenuModel = $e->getApplication()->getServiceManager()->get('ModelGateway')->getModel('GroupMenu');
+                $serverUrl = $e->getApplication()->getServiceManager()->get('ViewHelperManager')->get('serverUrl')->__invoke();
+
                 if ($auth->hasIdentity()) {
                     $user = $auth->getIdentity();
 
@@ -94,9 +97,20 @@ class Module
 
                 $viewModel->controller_name = $controller;
             }
-        }
+        });
 
-        );
+        $eventManager->attach(['dispatch.error', 'render.error'], function (MvcEvent $e) {
+
+            $writer = $e->getApplication()->getServiceManager()->get('writer');
+
+            $errorMsg = $e->getError();
+            $writer->write($errorMsg, 'ERR');
+
+            $exception = $e->getResult()->exception;
+            if ($exception instanceof \Exception) {
+                $writer->write($exception->getMessage() . PHP_EOL . $exception->getTraceAsString(), 'ERR');
+            }
+        });
     }
 
     public function getModuleTitle($menu, $module, $controller) {

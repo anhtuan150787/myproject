@@ -424,6 +424,7 @@ return array(
             'send_mail' => 'Admin\Service\SendMail',
             'encrypt' => 'Admin\Service\Encrypt',
             'cache' => 'Admin\Service\Cache',
+            'writer' => 'Admin\Service\Writer',
         )
     ),
 

@@ -21,6 +21,8 @@ class IndexController extends MasterController
 {
     public function indexAction()
     {
+        $writer = $this->getServiceLocator()->get('writer');
+        $writer->write('Test write log');
         $view = new ViewModel();
         return $view;
     }

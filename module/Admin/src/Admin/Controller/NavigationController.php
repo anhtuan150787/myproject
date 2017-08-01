@@ -71,6 +71,8 @@ class NavigationController extends MasterController
         $newsCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
         $pageModel = $this->getServiceLocator()->get('ModelGateway')->getModel('Page');
         $groupNavigationModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupNavigation');
+        $productModel = $this->getServiceLocator()->get('ModelGateway')->getModel('Product');
+        $newsModel = $this->getServiceLocator()->get('ModelGateway')->getModel('News');
 
         if ($this->getRequest()->isPost()) {
 
@@ -112,6 +114,16 @@ class NavigationController extends MasterController
             $navigationUrlSelectData[trim($url('home-news-category', array('name' => $functions->formatTitle($v['news_category_name']), 'id' => $v['news_category_id'])), '/')] = '[Danh mục bài viết] - ' . $v['news_category_name'];
         }
 
+        $news = $newsModel->getAll();
+        foreach($news as $v) {
+            $navigationUrlSelectData[trim($url('home-news-detail', array('name' => $functions->formatTitle($v['news_title']), 'id' => $v['news_id'])), '/')] = '[Tin tức] - ' . $v['news_title'];
+        }
+
+        $products = $productModel->getAll();
+        foreach($products as $v) {
+            $navigationUrlSelectData[trim($url('home-product-detail', array('name' => $functions->formatTitle($v['product_name']), 'id' => $v['product_id'])), '/')] = '[Sản phẩm] - ' . $v['product_name'];
+        }
+
         $page = $pageModel->getAll();
         foreach($page as $v) {
             $navigationUrlSelectData[trim($url('home-page', array('name' => $functions->formatTitle($v['page_title']), 'id' => $v['page_id'])), '/')] = '[Trang nội dung] - ' . $v['page_title'];
@@ -150,6 +162,8 @@ class NavigationController extends MasterController
         $newsCategoryModel = $this->getServiceLocator()->get('ModelGateway')->getModel('NewsCategory');
         $pageModel = $this->getServiceLocator()->get('ModelGateway')->getModel('Page');
         $groupNavigationModel = $this->getServiceLocator()->get('ModelGateway')->getModel('GroupNavigation');
+        $productModel = $this->getServiceLocator()->get('ModelGateway')->getModel('Product');
+        $newsModel = $this->getServiceLocator()->get('ModelGateway')->getModel('News');
 
         $id = $this->params()->fromQuery('id');
         $record = $model->fetchRow($id);
@@ -198,6 +212,16 @@ class NavigationController extends MasterController
         $page = $pageModel->getAll();
         foreach($page as $v) {
             $navigationUrlSelectData[trim($url('home-page', array('name' => $functions->formatTitle($v['page_title']), 'id' => $v['page_id'])), '/')] = '[Trang nội dung] - ' . $v['page_title'];
+        }
+
+        $news = $newsModel->getAll();
+        foreach($news as $v) {
+            $navigationUrlSelectData[trim($url('home-news-detail', array('name' => $functions->formatTitle($v['news_title']), 'id' => $v['news_id'])), '/')] = '[Tin tức] - ' . $v['news_title'];
+        }
+
+        $products = $productModel->getAll();
+        foreach($products as $v) {
+            $navigationUrlSelectData[trim($url('home-product-detail', array('name' => $functions->formatTitle($v['product_name']), 'id' => $v['product_id'])), '/')] = '[Sản phẩm] - ' . $v['product_name'];
         }
 
         $groupNavigation = $groupNavigationModel->fetchRow($group_navigation_id);

@@ -14,6 +14,8 @@ class News extends Master{
     {
         $this->tableName = 'news';
         parent::__construct($services);
+
+        $this->cache = $this->services->get('cache');
     }
 
     public function fetchAll($search)
@@ -53,6 +55,24 @@ class News extends Master{
         return $result;
     }
 
+    public function getAll()
+    {
+        if (!$this->cache->setNameSpace('news')->checkItem('news_model_getall')) {
+            $sql = 'SELECT news_id, news_title FROM news ORDER BY news_id DESC';
+            $statement = $this->tableGateway->getAdapter()->query($sql);
+            $result = $statement->execute();
+
+            $data = [];
+            foreach($result as $v) {
+                $data[$v['news_id']] = (array) $v;
+            }
+            $this->cache->setNameSpace('news')->set('news_model_getall', $data);
+            return $data;
+        } else {
+            return $this->cache->setNameSpace('news')->get('news_model_getall');
+        }
+    }
+
     public function save($data, $id = null)
     {
         if ($id == null) {
@@ -60,16 +80,21 @@ class News extends Master{
         } else {
             $this->tableGateway->update($data, array('news_id' => $id));
         }
+        $this->cache->setNameSpace('news')->clearByNameSpace();
     }
 
     public function delete($id)
     {
         $this->tableGateway->delete(array('news_id' => $id));
+
+        $this->cache->setNameSpace('news')->clearByNameSpace();
     }
 
     public function deleteWhere($where)
     {
         $this->tableGateway->delete($where);
+
+        $this->cache->setNameSpace('news')->clearByNameSpace();
     }
 
     public function fetchRow($id)

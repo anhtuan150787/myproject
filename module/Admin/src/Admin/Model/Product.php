@@ -14,6 +14,8 @@ class Product extends Master{
     {
         $this->tableName = 'product';
         parent::__construct($services);
+
+        $this->cache = $this->services->get('cache');
     }
 
     public function fetchAll($search)
@@ -54,6 +56,24 @@ class Product extends Master{
         return $result;
     }
 
+    public function getAll()
+    {
+        if (!$this->cache->setNameSpace('product')->checkItem('product_model_getall')) {
+            $sql = 'SELECT product_id, product_name FROM product ORDER BY product_id DESC';
+            $statement = $this->tableGateway->getAdapter()->query($sql);
+            $result = $statement->execute();
+
+            $data = [];
+            foreach($result as $v) {
+                $data[$v['product_id']] = (array) $v;
+            }
+            $this->cache->setNameSpace('product')->set('product_model_getall', $data);
+            return $data;
+        } else {
+            return $this->cache->setNameSpace('product')->get('product_model_getall');
+        }
+    }
+
     public function save($data, $id = null)
     {
         if ($id == null) {
@@ -61,16 +81,21 @@ class Product extends Master{
         } else {
             $this->tableGateway->update($data, array('product_id' => $id));
         }
+        $this->cache->setNameSpace('product')->clearByNameSpace();
     }
 
     public function delete($id)
     {
         $this->tableGateway->delete(array('product_id' => $id));
+
+        $this->cache->setNameSpace('product')->clearByNameSpace();
     }
 
     public function deleteWhere($where)
     {
         $this->tableGateway->delete($where);
+
+        $this->cache->setNameSpace('product')->clearByNameSpace();
     }
 
     public function fetchRow($id)
